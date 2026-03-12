@@ -6,15 +6,15 @@ import { hexToRgba } from "@/lib/utils";
 
 const stylePresets: Record<StyleId, CustomizerState> = {
   glassmorphism: {
-    blur: 20,
-    opacity: 15,
+    blur: 14,
+    opacity: 18,
     shadowX: 0,
-    shadowY: 8,
-    shadowBlur: 32,
+    shadowY: 4,
+    shadowBlur: 24,
     shadowSpread: 0,
     shadowColor: "#000000",
-    shadowOpacity: 25,
-    borderRadius: 16,
+    shadowOpacity: 8,
+    borderRadius: 18,
     bgColor: "#ffffff",
     borderColor: "#ffffff",
     borderWidth: 1,
