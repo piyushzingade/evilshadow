@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { DotCluster, DotDivider, DotNebula } from "./DotMatrix";
 

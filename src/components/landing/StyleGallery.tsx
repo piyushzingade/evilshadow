@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { stylesRegistry } from "@/lib/styles-registry";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";

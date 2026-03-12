@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { stylesRegistry } from "@/lib/styles-registry";
 import { useComponentCustomizer } from "@/hooks/useComponentCustomizer";
@@ -8,6 +8,20 @@ import { StyleId } from "@/types";
 import { RotateCcw, Copy, Check, Code2, Sliders, Palette } from "lucide-react";
 import { DotCluster, DotSparse } from "./DotMatrix";
 import { ColorPicker } from "./ColorPicker";
+
+/* ── Static constants hoisted out of render ── */
+const SLIDERS = [
+  { key: "blur" as const, label: "Blur", min: 0, max: 60, unit: "px" },
+  { key: "opacity" as const, label: "Opacity", min: 0, max: 100, unit: "%" },
+  { key: "borderRadius" as const, label: "Radius", min: 0, max: 48, unit: "px" },
+  { key: "shadowBlur" as const, label: "Shadow", min: 0, max: 60, unit: "px" },
+] as const;
+
+const PANEL_TABS = [
+  { id: "sliders" as const, label: "Properties", icon: Sliders },
+  { id: "colors" as const, label: "Colors", icon: Palette },
+  { id: "code" as const, label: "CSS", icon: Code2 },
+] as const;
 
 /* ── Crosshair corner marks for the preview canvas ── */
 function CornerMark({
@@ -220,15 +234,6 @@ export function InteractiveDemo() {
     [activeStyle]
   );
 
-  const sliders = useMemo(
-    () => [
-      { key: "blur" as const, label: "Blur", min: 0, max: 60, unit: "px" },
-      { key: "opacity" as const, label: "Opacity", min: 0, max: 100, unit: "%" },
-      { key: "borderRadius" as const, label: "Radius", min: 0, max: 48, unit: "px" },
-      { key: "shadowBlur" as const, label: "Shadow", min: 0, max: 60, unit: "px" },
-    ],
-    []
-  );
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(codeString);
@@ -423,11 +428,7 @@ export function InteractiveDemo() {
               {/* Panel header with tabs */}
               <div className="flex items-center justify-between border-b border-dashed border-[var(--color-border)] pb-4 mb-5">
                 <div className="flex items-center gap-0.5">
-                  {([
-                    { id: "sliders" as const, label: "Properties", icon: Sliders },
-                    { id: "colors" as const, label: "Colors", icon: Palette },
-                    { id: "code" as const, label: "CSS", icon: Code2 },
-                  ]).map((tab) => (
+                  {PANEL_TABS.map((tab) => (
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
@@ -463,7 +464,7 @@ export function InteractiveDemo() {
                     transition={{ duration: 0.2 }}
                     className="flex flex-col gap-5"
                   >
-                    {sliders.map((s) => (
+                    {SLIDERS.map((s) => (
                       <CustomSlider
                         key={s.key}
                         label={s.label}
