@@ -17,6 +17,7 @@ import {
   Crimson_Pro,
 } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 /* ── Display & Body ────────────────────────────────── */
@@ -118,9 +119,55 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "EvilShadow — Premium UI Component Library",
+  title: {
+    default: "EvilShadow — Premium UI Component Library",
+    template: "%s | EvilShadow",
+  },
   description:
     "Explore, preview, customize, and copy-paste components across 8 distinct design paradigms. Glassmorphism, Neobrutalism, Claymorphism, and more.",
+  keywords: [
+    "UI components",
+    "design system",
+    "glassmorphism",
+    "neobrutalism",
+    "claymorphism",
+    "minimalism",
+    "neomorphism",
+    "skeuomorphism",
+    "liquid glass",
+    "metal liquid",
+    "Tailwind CSS",
+    "React",
+    "Next.js",
+    "copy-paste",
+    "dark mode",
+  ],
+  authors: [{ name: "Piyush Zingade" }],
+  creator: "Piyush Zingade",
+  openGraph: {
+    title: "EvilShadow — Premium UI Component Library",
+    description:
+      "72+ copy-paste UI components across 8 design paradigms. Fully styled, dark mode ready.",
+    siteName: "EvilShadow",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "EvilShadow — Premium UI Component Library",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EvilShadow — Premium UI Component Library",
+    description:
+      "72+ copy-paste UI components across 8 design paradigms. Fully styled, dark mode ready.",
+    images: ["/og-image.png"],
+  },
+  manifest: "/site.webmanifest",
 };
 
 const fontVars = [
@@ -155,6 +202,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
