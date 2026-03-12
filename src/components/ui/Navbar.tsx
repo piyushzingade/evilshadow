@@ -115,7 +115,7 @@ export function Navbar() {
           <div className="hidden items-center gap-2 md:flex">
             <ThemeToggle />
             <a
-              href="https://github.com"
+              href="https://github.com/piyushzingade/evilshadow"
               target="_blank"
               rel="noopener noreferrer"
               className="flex h-10 w-10 items-center justify-center rounded-xl text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-border)] hover:text-[var(--color-fg)]"

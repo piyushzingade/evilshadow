@@ -125,7 +125,7 @@ export function DocsSidebar({
           asChild
         >
           <Link
-            href="https://github.com"
+            href="https://github.com/piyushzingade/evilshadow"
             target="_blank"
             rel="noopener noreferrer"
           >

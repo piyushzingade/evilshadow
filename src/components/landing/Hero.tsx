@@ -338,7 +338,7 @@ export function Hero() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <a
-              href="https://github.com"
+              href="https://github.com/piyushzingade/evilshadow"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-12 items-center justify-center gap-2 border border-[var(--color-border)] px-8 text-sm font-medium text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"

@@ -8,7 +8,7 @@ import { DotCluster, DotNebula, DotCorner } from "./DotMatrix";
 
 const footerLinks = [
   { label: "Documentation", href: "/docs" },
-  { label: "GitHub", href: "https://github.com", external: true },
+  { label: "GitHub", href: "https://github.com/piyushzingade/evilshadow", external: true },
   { label: "Glassmorphism", href: "/docs/glassmorphism" },
   { label: "Neobrutalism", href: "/docs/neobrutalism" },
   { label: "Minimalism", href: "/docs/minimalism" },
