@@ -191,7 +191,7 @@ export function StylePage({ style }: StylePageProps) {
       {/* Draggable Customizer */}
       <div
         ref={constraintsRef}
-        className="pointer-events-none fixed inset-0 z-40"
+        className="pointer-events-none fixed inset-0 z-[999]"
       >
         <DraggableMenu
           isVisible={isVisible}
