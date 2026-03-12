@@ -6,157 +6,155 @@ import { Sun, Droplets, Wind, MapPin } from "lucide-react";
 import type { StyleComponentProps } from "@/types";
 
 function CreditCard({ customStyle }: { customStyle?: React.CSSProperties }) {
+  /*
+   * Glass defaults tuned to the reference:
+   *  – backdrop-blur 14px: soft enough to still see the gradient blobs through
+   *  – white overlay ~0.18: barely-there milky tint, not opaque
+   *  – saturate(160%): keeps colours vibrant behind the glass
+   *  – border: thin 1px white at 0.4 — visible but gossamer
+   */
+  const defaultGlass: React.CSSProperties = {
+    backdropFilter: "blur(14px) saturate(160%)",
+    WebkitBackdropFilter: "blur(14px) saturate(160%)",
+    background:
+      "linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0.10) 100%)",
+    border: "1px solid rgba(255,255,255,0.4)",
+    borderRadius: "18px",
+    boxShadow:
+      "0 4px 24px rgba(0,0,0,0.04), 0 1px 6px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.35)",
+  };
+
+  const glassStyle = customStyle
+    ? { ...defaultGlass, ...customStyle }
+    : defaultGlass;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="font-[family-name:var(--font-clean)] relative w-full max-w-[400px] aspect-[1.586/1] rounded-[22px] overflow-hidden"
-      style={customStyle}
+      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+      className="font-[family-name:var(--font-clean)] relative w-full max-w-[420px] aspect-[1.586/1] overflow-hidden"
+      style={{ borderRadius: glassStyle.borderRadius }}
     >
-      {/* === Layer 1: Outer ambient glow === */}
+      {/* === Glass shell — customizer targets this layer === */}
+      <div className="absolute inset-0" style={glassStyle} />
+
+      {/* === Subtle inner frost — top-left light catch === */}
       <div
-        className="pointer-events-none absolute -inset-2 rounded-[28px]"
+        className="pointer-events-none absolute inset-0"
         style={{
-          boxShadow:
-            "0 0 60px 8px rgba(167,139,250,0.08), 0 0 120px 20px rgba(96,165,250,0.05)",
+          borderRadius: glassStyle.borderRadius,
+          background:
+            "linear-gradient(155deg, rgba(255,255,255,0.12) 0%, transparent 45%)",
         }}
       />
 
-      {/* === Layer 2: Glass shell with heavy blur === */}
+      {/* === Top edge highlight === */}
       <div
-        className="absolute inset-0 rounded-[22px] backdrop-blur-[40px] backdrop-saturate-[180%]"
+        className="pointer-events-none absolute inset-x-6 top-[1px] h-[1px]"
         style={{
           background:
-            "linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.08) 100%)",
-          border: "1px solid rgba(255,255,255,0.35)",
-          boxShadow:
-            "0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.25)",
+            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 30%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.55) 70%, transparent 100%)",
         }}
       />
 
-      {/* === Layer 3: Inner frost gradient === */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[22px]"
-        style={{
-          background:
-            "linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 35%, rgba(255,255,255,0.02) 60%, rgba(200,210,255,0.06) 100%)",
-        }}
-      />
-
-      {/* === Layer 4: Refraction light streak — top left === */}
-      <div
-        className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rotate-[35deg]"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 40%, transparent 70%)",
-          filter: "blur(30px)",
-        }}
-      />
-
-      {/* === Layer 5: Secondary refraction — bottom right pastel tint === */}
-      <div
-        className="pointer-events-none absolute -bottom-16 -right-16 h-48 w-48 rotate-[-20deg]"
-        style={{
-          background:
-            "radial-gradient(ellipse, rgba(167,139,250,0.08) 0%, rgba(96,165,250,0.04) 50%, transparent 80%)",
-          filter: "blur(24px)",
-        }}
-      />
-
-      {/* === Layer 6: Top edge highlight line === */}
-      <div
-        className="pointer-events-none absolute inset-x-6 top-0 h-[1px]"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.5) 70%, transparent 100%)",
-        }}
-      />
-
-      {/* Card content */}
-      <div className="relative flex h-full flex-col justify-between p-6 z-10">
-        {/* Top row -- chip + brand */}
-        <div className="flex items-start justify-between">
-          {/* EMV Chip */}
-          <div
-            className="h-10 w-13 rounded-md overflow-hidden"
-            style={{
-              background:
-                "linear-gradient(145deg, rgba(253,224,71,0.45) 0%, rgba(250,204,21,0.25) 50%, rgba(234,179,8,0.2) 100%)",
-              border: "1px solid rgba(253,224,71,0.3)",
-              boxShadow:
-                "inset 0 1px 2px rgba(255,255,255,0.2), inset 0 -1px 2px rgba(0,0,0,0.06)",
-            }}
-          >
-            <div className="mt-2.5 ml-1.5 grid grid-cols-3 gap-[2px]">
-              <div className="h-[3px] w-3 rounded-sm bg-yellow-600/25" />
-              <div className="h-[3px] w-3 rounded-sm bg-yellow-600/15" />
-              <div className="h-[3px] w-3 rounded-sm bg-yellow-600/25" />
-            </div>
+      {/* ── Card content ── */}
+      <div className="relative flex h-full flex-col justify-between px-8 py-7 z-10">
+        {/* Top: Mastercard (left) · VISA (right) */}
+        <div className="flex items-center justify-between">
+          {/* Mastercard overlapping circles */}
+          <div className="flex items-center">
+            <div
+              className="h-[34px] w-[34px] rounded-full"
+              style={{
+                background: "#eb001b",
+                boxShadow: "2px 0 8px rgba(235,0,27,0.18)",
+              }}
+            />
+            <div
+              className="-ml-3 h-[34px] w-[34px] rounded-full"
+              style={{
+                background: "#f79e1b",
+                boxShadow: "-2px 0 8px rgba(247,158,27,0.14)",
+              }}
+            />
           </div>
 
-          <div className="flex flex-col items-end gap-1">
-            {/* Mastercard overlapping circles */}
-            <div className="flex items-center">
-              <div
-                className="h-8 w-8 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle at 40% 35%, rgba(239,68,68,0.9) 0%, rgba(220,38,38,0.7) 100%)",
-                  boxShadow: "2px 0 8px rgba(239,68,68,0.2)",
-                }}
-              />
-              <div
-                className="-ml-3 h-8 w-8 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle at 60% 35%, rgba(251,146,60,0.9) 0%, rgba(234,88,12,0.7) 100%)",
-                  boxShadow: "-2px 0 8px rgba(251,146,60,0.15)",
-                }}
-              />
-            </div>
-            {/* VISA text */}
-            <span
-              className="text-xl font-bold italic tracking-wider"
+          {/* VISA wordmark */}
+          <span
+            className="text-[24px] font-extrabold italic tracking-wide leading-none"
+            style={{ color: "#1a1f71" }}
+          >
+            VISA
+          </span>
+        </div>
+
+        {/* Card Number — sans-serif, centered */}
+        <div
+          className="text-center text-[26px] tracking-[0.08em] leading-none"
+          style={{
+            fontWeight: 400,
+            color: "rgba(20,20,35,0.78)",
+          }}
+        >
+          4556 3325 8590 3732
+        </div>
+
+        {/* Bottom: holder · exp · cvv */}
+        <div className="flex items-end gap-8">
+          <div className="flex-1 min-w-0">
+            <p
+              className="mb-1 text-[13px] leading-none"
               style={{
-                color: "rgba(26,31,113,0.65)",
-                textShadow: "0 1px 2px rgba(255,255,255,0.15)",
+                color: "rgba(60,60,75,0.50)",
+                letterSpacing: "0.03em",
+                fontWeight: 400,
               }}
             >
-              VISA
-            </span>
-          </div>
-        </div>
-
-        {/* Card Number */}
-        <div className="flex justify-between font-mono text-[22px] tracking-[0.18em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
-          <span>4556</span>
-          <span>3325</span>
-          <span>8590</span>
-          <span>3732</span>
-        </div>
-
-        {/* Bottom row -- holder name, expiry, CVV */}
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
               owner&apos;s name
             </p>
-            <p className="text-sm font-semibold tracking-wide text-white/90">
+            <p
+              className="text-[17px] leading-tight truncate"
+              style={{ color: "rgba(20,20,35,0.75)", fontWeight: 500 }}
+            >
               Brian Jones
             </p>
           </div>
-          <div className="text-center">
-            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
+          <div className="shrink-0">
+            <p
+              className="mb-1 text-[13px] leading-none"
+              style={{
+                color: "rgba(60,60,75,0.50)",
+                letterSpacing: "0.03em",
+                fontWeight: 400,
+              }}
+            >
               Exp
             </p>
-            <p className="text-sm font-semibold text-white/90">09/25</p>
+            <p
+              className="text-[17px] leading-tight"
+              style={{ color: "rgba(20,20,35,0.75)", fontWeight: 500 }}
+            >
+              09/25
+            </p>
           </div>
-          <div className="text-right">
-            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
+          <div className="shrink-0">
+            <p
+              className="mb-1 text-[13px] leading-none"
+              style={{
+                color: "rgba(60,60,75,0.50)",
+                letterSpacing: "0.03em",
+                fontWeight: 400,
+              }}
+            >
               CVV
             </p>
-            <p className="text-sm font-semibold text-white/90">950</p>
+            <p
+              className="text-[17px] leading-tight"
+              style={{ color: "rgba(20,20,35,0.75)", fontWeight: 500 }}
+            >
+              950
+            </p>
           </div>
         </div>
       </div>
@@ -171,13 +169,28 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
     { label: "Following", value: "412" },
   ];
 
+  const defaultGlass: React.CSSProperties = {
+    backdropFilter: "blur(40px)",
+    WebkitBackdropFilter: "blur(40px)",
+    background:
+      "linear-gradient(155deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.06) 100%)",
+    border: "1px solid rgba(255,255,255,0.3)",
+    borderRadius: "22px",
+    boxShadow:
+      "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2)",
+  };
+
+  const glassStyle = customStyle
+    ? { ...defaultGlass, ...customStyle }
+    : defaultGlass;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="font-[family-name:var(--font-clean)] relative w-full max-w-sm rounded-[22px] overflow-hidden"
-      style={customStyle}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+      className="font-[family-name:var(--font-clean)] relative w-full max-w-sm overflow-hidden"
+      style={{ borderRadius: glassStyle.borderRadius }}
     >
       {/* === Layer 1: Outer ambient glow === */}
       <div
@@ -188,22 +201,17 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
         }}
       />
 
-      {/* === Layer 2: Glass shell === */}
+      {/* === Layer 2: Glass shell — customizer targets this === */}
       <div
-        className="absolute inset-0 rounded-[22px] backdrop-blur-[40px] backdrop-saturate-[180%]"
-        style={{
-          background:
-            "linear-gradient(155deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.06) 100%)",
-          border: "1px solid rgba(255,255,255,0.3)",
-          boxShadow:
-            "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2)",
-        }}
+        className="absolute inset-0"
+        style={glassStyle}
       />
 
       {/* === Layer 3: Inner frost gradient === */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[22px]"
+        className="pointer-events-none absolute inset-0"
         style={{
+          borderRadius: glassStyle.borderRadius,
           background:
             "linear-gradient(165deg, rgba(255,255,255,0.18) 0%, transparent 40%, rgba(34,211,238,0.03) 100%)",
         }}
@@ -289,13 +297,28 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 }
 
 function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const defaultGlass: React.CSSProperties = {
+    backdropFilter: "blur(40px)",
+    WebkitBackdropFilter: "blur(40px)",
+    background:
+      "linear-gradient(150deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.06) 100%)",
+    border: "1px solid rgba(255,255,255,0.3)",
+    borderRadius: "22px",
+    boxShadow:
+      "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2)",
+  };
+
+  const glassStyle = customStyle
+    ? { ...defaultGlass, ...customStyle }
+    : defaultGlass;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="font-[family-name:var(--font-clean)] relative w-full max-w-sm rounded-[22px] overflow-hidden"
-      style={customStyle}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+      className="font-[family-name:var(--font-clean)] relative w-full max-w-sm overflow-hidden"
+      style={{ borderRadius: glassStyle.borderRadius }}
     >
       {/* === Layer 1: Outer ambient glow — warm sun tint === */}
       <div
@@ -306,22 +329,17 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
         }}
       />
 
-      {/* === Layer 2: Glass shell with heavy blur === */}
+      {/* === Layer 2: Glass shell — customizer targets this === */}
       <div
-        className="absolute inset-0 rounded-[22px] backdrop-blur-[40px] backdrop-saturate-[180%]"
-        style={{
-          background:
-            "linear-gradient(150deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.06) 100%)",
-          border: "1px solid rgba(255,255,255,0.3)",
-          boxShadow:
-            "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2)",
-        }}
+        className="absolute inset-0"
+        style={glassStyle}
       />
 
       {/* === Layer 3: Warm/cool frost gradient === */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[22px]"
+        className="pointer-events-none absolute inset-0"
         style={{
+          borderRadius: glassStyle.borderRadius,
           background:
             "linear-gradient(155deg, rgba(253,224,71,0.06) 0%, transparent 40%, rgba(96,165,250,0.04) 100%)",
         }}
