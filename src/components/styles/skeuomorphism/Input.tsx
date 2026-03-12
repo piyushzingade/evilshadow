@@ -4,6 +4,13 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Command } from "lucide-react";
 import { StyleComponentProps } from "@/types";
+import { useTheme } from "next-themes";
+
+function useSkeuTheme() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== 'light';
+  return { isDark };
+}
 
 // ---- Embossed variant ----
 // Sunken input field recessed into the surface with multi-layer metallic outer bezel frame
@@ -13,6 +20,7 @@ function EmbossedInput({
 }: {
   customStyle?: React.CSSProperties;
 }) {
+  const { isDark } = useSkeuTheme();
   const [focused, setFocused] = useState(false);
 
   return (
@@ -27,7 +35,9 @@ function EmbossedInput({
       <label
         className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-400 mb-2.5"
         style={{
-          textShadow: "0 1px 0 rgba(255,255,255,0.7)",
+          textShadow: isDark
+            ? "0 1px 0 rgba(0,0,0,0.5)"
+            : "0 1px 0 rgba(255,255,255,0.7)",
         }}
       >
         Username
@@ -38,8 +48,12 @@ function EmbossedInput({
         className="rounded-xl p-[2.5px]"
         style={{
           background: focused
-            ? "linear-gradient(180deg, #a0a0e0 0%, #7878b0 25%, #6868a0 50%, #8080b8 75%, #a8a8d8 100%)"
-            : "linear-gradient(180deg, #b8b8c2 0%, #909098 20%, #7e7e88 40%, #8a8a94 60%, #a4a4ae 80%, #c0c0ca 100%)",
+            ? isDark
+              ? "linear-gradient(180deg, #4a4a72 0%, #3a3a5e 25%, #32325a 50%, #3a3a62 75%, #4e4e78 100%)"
+              : "linear-gradient(180deg, #a0a0e0 0%, #7878b0 25%, #6868a0 50%, #8080b8 75%, #a8a8d8 100%)"
+            : isDark
+              ? "linear-gradient(180deg, #4a4a52 0%, #3a3a42 20%, #32323a 40%, #363640 60%, #424248 80%, #4e4e56 100%)"
+              : "linear-gradient(180deg, #b8b8c2 0%, #909098 20%, #7e7e88 40%, #8a8a94 60%, #a4a4ae 80%, #c0c0ca 100%)",
           boxShadow: [
             focused
               ? "0 0 0 2px rgba(99,102,241,0.15)"
@@ -56,21 +70,25 @@ function EmbossedInput({
         <div
           className="rounded-[10px] p-[1.5px]"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.08) 60%, rgba(0,0,0,0.04) 100%)",
+            background: isDark
+              ? "linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0.02) 60%, rgba(0,0,0,0.08) 100%)"
+              : "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.08) 60%, rgba(0,0,0,0.04) 100%)",
           }}
         >
           {/* Sunken input field - recessed into the surface */}
           <div
             className="relative rounded-[9px] overflow-hidden"
             style={{
-              background:
-                "linear-gradient(180deg, #f6f6fa 0%, #fafafa 15%, #ffffff 40%, #ffffff 100%)",
+              background: isDark
+                ? "linear-gradient(180deg, #2a2a32 0%, #262630 15%, #22222c 40%, #22222c 100%)"
+                : "linear-gradient(180deg, #f6f6fa 0%, #fafafa 15%, #ffffff 40%, #ffffff 100%)",
               boxShadow: [
                 "inset 0 3px 10px rgba(0,0,0,0.12)",
                 "inset 0 1px 4px rgba(0,0,0,0.08)",
                 "inset 0 0.5px 1px rgba(0,0,0,0.06)",
-                "inset 0 -1px 0 rgba(255,255,255,0.6)",
+                isDark
+                  ? "inset 0 -1px 0 rgba(255,255,255,0.04)"
+                  : "inset 0 -1px 0 rgba(255,255,255,0.6)",
               ].join(", "),
             }}
           >
@@ -88,10 +106,10 @@ function EmbossedInput({
               placeholder="Enter your username"
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              className="w-full px-4 py-3 bg-transparent text-sm text-zinc-800 placeholder:text-zinc-350 focus:outline-none relative z-10"
+              className={`w-full px-4 py-3 bg-transparent text-sm focus:outline-none relative z-10 ${isDark ? "placeholder:text-zinc-600" : "placeholder:text-zinc-350"}`}
               style={{
                 fontFamily: "Inter, system-ui, sans-serif",
-                color: "#3f3f46",
+                color: isDark ? "#e4e4ec" : "#3f3f46",
                 caretColor: "#6366f1",
               }}
             />
@@ -103,7 +121,9 @@ function EmbossedInput({
       <p
         className="mt-2.5 text-[10px] font-medium text-zinc-400"
         style={{
-          textShadow: "0 1px 0 rgba(255,255,255,0.6)",
+          textShadow: isDark
+            ? "0 1px 0 rgba(0,0,0,0.4)"
+            : "0 1px 0 rgba(255,255,255,0.6)",
         }}
       >
         Letters and numbers only
@@ -120,6 +140,7 @@ function SearchInput({
 }: {
   customStyle?: React.CSSProperties;
 }) {
+  const { isDark } = useSkeuTheme();
   const [focused, setFocused] = useState(false);
 
   return (
@@ -135,8 +156,12 @@ function SearchInput({
         className="rounded-2xl p-[2.5px]"
         style={{
           background: focused
-            ? "linear-gradient(180deg, #b0b0e0 0%, #8888b8 20%, #7070a0 40%, #7878a8 60%, #9898c0 80%, #b8b8d8 100%)"
-            : "linear-gradient(180deg, #c8c8d2 0%, #a0a0aa 15%, #8e8e98 30%, #828290 50%, #9494a0 70%, #b0b0ba 85%, #c4c4ce 100%)",
+            ? isDark
+              ? "linear-gradient(180deg, #4e4e78 0%, #3a3a60 20%, #32325a 40%, #363660 60%, #424268 80%, #505078 100%)"
+              : "linear-gradient(180deg, #b0b0e0 0%, #8888b8 20%, #7070a0 40%, #7878a8 60%, #9898c0 80%, #b8b8d8 100%)"
+            : isDark
+              ? "linear-gradient(180deg, #4e4e56 0%, #404048 15%, #363640 30%, #32323c 50%, #3a3a44 70%, #464650 85%, #4e4e58 100%)"
+              : "linear-gradient(180deg, #c8c8d2 0%, #a0a0aa 15%, #8e8e98 30%, #828290 50%, #9494a0 70%, #b0b0ba 85%, #c4c4ce 100%)",
           boxShadow: [
             focused
               ? "0 0 0 2px rgba(99,102,241,0.12)"
@@ -144,7 +169,9 @@ function SearchInput({
             "0 5px 18px rgba(0,0,0,0.13)",
             "0 2px 8px rgba(0,0,0,0.08)",
             "0 1px 3px rgba(0,0,0,0.06)",
-            "inset 0 1px 0 rgba(255,255,255,0.3)",
+            isDark
+              ? "inset 0 1px 0 rgba(255,255,255,0.06)"
+              : "inset 0 1px 0 rgba(255,255,255,0.3)",
           ].join(", "),
           transition:
             "background 0.2s ease, box-shadow 0.2s ease",
@@ -154,21 +181,25 @@ function SearchInput({
         <div
           className="rounded-[14px] p-[1.5px]"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.25) 25%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.03) 100%)",
+            background: isDark
+              ? "linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.02) 50%, rgba(0,0,0,0.06) 100%)"
+              : "linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.25) 25%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.03) 100%)",
           }}
         >
-          {/* Input container - recessed white field */}
+          {/* Input container - recessed field */}
           <div
             className="flex items-center rounded-[13px] px-4 py-3 gap-3"
             style={{
-              background:
-                "linear-gradient(180deg, #f5f5fa 0%, #fafafe 12%, #ffffff 30%, #ffffff 100%)",
+              background: isDark
+                ? "linear-gradient(180deg, #2a2a32 0%, #262630 12%, #22222c 30%, #22222c 100%)"
+                : "linear-gradient(180deg, #f5f5fa 0%, #fafafe 12%, #ffffff 30%, #ffffff 100%)",
               boxShadow: [
                 "inset 0 2px 8px rgba(0,0,0,0.08)",
                 "inset 0 1px 3px rgba(0,0,0,0.05)",
                 "inset 0 0.5px 1px rgba(0,0,0,0.04)",
-                "inset 0 -1px 0 rgba(255,255,255,0.5)",
+                isDark
+                  ? "inset 0 -1px 0 rgba(255,255,255,0.04)"
+                  : "inset 0 -1px 0 rgba(255,255,255,0.5)",
               ].join(", "),
             }}
           >
@@ -176,14 +207,16 @@ function SearchInput({
             <div
               className="flex-shrink-0"
               style={{
-                filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6))",
+                filter: isDark
+                  ? "drop-shadow(0 1px 0 rgba(0,0,0,0.4))"
+                  : "drop-shadow(0 1px 0 rgba(255,255,255,0.6))",
               }}
             >
               <Search
                 className="w-[18px] h-[18px]"
                 strokeWidth={2.5}
                 style={{
-                  color: focused ? "#6366f1" : "#a1a1aa",
+                  color: focused ? "#6366f1" : isDark ? "#71717a" : "#a1a1aa",
                   transition: "color 0.2s ease",
                 }}
               />
@@ -195,10 +228,10 @@ function SearchInput({
               placeholder="Search..."
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              className="flex-1 bg-transparent text-sm text-zinc-800 placeholder:text-zinc-350 focus:outline-none"
+              className={`flex-1 bg-transparent text-sm focus:outline-none ${isDark ? "placeholder:text-zinc-600" : "placeholder:text-zinc-350"}`}
               style={{
                 fontFamily: "Inter, system-ui, sans-serif",
-                color: "#3f3f46",
+                color: isDark ? "#e4e4ec" : "#3f3f46",
                 caretColor: "#6366f1",
               }}
             />
@@ -207,51 +240,83 @@ function SearchInput({
             <div className="flex items-center gap-1 flex-shrink-0">
               {/* Cmd key cap */}
               <motion.div
-                whileTap={{ y: 1, boxShadow: "0 0.5px 0 #b0b0b6, 0 1px 2px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85)" }}
+                whileTap={{
+                  y: 1,
+                  boxShadow: isDark
+                    ? "0 0.5px 0 #1a1a22, 0 1px 2px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06)"
+                    : "0 0.5px 0 #b0b0b6, 0 1px 2px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85)",
+                }}
                 className="flex items-center justify-center w-[26px] h-[26px] rounded-md cursor-default"
                 style={{
-                  background:
-                    "linear-gradient(180deg, #fafafa 0%, #f0f0f4 25%, #e8e8ec 50%, #e2e2e6 75%, #dddde2 100%)",
-                  boxShadow: [
-                    "0 2px 0 #b4b4ba",
-                    "0 3px 1px #a8a8ae",
-                    "0 4px 6px rgba(0,0,0,0.1)",
-                    "inset 0 1px 0 rgba(255,255,255,0.95)",
-                    "inset 0 -0.5px 0 rgba(0,0,0,0.06)",
-                  ].join(", "),
-                  border: "1px solid #c4c4ca",
+                  background: isDark
+                    ? "linear-gradient(180deg, #3a3a42 0%, #343440 25%, #30303a 50%, #2c2c34 75%, #2a2a32 100%)"
+                    : "linear-gradient(180deg, #fafafa 0%, #f0f0f4 25%, #e8e8ec 50%, #e2e2e6 75%, #dddde2 100%)",
+                  boxShadow: isDark
+                    ? [
+                        "0 2px 0 #1e1e26",
+                        "0 3px 1px #1a1a22",
+                        "0 4px 6px rgba(0,0,0,0.2)",
+                        "inset 0 1px 0 rgba(255,255,255,0.08)",
+                        "inset 0 -0.5px 0 rgba(0,0,0,0.15)",
+                      ].join(", ")
+                    : [
+                        "0 2px 0 #b4b4ba",
+                        "0 3px 1px #a8a8ae",
+                        "0 4px 6px rgba(0,0,0,0.1)",
+                        "inset 0 1px 0 rgba(255,255,255,0.95)",
+                        "inset 0 -0.5px 0 rgba(0,0,0,0.06)",
+                      ].join(", "),
+                  border: isDark ? "1px solid #3e3e48" : "1px solid #c4c4ca",
                 }}
               >
                 <Command
-                  className="w-3.5 h-3.5 text-zinc-500"
+                  className={`w-3.5 h-3.5 ${isDark ? "text-zinc-400" : "text-zinc-500"}`}
                   strokeWidth={2.5}
                   style={{
-                    filter: "drop-shadow(0 0.5px 0 rgba(255,255,255,0.6))",
+                    filter: isDark
+                      ? "drop-shadow(0 0.5px 0 rgba(0,0,0,0.4))"
+                      : "drop-shadow(0 0.5px 0 rgba(255,255,255,0.6))",
                   }}
                 />
               </motion.div>
 
               {/* K key cap */}
               <motion.div
-                whileTap={{ y: 1, boxShadow: "0 0.5px 0 #b0b0b6, 0 1px 2px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85)" }}
+                whileTap={{
+                  y: 1,
+                  boxShadow: isDark
+                    ? "0 0.5px 0 #1a1a22, 0 1px 2px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06)"
+                    : "0 0.5px 0 #b0b0b6, 0 1px 2px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85)",
+                }}
                 className="flex items-center justify-center w-[26px] h-[26px] rounded-md cursor-default"
                 style={{
-                  background:
-                    "linear-gradient(180deg, #fafafa 0%, #f0f0f4 25%, #e8e8ec 50%, #e2e2e6 75%, #dddde2 100%)",
-                  boxShadow: [
-                    "0 2px 0 #b4b4ba",
-                    "0 3px 1px #a8a8ae",
-                    "0 4px 6px rgba(0,0,0,0.1)",
-                    "inset 0 1px 0 rgba(255,255,255,0.95)",
-                    "inset 0 -0.5px 0 rgba(0,0,0,0.06)",
-                  ].join(", "),
-                  border: "1px solid #c4c4ca",
+                  background: isDark
+                    ? "linear-gradient(180deg, #3a3a42 0%, #343440 25%, #30303a 50%, #2c2c34 75%, #2a2a32 100%)"
+                    : "linear-gradient(180deg, #fafafa 0%, #f0f0f4 25%, #e8e8ec 50%, #e2e2e6 75%, #dddde2 100%)",
+                  boxShadow: isDark
+                    ? [
+                        "0 2px 0 #1e1e26",
+                        "0 3px 1px #1a1a22",
+                        "0 4px 6px rgba(0,0,0,0.2)",
+                        "inset 0 1px 0 rgba(255,255,255,0.08)",
+                        "inset 0 -0.5px 0 rgba(0,0,0,0.15)",
+                      ].join(", ")
+                    : [
+                        "0 2px 0 #b4b4ba",
+                        "0 3px 1px #a8a8ae",
+                        "0 4px 6px rgba(0,0,0,0.1)",
+                        "inset 0 1px 0 rgba(255,255,255,0.95)",
+                        "inset 0 -0.5px 0 rgba(0,0,0,0.06)",
+                      ].join(", "),
+                  border: isDark ? "1px solid #3e3e48" : "1px solid #c4c4ca",
                 }}
               >
                 <span
-                  className="text-[11px] font-bold text-zinc-500"
+                  className={`text-[11px] font-bold ${isDark ? "text-zinc-400" : "text-zinc-500"}`}
                   style={{
-                    textShadow: "0 0.5px 0 rgba(255,255,255,0.7)",
+                    textShadow: isDark
+                      ? "0 0.5px 0 rgba(0,0,0,0.4)"
+                      : "0 0.5px 0 rgba(255,255,255,0.7)",
                   }}
                 >
                   K

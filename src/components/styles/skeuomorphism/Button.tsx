@@ -4,11 +4,52 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Home, Menu } from "lucide-react";
 import { StyleComponentProps } from "@/types";
+import { useTheme } from "next-themes";
+
+function useSkeuTheme() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== 'light';
+  return { isDark };
+}
 
 // ---- Push variant ----
 // Physically raised white buttons with realistic depth - home, menu, and figma-like icons
 // Multi-layer shadows create the illusion of buttons extruding from a surface
 function PushButton({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const { isDark } = useSkeuTheme();
+
+  const buttonBg = isDark
+    ? "linear-gradient(145deg, #2a2a32 0%, #262630 25%, #22222c 50%, #1e1e28 75%, #1e1e24 100%)"
+    : "linear-gradient(145deg, #ffffff 0%, #f8f8fa 25%, #f0f0f3 50%, #eaeaee 75%, #e4e4e9 100%)";
+
+  const buttonShadow = isDark
+    ? [
+        "0 8px 20px rgba(0,0,0,0.3)",
+        "0 3px 8px rgba(0,0,0,0.2)",
+        "0 1px 3px rgba(0,0,0,0.15)",
+        "inset 0 1px 0 rgba(255,255,255,0.08)",
+        "inset 0 -1px 2px rgba(0,0,0,0.15)",
+      ].join(", ")
+    : [
+        "0 8px 20px rgba(0,0,0,0.13)",
+        "0 3px 8px rgba(0,0,0,0.09)",
+        "0 1px 3px rgba(0,0,0,0.06)",
+        "inset 0 1px 0 rgba(255,255,255,0.95)",
+        "inset 0 -1px 2px rgba(0,0,0,0.04)",
+      ].join(", ");
+
+  const buttonBorder = isDark
+    ? "1px solid rgba(255,255,255,0.05)"
+    : "1px solid rgba(0,0,0,0.04)";
+
+  const innerHighlight = isDark
+    ? "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 40%)"
+    : "linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 40%)";
+
+  const tapShadow = isDark
+    ? "0 1px 2px rgba(0,0,0,0.2), 0 0.5px 1px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -2px 4px rgba(0,0,0,0.1)"
+    : "0 1px 2px rgba(0,0,0,0.08), 0 0.5px 1px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -2px 4px rgba(0,0,0,0.03)";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -21,30 +62,21 @@ function PushButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       <motion.button
         whileTap={{
           y: 3,
-          boxShadow:
-            "0 1px 2px rgba(0,0,0,0.08), 0 0.5px 1px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -2px 4px rgba(0,0,0,0.03)",
+          boxShadow: tapShadow,
         }}
         transition={{ type: "spring", stiffness: 600, damping: 35 }}
         className="relative w-[72px] h-[72px] rounded-[18px] cursor-pointer select-none focus:outline-none"
         style={{
-          background:
-            "linear-gradient(145deg, #ffffff 0%, #f8f8fa 25%, #f0f0f3 50%, #eaeaee 75%, #e4e4e9 100%)",
-          boxShadow: [
-            "0 8px 20px rgba(0,0,0,0.13)",
-            "0 3px 8px rgba(0,0,0,0.09)",
-            "0 1px 3px rgba(0,0,0,0.06)",
-            "inset 0 1px 0 rgba(255,255,255,0.95)",
-            "inset 0 -1px 2px rgba(0,0,0,0.04)",
-          ].join(", "),
-          border: "1px solid rgba(0,0,0,0.04)",
+          background: buttonBg,
+          boxShadow: buttonShadow,
+          border: buttonBorder,
         }}
       >
         {/* Inner subtle highlight for top-light illusion */}
         <div
           className="absolute inset-0 rounded-[17px] pointer-events-none"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 40%)",
+            background: innerHighlight,
           }}
         />
         <div className="flex items-center justify-center w-full h-full relative z-10">
@@ -62,29 +94,20 @@ function PushButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       <motion.button
         whileTap={{
           y: 3,
-          boxShadow:
-            "0 1px 2px rgba(0,0,0,0.08), 0 0.5px 1px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -2px 4px rgba(0,0,0,0.03)",
+          boxShadow: tapShadow,
         }}
         transition={{ type: "spring", stiffness: 600, damping: 35 }}
         className="relative w-[72px] h-[72px] rounded-[18px] cursor-pointer select-none focus:outline-none"
         style={{
-          background:
-            "linear-gradient(145deg, #ffffff 0%, #f8f8fa 25%, #f0f0f3 50%, #eaeaee 75%, #e4e4e9 100%)",
-          boxShadow: [
-            "0 8px 20px rgba(0,0,0,0.13)",
-            "0 3px 8px rgba(0,0,0,0.09)",
-            "0 1px 3px rgba(0,0,0,0.06)",
-            "inset 0 1px 0 rgba(255,255,255,0.95)",
-            "inset 0 -1px 2px rgba(0,0,0,0.04)",
-          ].join(", "),
-          border: "1px solid rgba(0,0,0,0.04)",
+          background: buttonBg,
+          boxShadow: buttonShadow,
+          border: buttonBorder,
         }}
       >
         <div
           className="absolute inset-0 rounded-[17px] pointer-events-none"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 40%)",
+            background: innerHighlight,
           }}
         />
         <div className="flex items-center justify-center w-full h-full relative z-10">
@@ -102,30 +125,39 @@ function PushButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       <motion.button
         whileTap={{
           y: 3,
-          boxShadow:
-            "0 1px 2px rgba(0,0,0,0.08), 0 0.5px 1px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -2px 4px rgba(0,0,0,0.03)",
+          boxShadow: tapShadow,
         }}
         transition={{ type: "spring", stiffness: 600, damping: 35 }}
         className="relative w-[72px] h-[72px] rounded-full cursor-pointer select-none focus:outline-none"
         style={{
-          background:
-            "radial-gradient(circle at 45% 38%, #ffffff 0%, #f8f8fa 20%, #f0f0f3 45%, #eaeaee 65%, #e2e2e8 85%, #dcdce2 100%)",
-          boxShadow: [
-            "0 8px 20px rgba(0,0,0,0.13)",
-            "0 3px 8px rgba(0,0,0,0.09)",
-            "0 1px 3px rgba(0,0,0,0.06)",
-            "inset 0 2px 0 rgba(255,255,255,0.8)",
-            "inset 0 -2px 4px rgba(0,0,0,0.05)",
-          ].join(", "),
-          border: "1px solid rgba(0,0,0,0.04)",
+          background: isDark
+            ? "radial-gradient(circle at 45% 38%, #2e2e36 0%, #2a2a32 20%, #24242c 45%, #1e1e28 65%, #1c1c24 85%, #1a1a22 100%)"
+            : "radial-gradient(circle at 45% 38%, #ffffff 0%, #f8f8fa 20%, #f0f0f3 45%, #eaeaee 65%, #e2e2e8 85%, #dcdce2 100%)",
+          boxShadow: isDark
+            ? [
+                "0 8px 20px rgba(0,0,0,0.3)",
+                "0 3px 8px rgba(0,0,0,0.2)",
+                "0 1px 3px rgba(0,0,0,0.15)",
+                "inset 0 2px 0 rgba(255,255,255,0.06)",
+                "inset 0 -2px 4px rgba(0,0,0,0.15)",
+              ].join(", ")
+            : [
+                "0 8px 20px rgba(0,0,0,0.13)",
+                "0 3px 8px rgba(0,0,0,0.09)",
+                "0 1px 3px rgba(0,0,0,0.06)",
+                "inset 0 2px 0 rgba(255,255,255,0.8)",
+                "inset 0 -2px 4px rgba(0,0,0,0.05)",
+              ].join(", "),
+          border: buttonBorder,
         }}
       >
         {/* Spherical highlight for round button */}
         <div
           className="absolute inset-0 rounded-full pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse at 42% 30%, rgba(255,255,255,0.6) 0%, transparent 55%)",
+            background: isDark
+              ? "radial-gradient(ellipse at 42% 30%, rgba(255,255,255,0.08) 0%, transparent 55%)"
+              : "radial-gradient(ellipse at 42% 30%, rgba(255,255,255,0.6) 0%, transparent 55%)",
           }}
         />
         <div className="flex items-center justify-center w-full h-full relative z-10">
@@ -369,6 +401,7 @@ function SegmentedButton({
 }: {
   customStyle?: React.CSSProperties;
 }) {
+  const { isDark } = useSkeuTheme();
   const [activeSegment, setActiveSegment] = useState(0);
   const segments = ["World Clock", "Alarm", "Stopwatch"];
 
@@ -380,15 +413,20 @@ function SegmentedButton({
       className="relative inline-flex rounded-xl overflow-hidden"
       style={{
         fontFamily: "Inter, system-ui, sans-serif",
-        background:
-          "linear-gradient(180deg, #d8d7e0 0%, #cccbd6 25%, #c4c3ce 50%, #c8c7d2 75%, #d0cfd8 100%)",
+        background: isDark
+          ? "linear-gradient(180deg, #2a2a32 0%, #262630 25%, #24242c 50%, #262630 75%, #222228 100%)"
+          : "linear-gradient(180deg, #d8d7e0 0%, #cccbd6 25%, #c4c3ce 50%, #c8c7d2 75%, #d0cfd8 100%)",
         boxShadow: [
           "inset 0 2px 5px rgba(0,0,0,0.14)",
           "inset 0 1px 2px rgba(0,0,0,0.08)",
-          "0 1px 0 rgba(255,255,255,0.65)",
+          isDark
+            ? "0 1px 0 rgba(255,255,255,0.04)"
+            : "0 1px 0 rgba(255,255,255,0.65)",
           "0 2px 4px rgba(0,0,0,0.06)",
         ].join(", "),
-        border: "1px solid rgba(0,0,0,0.08)",
+        border: isDark
+          ? "1px solid rgba(255,255,255,0.05)"
+          : "1px solid rgba(0,0,0,0.08)",
         padding: 3,
         gap: 2,
         ...customStyle,
@@ -406,16 +444,27 @@ function SegmentedButton({
           left: 0,
           width: 106,
           height: "calc(100% - 6px)",
-          background:
-            "linear-gradient(180deg, #ffffff 0%, #f8f8fa 30%, #f0f0f4 60%, #ebebf0 100%)",
-          boxShadow: [
-            "0 3px 8px rgba(0,0,0,0.12)",
-            "0 1px 3px rgba(0,0,0,0.08)",
-            "0 0.5px 1px rgba(0,0,0,0.06)",
-            "inset 0 1px 0 rgba(255,255,255,0.95)",
-            "inset 0 -0.5px 0 rgba(0,0,0,0.03)",
-          ].join(", "),
-          border: "0.5px solid rgba(0,0,0,0.06)",
+          background: isDark
+            ? "linear-gradient(180deg, #3a3a42 0%, #363640 30%, #34343c 60%, #32323a 100%)"
+            : "linear-gradient(180deg, #ffffff 0%, #f8f8fa 30%, #f0f0f4 60%, #ebebf0 100%)",
+          boxShadow: isDark
+            ? [
+                "0 3px 8px rgba(0,0,0,0.25)",
+                "0 1px 3px rgba(0,0,0,0.15)",
+                "0 0.5px 1px rgba(0,0,0,0.1)",
+                "inset 0 1px 0 rgba(255,255,255,0.08)",
+                "inset 0 -0.5px 0 rgba(0,0,0,0.1)",
+              ].join(", ")
+            : [
+                "0 3px 8px rgba(0,0,0,0.12)",
+                "0 1px 3px rgba(0,0,0,0.08)",
+                "0 0.5px 1px rgba(0,0,0,0.06)",
+                "inset 0 1px 0 rgba(255,255,255,0.95)",
+                "inset 0 -0.5px 0 rgba(0,0,0,0.03)",
+              ].join(", "),
+          border: isDark
+            ? "0.5px solid rgba(255,255,255,0.06)"
+            : "0.5px solid rgba(0,0,0,0.06)",
         }}
       />
 
@@ -428,10 +477,16 @@ function SegmentedButton({
             className="relative z-10 px-5 py-2 text-xs font-semibold cursor-pointer focus:outline-none select-none rounded-lg transition-colors duration-200"
             style={{
               width: 106,
-              color: isActive ? "#3f3f46" : "#71717a",
+              color: isActive
+                ? isDark ? "#e4e4ec" : "#3f3f46"
+                : "#71717a",
               textShadow: isActive
-                ? "0 0.5px 0 rgba(255,255,255,0.6)"
-                : "0 1px 0 rgba(255,255,255,0.4)",
+                ? isDark
+                  ? "0 0.5px 0 rgba(0,0,0,0.4)"
+                  : "0 0.5px 0 rgba(255,255,255,0.6)"
+                : isDark
+                  ? "0 1px 0 rgba(0,0,0,0.3)"
+                  : "0 1px 0 rgba(255,255,255,0.4)",
               background: "transparent",
             }}
           >

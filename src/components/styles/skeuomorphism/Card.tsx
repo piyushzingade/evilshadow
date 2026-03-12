@@ -4,11 +4,19 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Cloud, Sun } from "lucide-react";
 import { StyleComponentProps } from "@/types";
+import { useTheme } from "next-themes";
+
+function useSkeuTheme() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== 'light';
+  return { isDark };
+}
 
 // ---- Clock variant ----
 // Realistic analog clock with multi-layer metallic bezel, white radial-gradient face,
 // thin tick marks, hour numbers at 12/3/6/9, three hands, blue second hand, metallic center cap
 function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const { isDark } = useSkeuTheme();
   const [time, setTime] = useState({ h: 10, m: 10, s: 30 });
 
   useEffect(() => {
@@ -43,13 +51,16 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       <div
         className="relative rounded-full p-[7px]"
         style={{
-          background:
-            "linear-gradient(145deg, #eaeaef 0%, #d0d0d8 20%, #b8b8c4 45%, #c8c8d2 70%, #e0e0e8 90%, #eeeef2 100%)",
+          background: isDark
+            ? "linear-gradient(145deg, #4a4a52 0%, #38383e 20%, #2a2a30 45%, #32323a 70%, #424248 90%, #4a4a52 100%)"
+            : "linear-gradient(145deg, #eaeaef 0%, #d0d0d8 20%, #b8b8c4 45%, #c8c8d2 70%, #e0e0e8 90%, #eeeef2 100%)",
           boxShadow: [
             "0 12px 32px rgba(0,0,0,0.28)",
             "0 4px 12px rgba(0,0,0,0.18)",
             "0 1px 3px rgba(0,0,0,0.12)",
-            "inset 0 1px 0 rgba(255,255,255,0.65)",
+            isDark
+              ? "inset 0 1px 0 rgba(255,255,255,0.15)"
+              : "inset 0 1px 0 rgba(255,255,255,0.65)",
             "inset 0 -1px 0 rgba(0,0,0,0.08)",
           ].join(", "),
         }}
@@ -58,30 +69,36 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
         <div
           className="rounded-full p-[3px]"
           style={{
-            background:
-              "linear-gradient(to bottom, #d8d8de 0%, #a8a8b2 25%, #909098 50%, #a8a8b2 75%, #c4c4cc 100%)",
-            boxShadow:
-              "inset 0 2px 4px rgba(255,255,255,0.5), inset 0 -1px 3px rgba(0,0,0,0.2), inset 1px 0 2px rgba(255,255,255,0.15)",
+            background: isDark
+              ? "linear-gradient(to bottom, #3e3e44 0%, #2e2e36 25%, #262630 50%, #2e2e36 75%, #3a3a42 100%)"
+              : "linear-gradient(to bottom, #d8d8de 0%, #a8a8b2 25%, #909098 50%, #a8a8b2 75%, #c4c4cc 100%)",
+            boxShadow: isDark
+              ? "inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -1px 3px rgba(0,0,0,0.4), inset 1px 0 2px rgba(255,255,255,0.05)"
+              : "inset 0 2px 4px rgba(255,255,255,0.5), inset 0 -1px 3px rgba(0,0,0,0.2), inset 1px 0 2px rgba(255,255,255,0.15)",
           }}
         >
           {/* Third ring - thin highlight separator */}
           <div
             className="rounded-full p-[1.5px]"
             style={{
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 50%, rgba(0,0,0,0.06) 100%)",
+              background: isDark
+                ? "linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, rgba(0,0,0,0.1) 100%)"
+                : "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 50%, rgba(0,0,0,0.06) 100%)",
             }}
           >
             {/* Clock face - white with radial gradient for depth */}
             <div
               className="relative w-48 h-48 rounded-full overflow-hidden"
               style={{
-                background:
-                  "radial-gradient(circle at 50% 38%, #ffffff 0%, #fcfcfe 30%, #f5f5fa 55%, #eeeef4 75%, #e6e6ee 100%)",
+                background: isDark
+                  ? "radial-gradient(circle at 50% 38%, #2a2a32 0%, #262630 30%, #22222c 55%, #1e1e28 75%, #1a1a24 100%)"
+                  : "radial-gradient(circle at 50% 38%, #ffffff 0%, #fcfcfe 30%, #f5f5fa 55%, #eeeef4 75%, #e6e6ee 100%)",
                 boxShadow: [
                   "inset 0 3px 10px rgba(0,0,0,0.1)",
                   "inset 0 1px 4px rgba(0,0,0,0.06)",
-                  "inset 0 -2px 6px rgba(255,255,255,0.4)",
+                  isDark
+                    ? "inset 0 -2px 6px rgba(255,255,255,0.05)"
+                    : "inset 0 -2px 6px rgba(255,255,255,0.4)",
                   "inset 0 0 20px rgba(0,0,0,0.03)",
                 ].join(", "),
               }}
@@ -90,8 +107,9 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
               <div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background:
-                    "radial-gradient(circle at 45% 35%, rgba(255,255,255,0.4) 0%, transparent 50%)",
+                  background: isDark
+                    ? "radial-gradient(circle at 45% 35%, rgba(255,255,255,0.06) 0%, transparent 50%)"
+                    : "radial-gradient(circle at 45% 35%, rgba(255,255,255,0.4) 0%, transparent 50%)",
                 }}
               />
 
@@ -110,7 +128,7 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                         top: "50%",
                         width: 0.8,
                         height: 4,
-                        background: "#c4c4cc",
+                        background: isDark ? "#4a4a52" : "#c4c4cc",
                         borderRadius: 0.5,
                         transformOrigin: "50% 0",
                         transform: `translate(-50%, 0) rotate(${angle}deg) translate(0, -89px)`,
@@ -128,13 +146,19 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                       width: isMain ? 2.5 : 1.8,
                       height: isMain ? 14 : 9,
                       background: isMain
-                        ? "linear-gradient(to bottom, #3f3f46, #27272a)"
-                        : "#71717a",
+                        ? isDark
+                          ? "linear-gradient(to bottom, #a0a0a8, #c8c8d0)"
+                          : "linear-gradient(to bottom, #3f3f46, #27272a)"
+                        : isDark
+                          ? "#8a8a92"
+                          : "#71717a",
                       borderRadius: 1,
                       transformOrigin: "50% 0",
                       transform: `translate(-50%, 0) rotate(${angle}deg) translate(0, -88px)`,
                       boxShadow: isMain
-                        ? "0 1px 1px rgba(0,0,0,0.15)"
+                        ? isDark
+                          ? "0 1px 1px rgba(0,0,0,0.3)"
+                          : "0 1px 1px rgba(0,0,0,0.15)"
                         : "none",
                     }}
                   />
@@ -156,8 +180,10 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                     top: `${item.y}%`,
                     transform: "translate(-50%, -50%)",
                     fontFamily: "Inter, system-ui, sans-serif",
-                    color: "#52525b",
-                    textShadow: "0 0.5px 0 rgba(255,255,255,0.7)",
+                    color: isDark ? "#d4d4dc" : "#52525b",
+                    textShadow: isDark
+                      ? "0 0.5px 0 rgba(0,0,0,0.5)"
+                      : "0 0.5px 0 rgba(255,255,255,0.7)",
                   }}
                 >
                   {item.num}
@@ -172,8 +198,9 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                   top: "50%",
                   width: 4,
                   height: 36,
-                  background:
-                    "linear-gradient(90deg, #18181b 0%, #3f3f46 40%, #27272a 60%, #18181b 100%)",
+                  background: isDark
+                    ? "linear-gradient(90deg, #c8c8d0 0%, #e4e4ec 40%, #d0d0d8 60%, #c8c8d0 100%)"
+                    : "linear-gradient(90deg, #18181b 0%, #3f3f46 40%, #27272a 60%, #18181b 100%)",
                   borderRadius: "2px 2px 1px 1px",
                   transformOrigin: "50% 100%",
                   transform: `translate(-50%, -100%) rotate(${hourDeg}deg)`,
@@ -190,8 +217,9 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                   top: "50%",
                   width: 2.8,
                   height: 54,
-                  background:
-                    "linear-gradient(90deg, #27272a 0%, #52525b 40%, #3f3f46 60%, #27272a 100%)",
+                  background: isDark
+                    ? "linear-gradient(90deg, #b0b0b8 0%, #d4d4dc 40%, #c0c0c8 60%, #b0b0b8 100%)"
+                    : "linear-gradient(90deg, #27272a 0%, #52525b 40%, #3f3f46 60%, #27272a 100%)",
                   borderRadius: "1.5px 1.5px 1px 1px",
                   transformOrigin: "50% 100%",
                   transform: `translate(-50%, -100%) rotate(${minuteDeg}deg)`,
@@ -266,17 +294,21 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* Clock label - city and time */}
       <div className="text-center mt-1">
         <div
-          className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400"
+          className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isDark ? "text-zinc-500" : "text-zinc-400"}`}
           style={{
-            textShadow: "0 1px 0 rgba(255,255,255,0.8)",
+            textShadow: isDark
+              ? "0 1px 0 rgba(0,0,0,0.5)"
+              : "0 1px 0 rgba(255,255,255,0.8)",
           }}
         >
           New York
         </div>
         <div
-          className="text-sm font-medium text-zinc-600 mt-0.5 tabular-nums"
+          className={`text-sm font-medium mt-0.5 tabular-nums ${isDark ? "text-zinc-400" : "text-zinc-600"}`}
           style={{
-            textShadow: "0 1px 0 rgba(255,255,255,0.6)",
+            textShadow: isDark
+              ? "0 1px 0 rgba(0,0,0,0.4)"
+              : "0 1px 0 rgba(255,255,255,0.6)",
             letterSpacing: "-0.01em",
           }}
         >
@@ -290,6 +322,7 @@ function ClockCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 // ---- Alarm variant ----
 // iOS-style alarm list with gradient bg, white rounded alarm cards, toggle switches
 function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const { isDark } = useSkeuTheme();
   const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   const initialAlarms = [
@@ -332,13 +365,16 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       className="w-[290px] rounded-3xl p-4"
       style={{
         fontFamily: "Inter, system-ui, sans-serif",
-        background:
-          "linear-gradient(180deg, #f0eff5 0%, #eae9f1 25%, #e5e4ed 50%, #e2e1ea 75%, #dddce6 100%)",
+        background: isDark
+          ? "linear-gradient(180deg, #1e1e24 0%, #1c1c22 25%, #1a1a20 50%, #18181e 75%, #16161c 100%)"
+          : "linear-gradient(180deg, #f0eff5 0%, #eae9f1 25%, #e5e4ed 50%, #e2e1ea 75%, #dddce6 100%)",
         boxShadow: [
           "0 10px 36px rgba(0,0,0,0.14)",
           "0 3px 10px rgba(0,0,0,0.08)",
           "0 1px 3px rgba(0,0,0,0.06)",
-          "inset 0 1px 0 rgba(255,255,255,0.75)",
+          isDark
+            ? "inset 0 1px 0 rgba(255,255,255,0.06)"
+            : "inset 0 1px 0 rgba(255,255,255,0.75)",
           "inset 0 -1px 0 rgba(0,0,0,0.04)",
         ].join(", "),
         ...customStyle,
@@ -347,14 +383,14 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-3 px-1">
         <span
-          className="text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-500"
-          style={{ textShadow: "0 1px 0 rgba(255,255,255,0.7)" }}
+          className={`text-[11px] font-bold uppercase tracking-[0.12em] ${isDark ? "text-zinc-400" : "text-zinc-500"}`}
+          style={{ textShadow: isDark ? "0 1px 0 rgba(0,0,0,0.5)" : "0 1px 0 rgba(255,255,255,0.7)" }}
         >
           Alarms
         </span>
         <span
           className="text-[11px] font-semibold text-indigo-500 cursor-pointer"
-          style={{ textShadow: "0 1px 0 rgba(255,255,255,0.5)" }}
+          style={{ textShadow: isDark ? "0 1px 0 rgba(0,0,0,0.4)" : "0 1px 0 rgba(255,255,255,0.5)" }}
         >
           + Add
         </span>
@@ -367,31 +403,44 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             key={i}
             className="rounded-2xl px-4 py-3"
             style={{
-              background:
-                "linear-gradient(180deg, #ffffff 0%, #fdfdfff 30%, #f9f9fc 60%, #f5f5f9 100%)",
-              boxShadow: [
-                "0 3px 10px rgba(0,0,0,0.07)",
-                "0 1px 4px rgba(0,0,0,0.04)",
-                "0 0.5px 1px rgba(0,0,0,0.03)",
-                "inset 0 1px 0 rgba(255,255,255,0.95)",
-                "inset 0 -0.5px 0 rgba(0,0,0,0.02)",
-              ].join(", "),
-              border: "1px solid rgba(0,0,0,0.04)",
+              background: isDark
+                ? "linear-gradient(180deg, #2a2a32 0%, #282830 30%, #262630 60%, #242430 100%)"
+                : "linear-gradient(180deg, #ffffff 0%, #fdfdfff 30%, #f9f9fc 60%, #f5f5f9 100%)",
+              boxShadow: isDark
+                ? [
+                    "0 3px 10px rgba(0,0,0,0.2)",
+                    "0 1px 4px rgba(0,0,0,0.12)",
+                    "0 0.5px 1px rgba(0,0,0,0.08)",
+                    "inset 0 1px 0 rgba(255,255,255,0.06)",
+                    "inset 0 -0.5px 0 rgba(0,0,0,0.1)",
+                  ].join(", ")
+                : [
+                    "0 3px 10px rgba(0,0,0,0.07)",
+                    "0 1px 4px rgba(0,0,0,0.04)",
+                    "0 0.5px 1px rgba(0,0,0,0.03)",
+                    "inset 0 1px 0 rgba(255,255,255,0.95)",
+                    "inset 0 -0.5px 0 rgba(0,0,0,0.02)",
+                  ].join(", "),
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.04)"
+                : "1px solid rgba(0,0,0,0.04)",
             }}
           >
             {/* Time and toggle row */}
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-baseline gap-1.5">
                 <span
-                  className="text-[26px] font-light text-zinc-700"
+                  className={`text-[26px] font-light ${isDark ? "text-zinc-200" : "text-zinc-700"}`}
                   style={{
                     letterSpacing: "-0.03em",
-                    textShadow: "0 0.5px 0 rgba(255,255,255,0.8)",
+                    textShadow: isDark
+                      ? "0 0.5px 0 rgba(0,0,0,0.5)"
+                      : "0 0.5px 0 rgba(255,255,255,0.8)",
                   }}
                 >
                   {alarm.time}
                 </span>
-                <span className="text-[11px] font-medium text-zinc-400">
+                <span className={`text-[11px] font-medium ${isDark ? "text-zinc-500" : "text-zinc-400"}`}>
                   {alarm.period}
                 </span>
               </div>
@@ -403,16 +452,20 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                 style={{
                   background: alarm.on
                     ? "linear-gradient(180deg, #818cf8 0%, #6366f1 30%, #4f46e5 70%, #4338ca 100%)"
-                    : "linear-gradient(180deg, #d4d4d8 0%, #b8b8be 30%, #a1a1aa 70%, #94949c 100%)",
+                    : isDark
+                      ? "linear-gradient(180deg, #4a4a52 0%, #3a3a42 30%, #32323a 70%, #2a2a32 100%)"
+                      : "linear-gradient(180deg, #d4d4d8 0%, #b8b8be 30%, #a1a1aa 70%, #94949c 100%)",
                   boxShadow: [
                     "inset 0 2px 5px rgba(0,0,0,0.18)",
                     "inset 0 0.5px 1px rgba(0,0,0,0.1)",
-                    `0 1px 0 rgba(255,255,255,0.5)`,
+                    isDark
+                      ? "0 1px 0 rgba(255,255,255,0.05)"
+                      : "0 1px 0 rgba(255,255,255,0.5)",
                     alarm.on
                       ? "inset 0 -1px 2px rgba(99,102,241,0.3)"
                       : "inset 0 -1px 2px rgba(0,0,0,0.05)",
                   ].join(", "),
-                  border: `1px solid ${alarm.on ? "#3730a3" : "#88888e"}`,
+                  border: `1px solid ${alarm.on ? "#3730a3" : isDark ? "#52525b" : "#88888e"}`,
                   transition: "background 0.25s ease, border-color 0.25s ease",
                 }}
               >
@@ -459,8 +512,8 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
             {/* Label */}
             <div
-              className="text-[10px] font-medium text-zinc-400 mb-2 uppercase tracking-[0.08em]"
-              style={{ textShadow: "0 0.5px 0 rgba(255,255,255,0.6)" }}
+              className={`text-[10px] font-medium mb-2 uppercase tracking-[0.08em] ${isDark ? "text-zinc-500" : "text-zinc-400"}`}
+              style={{ textShadow: isDark ? "0 0.5px 0 rgba(0,0,0,0.4)" : "0 0.5px 0 rgba(255,255,255,0.6)" }}
             >
               {alarm.label}
             </div>
@@ -476,13 +529,17 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                     style={{
                       color: isActive
                         ? alarm.on
-                          ? "#4f46e5"
-                          : "#6b7280"
-                        : "#b0b0b8",
+                          ? isDark ? "#818cf8" : "#4f46e5"
+                          : isDark ? "#9ca3af" : "#6b7280"
+                        : isDark ? "#52525b" : "#b0b0b8",
                       background: isActive
                         ? alarm.on
-                          ? "linear-gradient(180deg, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0.06) 100%)"
-                          : "rgba(0,0,0,0.04)"
+                          ? isDark
+                            ? "linear-gradient(180deg, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0.1) 100%)"
+                            : "linear-gradient(180deg, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0.06) 100%)"
+                          : isDark
+                            ? "rgba(255,255,255,0.06)"
+                            : "rgba(0,0,0,0.04)"
                         : "transparent",
                       boxShadow: isActive
                         ? "inset 0 0.5px 1px rgba(0,0,0,0.04)"
@@ -505,6 +562,8 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 // ---- Weather variant ----
 // Dark indigo pill badge + light weather detail card
 function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const { isDark } = useSkeuTheme();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -586,32 +645,39 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       <div
         className="w-[268px] rounded-2xl p-5"
         style={{
-          background:
-            "linear-gradient(180deg, #f2f1f7 0%, #eceaf3 30%, #e8e7ef 60%, #e4e3ec 100%)",
+          background: isDark
+            ? "linear-gradient(180deg, #1e1e24 0%, #1c1c22 30%, #1a1a20 60%, #16161c 100%)"
+            : "linear-gradient(180deg, #f2f1f7 0%, #eceaf3 30%, #e8e7ef 60%, #e4e3ec 100%)",
           boxShadow: [
             "0 6px 20px rgba(0,0,0,0.1)",
             "0 2px 8px rgba(0,0,0,0.06)",
             "0 1px 3px rgba(0,0,0,0.04)",
-            "inset 0 1px 0 rgba(255,255,255,0.75)",
+            isDark
+              ? "inset 0 1px 0 rgba(255,255,255,0.06)"
+              : "inset 0 1px 0 rgba(255,255,255,0.75)",
             "inset 0 -0.5px 0 rgba(0,0,0,0.04)",
           ].join(", "),
-          border: "1px solid rgba(0,0,0,0.05)",
+          border: isDark
+            ? "1px solid rgba(255,255,255,0.04)"
+            : "1px solid rgba(0,0,0,0.05)",
         }}
       >
         {/* Header row */}
         <div className="flex items-center justify-between mb-4">
           <div>
             <div
-              className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400"
-              style={{ textShadow: "0 1px 0 rgba(255,255,255,0.7)" }}
+              className={`text-[10px] font-bold uppercase tracking-[0.18em] ${isDark ? "text-zinc-500" : "text-zinc-400"}`}
+              style={{ textShadow: isDark ? "0 1px 0 rgba(0,0,0,0.5)" : "0 1px 0 rgba(255,255,255,0.7)" }}
             >
               Weather
             </div>
             <div
-              className="text-lg font-bold text-zinc-700 mt-0.5"
+              className={`text-lg font-bold mt-0.5 ${isDark ? "text-zinc-200" : "text-zinc-700"}`}
               style={{
                 letterSpacing: "-0.01em",
-                textShadow: "0 0.5px 0 rgba(255,255,255,0.6)",
+                textShadow: isDark
+                  ? "0 0.5px 0 rgba(0,0,0,0.4)"
+                  : "0 0.5px 0 rgba(255,255,255,0.6)",
               }}
             >
               Istanbul
@@ -622,45 +688,61 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
           <div
             className="w-[52px] h-[52px] rounded-xl flex items-center justify-center"
             style={{
-              background:
-                "linear-gradient(135deg, #e8eeff 0%, #dde4ff 30%, #cdd6fe 60%, #c7d2fe 100%)",
-              boxShadow: [
-                "0 3px 8px rgba(99,102,241,0.15)",
-                "0 1px 3px rgba(0,0,0,0.06)",
-                "inset 0 1px 0 rgba(255,255,255,0.8)",
-                "inset 0 -1px 2px rgba(99,102,241,0.08)",
-              ].join(", "),
-              border: "1px solid rgba(99,102,241,0.1)",
+              background: isDark
+                ? "linear-gradient(135deg, #2a2a3a 0%, #242438 30%, #1e1e34 60%, #1c1c32 100%)"
+                : "linear-gradient(135deg, #e8eeff 0%, #dde4ff 30%, #cdd6fe 60%, #c7d2fe 100%)",
+              boxShadow: isDark
+                ? [
+                    "0 3px 8px rgba(0,0,0,0.3)",
+                    "0 1px 3px rgba(0,0,0,0.15)",
+                    "inset 0 1px 0 rgba(255,255,255,0.06)",
+                    "inset 0 -1px 2px rgba(0,0,0,0.15)",
+                  ].join(", ")
+                : [
+                    "0 3px 8px rgba(99,102,241,0.15)",
+                    "0 1px 3px rgba(0,0,0,0.06)",
+                    "inset 0 1px 0 rgba(255,255,255,0.8)",
+                    "inset 0 -1px 2px rgba(99,102,241,0.08)",
+                  ].join(", "),
+              border: isDark
+                ? "1px solid rgba(99,102,241,0.15)"
+                : "1px solid rgba(99,102,241,0.1)",
             }}
           >
-            <Cloud className="w-6 h-6 text-indigo-400" strokeWidth={2} />
+            <Cloud className={`w-6 h-6 ${isDark ? "text-indigo-300" : "text-indigo-400"}`} strokeWidth={2} />
           </div>
         </div>
 
         {/* Temperature and condition */}
         <div className="flex items-end justify-between">
           <div
-            className="text-[40px] font-extralight text-zinc-600 leading-none"
+            className={`text-[40px] font-extralight leading-none ${isDark ? "text-zinc-300" : "text-zinc-600"}`}
             style={{
               letterSpacing: "-0.04em",
-              textShadow: "0 1px 0 rgba(255,255,255,0.6)",
+              textShadow: isDark
+                ? "0 1px 0 rgba(0,0,0,0.4)"
+                : "0 1px 0 rgba(255,255,255,0.6)",
             }}
           >
             22
-            <span className="text-[22px] font-light text-zinc-400 ml-0.5">
+            <span className={`text-[22px] font-light ml-0.5 ${isDark ? "text-zinc-500" : "text-zinc-400"}`}>
               °C
             </span>
           </div>
 
           {/* Condition badge */}
           <div
-            className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-indigo-600"
+            className={`rounded-lg px-3 py-1.5 text-[11px] font-semibold ${isDark ? "text-indigo-300" : "text-indigo-600"}`}
             style={{
-              background:
-                "linear-gradient(180deg, rgba(99,102,241,0.1) 0%, rgba(99,102,241,0.06) 100%)",
-              border: "1px solid rgba(99,102,241,0.12)",
-              boxShadow:
-                "inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.04)",
+              background: isDark
+                ? "linear-gradient(180deg, rgba(99,102,241,0.18) 0%, rgba(99,102,241,0.1) 100%)"
+                : "linear-gradient(180deg, rgba(99,102,241,0.1) 0%, rgba(99,102,241,0.06) 100%)",
+              border: isDark
+                ? "1px solid rgba(99,102,241,0.2)"
+                : "1px solid rgba(99,102,241,0.12)",
+              boxShadow: isDark
+                ? "inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.1)"
+                : "inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.04)",
             }}
           >
             Partly Cloudy
@@ -677,26 +759,37 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
               key={stat.label}
               className="flex-1 rounded-xl px-3 py-2.5"
               style={{
-                background:
-                  "linear-gradient(180deg, #ffffff 0%, #f8f8fc 50%, #f4f4f8 100%)",
-                boxShadow: [
-                  "0 2px 6px rgba(0,0,0,0.05)",
-                  "0 0.5px 2px rgba(0,0,0,0.03)",
-                  "inset 0 1px 0 rgba(255,255,255,0.9)",
-                ].join(", "),
-                border: "1px solid rgba(0,0,0,0.04)",
+                background: isDark
+                  ? "linear-gradient(180deg, #2a2a32 0%, #262630 50%, #242430 100%)"
+                  : "linear-gradient(180deg, #ffffff 0%, #f8f8fc 50%, #f4f4f8 100%)",
+                boxShadow: isDark
+                  ? [
+                      "0 2px 6px rgba(0,0,0,0.15)",
+                      "0 0.5px 2px rgba(0,0,0,0.1)",
+                      "inset 0 1px 0 rgba(255,255,255,0.05)",
+                    ].join(", ")
+                  : [
+                      "0 2px 6px rgba(0,0,0,0.05)",
+                      "0 0.5px 2px rgba(0,0,0,0.03)",
+                      "inset 0 1px 0 rgba(255,255,255,0.9)",
+                    ].join(", "),
+                border: isDark
+                  ? "1px solid rgba(255,255,255,0.04)"
+                  : "1px solid rgba(0,0,0,0.04)",
               }}
             >
               <div
-                className="text-[9px] font-semibold uppercase tracking-[0.1em] text-zinc-400 mb-1"
-                style={{ textShadow: "0 0.5px 0 rgba(255,255,255,0.6)" }}
+                className={`text-[9px] font-semibold uppercase tracking-[0.1em] mb-1 ${isDark ? "text-zinc-500" : "text-zinc-400"}`}
+                style={{ textShadow: isDark ? "0 0.5px 0 rgba(0,0,0,0.4)" : "0 0.5px 0 rgba(255,255,255,0.6)" }}
               >
                 {stat.label}
               </div>
               <div
-                className="text-sm font-bold text-zinc-600"
+                className={`text-sm font-bold ${isDark ? "text-zinc-300" : "text-zinc-600"}`}
                 style={{
-                  textShadow: "0 0.5px 0 rgba(255,255,255,0.5)",
+                  textShadow: isDark
+                    ? "0 0.5px 0 rgba(0,0,0,0.3)"
+                    : "0 0.5px 0 rgba(255,255,255,0.5)",
                 }}
               >
                 {stat.value}
