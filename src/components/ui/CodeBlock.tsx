@@ -22,12 +22,16 @@ export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
       try {
         const shiki = await import("shiki");
         const highlighter = await shiki.createHighlighter({
-          themes: ["github-dark"],
+          themes: ["github-light", "github-dark"],
           langs: [language],
         });
         const html = highlighter.codeToHtml(code, {
           lang: language,
-          theme: "github-dark",
+          themes: {
+            light: "github-light",
+            dark: "github-dark",
+          },
+          defaultColor: false,
         });
         setHighlightedHtml(html);
       } catch {
@@ -45,46 +49,64 @@ export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
 
   return (
     <div className="relative overflow-hidden rounded-xl bg-[var(--color-code-bg)] font-[family-name:var(--font-mono)]">
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
-        <span className="text-xs text-white/40 uppercase">{language}</span>
+      {/* Top accent gradient */}
+      <div
+        className="h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, var(--color-accent), transparent)",
+          opacity: 0.35,
+        }}
+      />
+
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-[var(--color-code-border)] bg-[var(--color-code-header)] px-4 py-2">
+        <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-code-muted)]">
+          {language}
+        </span>
         <button
           onClick={handleCopy}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-white/40 transition-colors hover:bg-white/10 hover:text-white/70"
+          className="flex h-7 items-center gap-1.5 rounded-lg px-2.5 text-[var(--color-code-muted)] transition-all duration-150 hover:bg-[var(--color-code-hover)] hover:text-[var(--color-fg)]"
           aria-label="Copy code"
         >
           <AnimatePresence mode="wait" initial={false}>
             {copied ? (
               <motion.div
                 key="check"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
                 transition={{ duration: 0.15 }}
+                className="flex items-center gap-1.5"
               >
-                <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <Check className="h-3.5 w-3.5 text-emerald-500" />
+                <span className="text-[10px] font-medium text-emerald-500">
+                  Copied!
+                </span>
               </motion.div>
             ) : (
               <motion.div
                 key="copy"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
                 transition={{ duration: 0.15 }}
+                className="flex items-center gap-1.5"
               >
                 <Copy className="h-3.5 w-3.5" />
+                <span className="text-[10px] font-medium">Copy</span>
               </motion.div>
             )}
           </AnimatePresence>
         </button>
       </div>
-      <div className="overflow-x-auto p-4 text-sm leading-relaxed">
+
+      {/* Code content */}
+      <div className="code-scroll overflow-x-auto p-4 text-[13px] leading-[1.7]">
         {highlightedHtml ? (
-          <div
-            dangerouslySetInnerHTML={{ __html: highlightedHtml }}
-            className="[&_pre]:!bg-transparent [&_pre]:!p-0 [&_code]:!bg-transparent"
-          />
+          <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
         ) : (
-          <pre className="text-white/70">
+          <pre className="text-[var(--color-code-muted)]">
             <code>{code}</code>
           </pre>
         )}
