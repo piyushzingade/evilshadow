@@ -13,9 +13,9 @@ function FloatingStyles() {
     {
       name: "Glassmorphism",
       label: "Glass",
-      color: "#6366f1",
-      bg: "rgba(99, 102, 241, 0.08)",
-      borderColor: "rgba(99, 102, 241, 0.2)",
+      color: "#c2783a",
+      bg: "rgba(194, 120, 58, 0.08)",
+      borderColor: "rgba(194, 120, 58, 0.2)",
       blur: true,
     },
     {
@@ -29,9 +29,9 @@ function FloatingStyles() {
     {
       name: "Claymorphism",
       label: "Clay",
-      color: "#a855f7",
-      bg: "rgba(168, 85, 247, 0.06)",
-      borderColor: "rgba(168, 85, 247, 0.15)",
+      color: "#d97706",
+      bg: "rgba(217, 119, 6, 0.06)",
+      borderColor: "rgba(217, 119, 6, 0.15)",
       rounded: true,
     },
     {
@@ -79,7 +79,7 @@ function FloatingStyles() {
               boxShadow: s.offset
                 ? `3px 3px 0px ${s.borderColor}`
                 : s.rounded
-                  ? "4px 8px 20px rgba(168, 85, 247, 0.08), inset 0 1px 0 rgba(255,255,255,0.05)"
+                  ? "4px 8px 20px rgba(217, 119, 6, 0.08), inset 0 1px 0 rgba(255,255,255,0.05)"
                   : "0 2px 12px rgba(0,0,0,0.04)",
             }}
           >
@@ -247,7 +247,7 @@ export function Hero() {
         className="pointer-events-none absolute top-1/3 right-[10%] hidden lg:block h-[400px] w-[400px] rounded-full opacity-[0.03] blur-[100px]"
         style={{
           background:
-            "radial-gradient(circle, #a855f7, transparent 70%)",
+            "radial-gradient(circle, #d97706, transparent 70%)",
         }}
       />
 

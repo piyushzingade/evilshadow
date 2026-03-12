@@ -54,8 +54,8 @@ export function Navbar() {
                   x2="100%"
                   y2="100%"
                 >
-                  <stop offset="0%" stopColor="#a5b4fc" />
-                  <stop offset="100%" stopColor="#818cf8" />
+                  <stop offset="0%" stopColor="#f5c98a" />
+                  <stop offset="100%" stopColor="#d4a060" />
                 </linearGradient>
               </defs>
               <rect
@@ -65,7 +65,7 @@ export function Navbar() {
                 height="216"
                 rx="24"
                 transform="rotate(45 292 292)"
-                fill="#1e1b4b"
+                fill="#3a2810"
               />
               <rect
                 x="148"
@@ -74,7 +74,7 @@ export function Navbar() {
                 height="216"
                 rx="24"
                 transform="rotate(45 256 256)"
-                fill="#4338ca"
+                fill="#a06830"
               />
               <rect
                 x="112"

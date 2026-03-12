@@ -7,7 +7,7 @@ export const stylesRegistry: StyleDefinition[] = [
     description:
       "Frosted glass aesthetics with translucent layers, backdrop blur, and subtle borders that create depth through transparency.",
     tagline: "Frosted glass for modern interfaces",
-    color: "#6366f1",
+    color: "#c2783a",
     font: "Outfit",
     fontVariable: "--font-glass",
     techniques: [
@@ -151,14 +151,14 @@ export const stylesRegistry: StyleDefinition[] = [
     description:
       "Soft, puffy 3D surfaces with inner highlight shadows that make elements look like sculpted clay or plasticine.",
     tagline: "Soft, puffy, 3D clay surfaces",
-    color: "#a855f7",
+    color: "#d97706",
     font: "Nunito",
     fontVariable: "--font-clay",
     techniques: [
       "Dual inner shadows: top-left highlight + bottom-right shadow",
       "Outer shadow for surface elevation",
       "Large border-radius (rounded-2xl/3xl) for puffy feel",
-      "Soft pastel color palette (lavender, mint, orange, pink)",
+      "Soft pastel color palette (cream, mint, orange, pink)",
       "Shadow inversion on press for sunken/pressed state",
     ],
     cssHighlights: [
@@ -171,7 +171,7 @@ export const stylesRegistry: StyleDefinition[] = [
       {
         type: "card",
         variants: [
-          { id: "dialog", name: "Dialog Card", description: "\"Hey, Wait!!\" dialog with character, purple text, and clay CTA buttons" },
+          { id: "dialog", name: "Dialog Card", description: "\"Hey, Wait!!\" dialog with character, warm accent text, and clay CTA buttons" },
           { id: "notification", name: "Notification", description: "Puffy notification card with bell icon and soft shadows" },
           { id: "pricing", name: "Pricing Card", description: "Clay pricing tier with feature list and rounded CTA" },
         ],
@@ -199,7 +199,7 @@ export const stylesRegistry: StyleDefinition[] = [
     description:
       "Dark chrome surfaces with rainbow refraction borders, conic gradients, and liquid metal reflections.",
     tagline: "Chrome and rainbow refraction",
-    color: "#8b5cf6",
+    color: "#b45309",
     font: "Orbitron",
     fontVariable: "--font-metal",
     techniques: [
@@ -213,7 +213,7 @@ export const stylesRegistry: StyleDefinition[] = [
       "background: conic-gradient(from 0deg, #ff0000, #ff8800, ...)",
       "p-[1.5px] border wrapper technique",
       "bg-zinc-900",
-      "shadow-[0_0_20px_rgba(139,92,246,0.3)]",
+      "shadow-[0_0_20px_rgba(180,83,9,0.3)]",
     ],
     components: [
       {
@@ -229,7 +229,7 @@ export const stylesRegistry: StyleDefinition[] = [
         variants: [
           { id: "chrome", name: "Chrome Submit", description: "Premium pill button with rainbow refraction border and metallic icon" },
           { id: "icon", name: "Icon Button", description: "Circular chrome button with rotating icon on hover" },
-          { id: "gradient", name: "Gradient Edge", description: "Button with purple-to-blue gradient border" },
+          { id: "gradient", name: "Gradient Edge", description: "Button with warm gradient border" },
         ],
       },
       {
