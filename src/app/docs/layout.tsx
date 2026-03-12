@@ -10,11 +10,13 @@ export default function Layout({
   return (
     <SidebarProvider>
       <DocsSidebar />
-      <SidebarInset>
+      <SidebarInset className="min-h-0">
         {/* Header */}
         <DocsHeader />
         {/* Content */}
-        <div className="docs-content-wrapper">{children}</div>
+        <div className="docs-content-wrapper flex-1 overflow-y-auto min-h-0">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
