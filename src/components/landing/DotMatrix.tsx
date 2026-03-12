@@ -8,6 +8,11 @@ function seededRandom(seed: number): number {
   return x - Math.floor(x);
 }
 
+/** Round to 4 decimal places for SSR/client hydration consistency */
+function roundOpacity(value: number): number {
+  return Math.round(value * 10000) / 10000;
+}
+
 /* ── Organic Cluster ── */
 /* Dense center, organic radial falloff — the signature EvilShadow dot pattern */
 export function DotCluster({
@@ -46,7 +51,7 @@ export function DotCluster({
           result.push({
             row: r,
             col: c,
-            opacity: Math.max(0.1, 1 - dist * 1.3),
+            opacity: roundOpacity(Math.max(0.1, 1 - dist * 1.3)),
           });
         }
       }
@@ -176,7 +181,7 @@ export function DotSparse({
           result.push({
             row: r,
             col: c,
-            opacity: 0.08 + seededRandom(s + 500) * 0.15,
+            opacity: roundOpacity(0.08 + seededRandom(s + 500) * 0.15),
           });
         }
       }
@@ -242,7 +247,7 @@ export function DotDivider({
           result.push({
             row: r,
             col: c,
-            opacity: Math.max(0.04, (1 - distFromCenter * 0.8) * (1 - distY) * 0.2),
+            opacity: roundOpacity(Math.max(0.04, (1 - distFromCenter * 0.8) * (1 - distY) * 0.2)),
           });
         }
       }
@@ -317,7 +322,7 @@ export function DotCorner({
           result.push({
             row: r,
             col: c,
-            opacity: Math.max(0.15, 1 - dist * 3),
+            opacity: roundOpacity(Math.max(0.15, 1 - dist * 3)),
           });
         }
       }
