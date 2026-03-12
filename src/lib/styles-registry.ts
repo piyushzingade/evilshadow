@@ -391,8 +391,3 @@ export function getStyleById(id: string): StyleDefinition | undefined {
   return stylesRegistry.find((s) => s.id === id);
 }
 
-export function getStyleComponents(styleId: string, type: string) {
-  const style = getStyleById(styleId);
-  if (!style) return undefined;
-  return style.components.find((c) => c.type === type);
-}

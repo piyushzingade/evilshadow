@@ -10,8 +10,6 @@ export type StyleId =
 
 export type ComponentType = "card" | "button" | "input";
 
-export type Theme = "light" | "dark";
-
 export interface ComponentVariant {
   id: string;
   name: string;
@@ -54,5 +52,4 @@ export interface CustomizerState {
 export interface StyleComponentProps {
   variant?: string;
   customStyle?: React.CSSProperties;
-  previewTheme?: Theme;
 }
