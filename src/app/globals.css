@@ -285,3 +285,13 @@ code span {
 .dark code span {
   color: var(--shiki-dark) !important;
 }
+
+/* ── Custom range slider thumb ── */
+input[type="range"]::-webkit-slider-thumb {
+  background-color: var(--color-fg);
+}
+
+input[type="range"]::-moz-range-thumb {
+  background-color: var(--color-fg);
+  border: none;
+}
