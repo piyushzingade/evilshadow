@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Sun, Moon } from "lucide-react";
 import { CodeBlock } from "./CodeBlock";
-import { Theme } from "@/types";
 
 interface ComponentPreviewProps {
   name: string;
@@ -14,7 +12,6 @@ interface ComponentPreviewProps {
 
 export function ComponentPreview({ name, children, code }: ComponentPreviewProps) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
-  const [previewTheme, setPreviewTheme] = useState<Theme>("dark");
 
   const tabs = [
     { id: "preview" as const, label: "Preview" },
@@ -52,32 +49,10 @@ export function ComponentPreview({ name, children, code }: ComponentPreviewProps
             ))}
           </div>
         </div>
-        {tab === "preview" && (
-          <button
-            onClick={() =>
-              setPreviewTheme((t) => (t === "dark" ? "light" : "dark"))
-            }
-            className="flex h-7 w-7 items-center justify-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-border)]"
-            aria-label="Toggle preview theme"
-          >
-            {previewTheme === "dark" ? (
-              <Moon className="h-3.5 w-3.5" />
-            ) : (
-              <Sun className="h-3.5 w-3.5" />
-            )}
-          </button>
-        )}
       </div>
 
       {tab === "preview" ? (
-        <div
-          data-theme={previewTheme}
-          className="preview-grid flex min-h-[200px] items-center justify-center p-8"
-          style={{
-            backgroundColor:
-              previewTheme === "dark" ? "#18181b" : "#f5f5f5",
-          }}
-        >
+        <div className="preview-grid flex min-h-[200px] items-center justify-center p-8 bg-[var(--color-preview-bg)]">
           {children}
         </div>
       ) : (

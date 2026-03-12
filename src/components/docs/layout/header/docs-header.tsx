@@ -5,24 +5,15 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button-shadcn";
-import { useTheme } from "next-themes";
-import { GithubIcon, Lightbulb } from "lucide-react";
+import { GithubIcon } from "lucide-react";
+import { ThemeToggleCompact } from "@/components/ui/ThemeToggle";
 
 const DocsHeader = () => {
-  const { resolvedTheme, setTheme } = useTheme();
-
   return (
     <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-dashed px-4 sticky top-0 bg-background z-50">
       <SidebarTrigger />
       <div className="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn("h-7 w-7 cursor-pointer")}
-          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-        >
-          <Lightbulb className="size-4" />
-        </Button>
+        <ThemeToggleCompact />
         <Link
           href="https://github.com"
           target="_blank"
