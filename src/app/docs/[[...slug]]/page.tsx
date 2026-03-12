@@ -1,9 +1,5 @@
 import { source } from "@/lib/source";
 import { notFound } from "next/navigation";
-import {
-  DocsPage,
-  DocsBody,
-} from "fumadocs-ui/layouts/docs/page";
 import type { Metadata } from "next";
 
 export default async function Page({
@@ -16,18 +12,20 @@ export default async function Page({
 
   if (!page) notFound();
 
-  const { body: Mdx, toc } = await page.data.load();
+  const { body: Mdx } = await page.data.load();
 
   return (
-    <DocsPage toc={toc}>
-      <h1 className="text-3xl font-bold">{page.data.title}</h1>
-      <p className="mb-6 mt-2 text-lg text-fd-muted-foreground">
-        {page.data.description}
-      </p>
-      <DocsBody>
+    <div className="page">
+      <div className="flex flex-col sm:gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold">{page.data.title}</h1>
+        <p className="text-muted-foreground text-xs sm:text-sm">
+          {page.data.description}
+        </p>
+      </div>
+      <div className="prose prose-sm dark:prose-invert max-w-none">
         <Mdx />
-      </DocsBody>
-    </DocsPage>
+      </div>
+    </div>
   );
 }
 

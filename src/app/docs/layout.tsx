@@ -1,21 +1,21 @@
-import { DocsLayout } from "fumadocs-ui/layouts/docs";
-import { source } from "@/lib/source";
-import type { ReactNode } from "react";
+import { DocsSidebar } from "@/components/docs/layout/sidebar/docs-sidebar";
+import DocsHeader from "@/components/docs/layout/header/docs-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <DocsLayout
-      tree={source.getPageTree()}
-      nav={{
-        title: (
-          <span className="font-[family-name:var(--font-display)] text-lg italic">
-            EvilShadow
-          </span>
-        ),
-        url: "/",
-      }}
-    >
-      {children}
-    </DocsLayout>
+    <SidebarProvider>
+      <DocsSidebar />
+      <SidebarInset>
+        {/* Header */}
+        <DocsHeader />
+        {/* Content */}
+        <div className="p-6 w-full">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
