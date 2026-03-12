@@ -16,7 +16,7 @@ import {
   Raleway,
   Crimson_Pro,
 } from "next/font/google";
-import { RootProvider } from "fumadocs-ui/provider/next";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 /* ── Display & Body ────────────────────────────────── */
@@ -149,15 +149,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${fontVars} antialiased`}>
-        <RootProvider
-          theme={{
-            defaultTheme: "dark",
-            attribute: "class",
-            disableTransitionOnChange: true,
-          }}
+        <ThemeProvider
+          defaultTheme="dark"
+          attribute="class"
+          disableTransitionOnChange
         >
           {children}
-        </RootProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
