@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Trash2, Power, Sparkles } from "lucide-react";
+import { useTheme } from "next-themes";
 import type { StyleComponentProps } from "@/types";
 
 // ---------------------------------------------------------------------------
@@ -16,7 +17,14 @@ import type { StyleComponentProps } from "@/types";
 //              inset -Xpx -Xpx Xpx shadow"
 // ---------------------------------------------------------------------------
 
-/* ─── Orange clay shadows ─── */
+/* ─── dark-mode-aware hook ─── */
+function useClayTheme() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== "light";
+  return { isDark };
+}
+
+/* ─── Orange clay shadows (accent — same in both themes) ─── */
 
 const clayOrangeResting =
   "8px 8px 18px rgba(180,90,20,0.35), -5px -5px 14px rgba(255,200,140,0.5), inset 3px 3px 8px rgba(255,200,140,0.5), inset -2px -2px 5px rgba(140,60,10,0.2)";
@@ -43,25 +51,51 @@ const clayOrangeFadedPressed =
 const clayOrangeOutline =
   "8px 8px 18px rgba(160,70,15,0.35), -5px -5px 14px rgba(255,190,130,0.35), inset 3px 3px 7px rgba(255,180,120,0.35), inset -2px -2px 5px rgba(120,50,10,0.22)";
 
-/* ─── Toggle shadows ─── */
-const clayToggleOff =
+/* ─── Toggle shadows (light / dark) ─── */
+const clayToggleOffLight =
   "8px 8px 18px rgba(0,0,0,0.1), -5px -5px 14px rgba(255,255,255,0.75), inset 3px 3px 6px rgba(255,255,255,0.55), inset -2px -2px 4px rgba(0,0,0,0.07)";
+const clayToggleOffDark =
+  "8px 8px 18px rgba(0,0,0,0.3), -5px -5px 14px rgba(255,255,255,0.05), inset 3px 3px 6px rgba(255,255,255,0.08), inset -2px -2px 4px rgba(0,0,0,0.15)";
 
 const clayToggleOn =
   "inset 5px 5px 14px rgba(0,0,0,0.15), inset -3px -3px 8px rgba(255,255,255,0.2), 2px 2px 4px rgba(0,0,0,0.05)";
 
-const clayToggleKnobOff =
+const clayToggleKnobOffLight =
   "3px 3px 8px rgba(0,0,0,0.12), -2px -2px 6px rgba(255,255,255,0.6), inset 1px 1px 3px rgba(255,255,255,0.5), inset -1px -1px 2px rgba(0,0,0,0.08)";
+const clayToggleKnobOffDark =
+  "3px 3px 8px rgba(0,0,0,0.3), -2px -2px 6px rgba(255,255,255,0.04), inset 1px 1px 3px rgba(255,255,255,0.06), inset -1px -1px 2px rgba(0,0,0,0.15)";
 
 const clayToggleKnobOn =
   "3px 3px 8px rgba(180,90,20,0.25), -2px -2px 6px rgba(255,200,140,0.4), inset 1px 1px 3px rgba(255,200,140,0.4), inset -1px -1px 2px rgba(140,60,10,0.15)";
 
-/* ─── Pill shadows ─── */
-const clayPillResting =
-  "7px 7px 16px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.65), inset 3px 3px 6px rgba(255,255,255,0.45), inset -2px -2px 4px rgba(0,0,0,0.06)";
+/* ─── Toggle label shadow (light / dark) ─── */
+const clayToggleLabelLight =
+  "4px 4px 10px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.6), inset 2px 2px 4px rgba(255,255,255,0.4), inset -1px -1px 3px rgba(0,0,0,0.05)";
+const clayToggleLabelDark =
+  "4px 4px 10px rgba(0,0,0,0.25), -3px -3px 8px rgba(255,255,255,0.04), inset 2px 2px 4px rgba(255,255,255,0.06), inset -1px -1px 3px rgba(0,0,0,0.12)";
 
-const clayPillPressed =
+/* ─── Pill shadows (light / dark) ─── */
+const clayPillRestingLight =
+  "7px 7px 16px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.65), inset 3px 3px 6px rgba(255,255,255,0.45), inset -2px -2px 4px rgba(0,0,0,0.06)";
+const clayPillRestingDark =
+  "7px 7px 16px rgba(0,0,0,0.3), -4px -4px 12px rgba(255,255,255,0.04), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 4px rgba(0,0,0,0.12)";
+
+const clayPillPressedLight =
   "inset 4px 4px 10px rgba(0,0,0,0.12), inset -3px -3px 7px rgba(255,255,255,0.25), 1px 1px 2px rgba(0,0,0,0.05)";
+const clayPillPressedDark =
+  "inset 4px 4px 10px rgba(0,0,0,0.3), inset -3px -3px 7px rgba(255,255,255,0.06), 1px 1px 2px rgba(0,0,0,0.12)";
+
+/* ─── Lavender pill shadow (light / dark) ─── */
+const clayLavenderPillLight =
+  "7px 7px 16px rgba(80,60,140,0.12), -4px -4px 12px rgba(240,235,255,0.7), inset 3px 3px 6px rgba(240,235,255,0.5), inset -2px -2px 4px rgba(80,60,120,0.08)";
+const clayLavenderPillDark =
+  "7px 7px 16px rgba(0,0,0,0.3), -4px -4px 12px rgba(255,255,255,0.04), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 4px rgba(0,0,0,0.12)";
+
+/* ─── Pink pill shadow (light / dark) ─── */
+const clayPinkPillLight =
+  "7px 7px 16px rgba(160,80,100,0.12), -4px -4px 12px rgba(255,230,240,0.7), inset 3px 3px 6px rgba(255,230,240,0.5), inset -2px -2px 4px rgba(140,60,80,0.08)";
+const clayPinkPillDark =
+  "7px 7px 16px rgba(0,0,0,0.3), -4px -4px 12px rgba(255,255,255,0.04), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 4px rgba(0,0,0,0.12)";
 
 // ──────────────────────────────────────────────────────────────────────────────
 //  Action Buttons  ── 5 orange "Delete" variations showing puffy 3D effect
@@ -130,6 +164,15 @@ function ActionButton({ customStyle }: { customStyle?: React.CSSProperties }) {
 // ──────────────────────────────────────────────────────────────────────────────
 function ToggleButton({ customStyle }: { customStyle?: React.CSSProperties }) {
   const [active, setActive] = useState(false);
+  const { isDark } = useClayTheme();
+
+  const clayToggleOff = isDark ? clayToggleOffDark : clayToggleOffLight;
+  const clayToggleKnobOff = isDark ? clayToggleKnobOffDark : clayToggleKnobOffLight;
+  const toggleLabelShadow = isDark ? clayToggleLabelDark : clayToggleLabelLight;
+
+  const offBg = isDark ? "bg-[#2a2540]" : "bg-[#e8e2f0]";
+  const knobOffBg = isDark ? "bg-[#3a3548]" : "bg-[#f5f2fa]";
+  const labelOffBg = isDark ? "bg-[#2a2540]" : "bg-[#e8e2f0]";
 
   return (
     <div
@@ -141,7 +184,7 @@ function ToggleButton({ customStyle }: { customStyle?: React.CSSProperties }) {
         onClick={() => setActive((v) => !v)}
         whileTap={{ scale: 0.94 }}
         className={`relative flex h-14 w-[100px] items-center rounded-full px-1.5 transition-colors duration-300 ${
-          active ? "bg-[#E8772E]" : "bg-[#e8e2f0]"
+          active ? "bg-[#E8772E]" : offBg
         }`}
         style={{ boxShadow: active ? clayToggleOn : clayToggleOff }}
       >
@@ -150,7 +193,7 @@ function ToggleButton({ customStyle }: { customStyle?: React.CSSProperties }) {
           layout
           transition={{ type: "spring", stiffness: 500, damping: 35 }}
           className={`flex h-11 w-11 items-center justify-center rounded-full ${
-            active ? "bg-white ml-auto" : "bg-[#f5f2fa]"
+            active ? "bg-white ml-auto" : knobOffBg
           }`}
           style={{
             boxShadow: active ? clayToggleKnobOn : clayToggleKnobOff,
@@ -167,12 +210,9 @@ function ToggleButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* Label */}
       <span
         className={`rounded-full px-6 py-2 text-sm font-extrabold transition-colors duration-300 ${
-          active ? "bg-[#E8772E]/15 text-[#c5611f]" : "bg-[#e8e2f0] text-gray-500"
+          active ? "bg-[#E8772E]/15 text-[#c5611f]" : `${labelOffBg} text-gray-500`
         }`}
-        style={{
-          boxShadow:
-            "4px 4px 10px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.6), inset 2px 2px 4px rgba(255,255,255,0.4), inset -1px -1px 3px rgba(0,0,0,0.05)",
-        }}
+        style={{ boxShadow: toggleLabelShadow }}
       >
         {active ? "ON" : "OFF"}
       </span>
@@ -184,6 +224,13 @@ function ToggleButton({ customStyle }: { customStyle?: React.CSSProperties }) {
 //  Pill Button  ── rounded pill with soft pastel color
 // ──────────────────────────────────────────────────────────────────────────────
 function PillButton({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const { isDark } = useClayTheme();
+
+  const clayPillResting = isDark ? clayPillRestingDark : clayPillRestingLight;
+  const clayPillPressed = isDark ? clayPillPressedDark : clayPillPressedLight;
+  const lavenderShadow = isDark ? clayLavenderPillDark : clayLavenderPillLight;
+  const pinkShadow = isDark ? clayPinkPillDark : clayPinkPillLight;
+
   return (
     <div
       className="font-[family-name:var(--font-clay)] flex flex-col items-center gap-5"
@@ -192,7 +239,7 @@ function PillButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* ── Mint pill ── */}
       <motion.button
         whileTap={{ scale: 0.92, boxShadow: clayPillPressed }}
-        className="flex items-center gap-2 rounded-full bg-[#b8ddd0] px-9 py-3 text-sm font-bold text-gray-700"
+        className={`flex items-center gap-2 rounded-full px-9 py-3 text-sm font-bold ${isDark ? "bg-[#1e3830] text-gray-300" : "bg-[#b8ddd0] text-gray-700"}`}
         style={{ boxShadow: clayPillResting }}
       >
         <Sparkles size={15} strokeWidth={2.5} className="text-[#4a9480]" />
@@ -202,11 +249,8 @@ function PillButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* ── Lavender pill ── */}
       <motion.button
         whileTap={{ scale: 0.92, boxShadow: clayPillPressed }}
-        className="flex items-center gap-2 rounded-full bg-[#d4ccec] px-9 py-3 text-sm font-bold text-[#5b4ba0]"
-        style={{
-          boxShadow:
-            "7px 7px 16px rgba(80,60,140,0.12), -4px -4px 12px rgba(240,235,255,0.7), inset 3px 3px 6px rgba(240,235,255,0.5), inset -2px -2px 4px rgba(80,60,120,0.08)",
-        }}
+        className={`flex items-center gap-2 rounded-full px-9 py-3 text-sm font-bold text-[#5b4ba0] ${isDark ? "bg-[#2a2540]" : "bg-[#d4ccec]"}`}
+        style={{ boxShadow: lavenderShadow }}
       >
         Explore
       </motion.button>
@@ -214,11 +258,8 @@ function PillButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* ── Pink pill ── */}
       <motion.button
         whileTap={{ scale: 0.92, boxShadow: clayPillPressed }}
-        className="flex items-center gap-2 rounded-full bg-[#f5c0ce] px-9 py-3 text-sm font-bold text-[#a04060]"
-        style={{
-          boxShadow:
-            "7px 7px 16px rgba(160,80,100,0.12), -4px -4px 12px rgba(255,230,240,0.7), inset 3px 3px 6px rgba(255,230,240,0.5), inset -2px -2px 4px rgba(140,60,80,0.08)",
-        }}
+        className={`flex items-center gap-2 rounded-full px-9 py-3 text-sm font-bold text-[#a04060] ${isDark ? "bg-[#3a2028]" : "bg-[#f5c0ce]"}`}
+        style={{ boxShadow: pinkShadow }}
       >
         Learn More
       </motion.button>

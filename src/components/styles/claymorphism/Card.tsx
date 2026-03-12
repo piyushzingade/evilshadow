@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, Check, Crown, Star, X } from "lucide-react";
+import { useTheme } from "next-themes";
 import type { StyleComponentProps } from "@/types";
 
 // ---------------------------------------------------------------------------
@@ -15,37 +16,69 @@ import type { StyleComponentProps } from "@/types";
 //   press:  shadows invert (outer → inset)  → "pressed into clay"
 // ---------------------------------------------------------------------------
 
-/* ─── Shadow library ─── */
+/* ─── dark-mode-aware hook ─── */
+function useClayTheme() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== "light";
+  return { isDark };
+}
 
-const clayCardOuter =
+/* ─── Shadow library (light / dark) ─── */
+
+const clayCardOuterLight =
   "12px 12px 24px rgba(0,0,0,0.12), -6px -6px 18px rgba(255,255,255,0.85), inset 3px 3px 6px rgba(255,255,255,0.65), inset -2px -2px 5px rgba(0,0,0,0.07)";
+const clayCardOuterDark =
+  "12px 12px 24px rgba(0,0,0,0.3), -6px -6px 18px rgba(255,255,255,0.05), inset 3px 3px 6px rgba(255,255,255,0.08), inset -2px -2px 5px rgba(0,0,0,0.15)";
 
-const clayBtnResting =
+const clayBtnRestingLight =
   "6px 6px 14px rgba(0,0,0,0.12), -4px -4px 10px rgba(255,255,255,0.7), inset 2px 2px 5px rgba(255,255,255,0.5), inset -2px -2px 4px rgba(0,0,0,0.07)";
+const clayBtnRestingDark =
+  "6px 6px 14px rgba(0,0,0,0.3), -4px -4px 10px rgba(255,255,255,0.05), inset 2px 2px 5px rgba(255,255,255,0.08), inset -2px -2px 4px rgba(0,0,0,0.15)";
 
-const clayBtnPressed =
+const clayBtnPressedLight =
   "inset 4px 4px 10px rgba(0,0,0,0.14), inset -3px -3px 7px rgba(255,255,255,0.25), 1px 1px 2px rgba(0,0,0,0.06)";
+const clayBtnPressedDark =
+  "inset 4px 4px 10px rgba(0,0,0,0.3), inset -3px -3px 7px rgba(255,255,255,0.06), 1px 1px 2px rgba(0,0,0,0.12)";
 
-const clayPillShadow =
+const clayPillShadowLight =
   "4px 4px 10px rgba(0,0,0,0.1), -3px -3px 8px rgba(255,255,255,0.6), inset 2px 2px 4px rgba(255,255,255,0.45), inset -1px -1px 3px rgba(0,0,0,0.06)";
+const clayPillShadowDark =
+  "4px 4px 10px rgba(0,0,0,0.25), -3px -3px 8px rgba(255,255,255,0.04), inset 2px 2px 4px rgba(255,255,255,0.06), inset -1px -1px 3px rgba(0,0,0,0.12)";
 
-const clayIconShadow =
+const clayIconShadowLight =
   "4px 4px 10px rgba(0,0,0,0.14), -3px -3px 8px rgba(255,255,255,0.5), inset 2px 2px 4px rgba(255,255,255,0.3), inset -1px -1px 3px rgba(0,0,0,0.1)";
+const clayIconShadowDark =
+  "4px 4px 10px rgba(0,0,0,0.3), -3px -3px 8px rgba(255,255,255,0.04), inset 2px 2px 4px rgba(255,255,255,0.06), inset -1px -1px 3px rgba(0,0,0,0.18)";
 
-const clayCheckShadow =
+const clayCheckShadowLight =
   "3px 3px 7px rgba(0,0,0,0.09), -2px -2px 5px rgba(255,255,255,0.55), inset 1px 1px 2px rgba(255,255,255,0.5)";
+const clayCheckShadowDark =
+  "3px 3px 7px rgba(0,0,0,0.25), -2px -2px 5px rgba(255,255,255,0.04), inset 1px 1px 2px rgba(255,255,255,0.06)";
 
 // ──────────────────────────────────────────────────────────────────────────────
 //  Dialog Card  ── "Hey, Wait!!"
 // ──────────────────────────────────────────────────────────────────────────────
 function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
   const [visible, setVisible] = useState(true);
+  const { isDark } = useClayTheme();
+
+  const clayCardOuter = isDark ? clayCardOuterDark : clayCardOuterLight;
+  const clayBtnResting = isDark ? clayBtnRestingDark : clayBtnRestingLight;
+  const clayBtnPressed = isDark ? clayBtnPressedDark : clayBtnPressedLight;
+
+  const closeBtnShadow = isDark
+    ? "4px 4px 10px rgba(0,0,0,0.3), -3px -3px 7px rgba(255,255,255,0.04), inset 2px 2px 4px rgba(255,255,255,0.06), inset -1px -1px 3px rgba(0,0,0,0.2)"
+    : "4px 4px 10px rgba(0,0,0,0.16), -3px -3px 7px rgba(255,255,255,0.45), inset 2px 2px 4px rgba(255,255,255,0.3), inset -1px -1px 3px rgba(0,0,0,0.12)";
+
+  const outlineBtnShadow = isDark
+    ? "6px 6px 14px rgba(0,0,0,0.3), -4px -4px 10px rgba(255,255,255,0.04), inset 2px 2px 4px rgba(255,255,255,0.06), inset -1px -1px 3px rgba(0,0,0,0.12)"
+    : "6px 6px 14px rgba(0,0,0,0.09), -4px -4px 10px rgba(255,255,255,0.65), inset 2px 2px 4px rgba(255,255,255,0.45), inset -1px -1px 3px rgba(0,0,0,0.05)";
 
   return (
     <AnimatePresence>
       {visible && (
         <div
-          className="font-[family-name:var(--font-clay)] w-full max-w-md rounded-[28px] bg-[#e0daf0]/60 p-2.5"
+          className={`font-[family-name:var(--font-clay)] w-full max-w-md rounded-[28px] p-2.5 ${isDark ? "bg-[#1e1a2e]/60" : "bg-[#e0daf0]/60"}`}
           style={customStyle}
         >
           <motion.div
@@ -53,7 +86,7 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.95 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className="relative w-full rounded-[26px] bg-[#f2eff8] px-8 pb-9 pt-7"
+            className={`relative w-full rounded-[26px] px-8 pb-9 pt-7 ${isDark ? "bg-[#2a2540]" : "bg-[#f2eff8]"}`}
             style={{ boxShadow: clayCardOuter }}
           >
             {/* ── Close button (X) ── */}
@@ -64,10 +97,7 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                 setTimeout(() => setVisible(true), 1200);
               }}
               className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#9b8ec4] text-white"
-              style={{
-                boxShadow:
-                  "4px 4px 10px rgba(0,0,0,0.16), -3px -3px 7px rgba(255,255,255,0.45), inset 2px 2px 4px rgba(255,255,255,0.3), inset -1px -1px 3px rgba(0,0,0,0.12)",
-              }}
+              style={{ boxShadow: closeBtnShadow }}
             >
               <X size={16} strokeWidth={3} />
             </motion.button>
@@ -112,10 +142,10 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
               {/* ── Text content ── */}
               <div className="flex-1 pt-5">
-                <h2 className="mb-3 text-[26px] font-extrabold leading-tight text-[#5b4ba0]">
+                <h2 className={`mb-3 text-[26px] font-extrabold leading-tight ${isDark ? "text-[#b8a8e0]" : "text-[#5b4ba0]"}`}>
                   Hey, Wait!!
                 </h2>
-                <p className="text-[15px] leading-relaxed text-gray-600">
+                <p className={`text-[15px] leading-relaxed ${isDark ? "text-gray-400" : "text-gray-600"}`}>
                   Are you sure you want to leave this page without confirming your
                   order?
                 </p>
@@ -126,18 +156,15 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             <div className="mt-7 flex gap-4 pl-[120px]">
               <motion.button
                 whileTap={{ scale: 0.92, boxShadow: clayBtnPressed }}
-                className="flex-1 rounded-2xl bg-white px-5 py-3.5 text-sm font-bold text-gray-700"
+                className={`flex-1 rounded-2xl px-5 py-3.5 text-sm font-bold ${isDark ? "bg-[#2a2540] text-gray-300" : "bg-white text-gray-700"}`}
                 style={{ boxShadow: clayBtnResting }}
               >
                 Yes, Maybe Later
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.92, boxShadow: clayBtnPressed }}
-                className="flex-1 rounded-2xl border-2 border-[#c4b8e0] bg-[#ece8f5] px-5 py-3.5 text-sm font-bold text-[#6b5ea0]"
-                style={{
-                  boxShadow:
-                    "6px 6px 14px rgba(0,0,0,0.09), -4px -4px 10px rgba(255,255,255,0.65), inset 2px 2px 4px rgba(255,255,255,0.45), inset -1px -1px 3px rgba(0,0,0,0.05)",
-                }}
+                className={`flex-1 rounded-2xl border-2 px-5 py-3.5 text-sm font-bold text-[#6b5ea0] ${isDark ? "border-[#4a4068] bg-[#352e50]" : "border-[#c4b8e0] bg-[#ece8f5]"}`}
+                style={{ boxShadow: outlineBtnShadow }}
               >
                 No, I Want to Stay
               </motion.button>
@@ -157,16 +184,29 @@ function NotificationCard({
 }: {
   customStyle?: React.CSSProperties;
 }) {
+  const { isDark } = useClayTheme();
+
+  const clayIconShadow = isDark ? clayIconShadowDark : clayIconShadowLight;
+  const clayPillShadow = isDark ? clayPillShadowDark : clayPillShadowLight;
+  const clayBtnPressed = isDark ? clayBtnPressedDark : clayBtnPressedLight;
+
+  const cardShadow = isDark
+    ? "10px 10px 22px rgba(0,0,0,0.3), -6px -6px 16px rgba(255,255,255,0.03), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 4px rgba(0,0,0,0.12)"
+    : "10px 10px 22px rgba(180,100,120,0.15), -6px -6px 16px rgba(255,240,245,0.9), inset 3px 3px 6px rgba(255,245,248,0.7), inset -2px -2px 4px rgba(160,80,100,0.06)";
+
+  const ctaShadow = isDark
+    ? "6px 6px 14px rgba(0,0,0,0.3), -4px -4px 10px rgba(255,255,255,0.04), inset 3px 3px 6px rgba(255,200,215,0.1), inset -2px -2px 4px rgba(0,0,0,0.18)"
+    : "6px 6px 14px rgba(180,80,110,0.2), -4px -4px 10px rgba(255,210,225,0.5), inset 3px 3px 6px rgba(255,200,215,0.4), inset -2px -2px 4px rgba(140,50,70,0.12)";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
       whileTap={{ scale: 0.97 }}
-      className="font-[family-name:var(--font-clay)] w-full max-w-xs rounded-[26px] bg-[#fce4e9] p-6"
+      className={`font-[family-name:var(--font-clay)] w-full max-w-xs rounded-[26px] p-6 ${isDark ? "bg-[#3a2028]" : "bg-[#fce4e9]"}`}
       style={{
-        boxShadow:
-          "10px 10px 22px rgba(180,100,120,0.15), -6px -6px 16px rgba(255,240,245,0.9), inset 3px 3px 6px rgba(255,245,248,0.7), inset -2px -2px 4px rgba(160,80,100,0.06)",
+        boxShadow: cardShadow,
         ...customStyle,
       }}
     >
@@ -176,17 +216,17 @@ function NotificationCard({
           <motion.div
             animate={{ rotate: [0, -8, 8, -4, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
-            className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-[#f5b8c4]"
+            className={`flex h-11 w-11 items-center justify-center rounded-[14px] ${isDark ? "bg-[#6a3040]" : "bg-[#f5b8c4]"}`}
             style={{ boxShadow: clayIconShadow }}
           >
             <Bell size={18} strokeWidth={2.5} className="text-[#c75070]" />
           </motion.div>
-          <span className="text-sm font-extrabold text-gray-800">
+          <span className={`text-sm font-extrabold ${isDark ? "text-gray-200" : "text-gray-800"}`}>
             New Message
           </span>
         </div>
         <span
-          className="rounded-full bg-[#f5c6d0]/60 px-3.5 py-1.5 text-[11px] font-bold text-[#b06078]"
+          className={`rounded-full px-3.5 py-1.5 text-[11px] font-bold text-[#b06078] ${isDark ? "bg-[#5a2838]" : "bg-[#f5c6d0]/60"}`}
           style={{ boxShadow: clayPillShadow }}
         >
           2m ago
@@ -194,7 +234,7 @@ function NotificationCard({
       </div>
 
       {/* Body */}
-      <p className="mb-5 text-sm leading-relaxed text-gray-600">
+      <p className={`mb-5 text-sm leading-relaxed ${isDark ? "text-gray-400" : "text-gray-600"}`}>
         You have a new notification waiting for you. Tap to view the full
         details and stay updated.
       </p>
@@ -203,10 +243,7 @@ function NotificationCard({
       <motion.button
         whileTap={{ scale: 0.92, boxShadow: clayBtnPressed }}
         className="w-full rounded-2xl bg-[#f0a0b4] py-3 text-sm font-bold text-white"
-        style={{
-          boxShadow:
-            "6px 6px 14px rgba(180,80,110,0.2), -4px -4px 10px rgba(255,210,225,0.5), inset 3px 3px 6px rgba(255,200,215,0.4), inset -2px -2px 4px rgba(140,50,70,0.12)",
-        }}
+        style={{ boxShadow: ctaShadow }}
       >
         View Details
       </motion.button>
@@ -218,6 +255,21 @@ function NotificationCard({
 //  Pricing Card  ── blue clay pricing tier
 // ──────────────────────────────────────────────────────────────────────────────
 function PricingCard({ customStyle }: { customStyle?: React.CSSProperties }) {
+  const { isDark } = useClayTheme();
+
+  const clayIconShadow = isDark ? clayIconShadowDark : clayIconShadowLight;
+  const clayPillShadow = isDark ? clayPillShadowDark : clayPillShadowLight;
+  const clayCheckShadow = isDark ? clayCheckShadowDark : clayCheckShadowLight;
+  const clayBtnPressed = isDark ? clayBtnPressedDark : clayBtnPressedLight;
+
+  const cardShadow = isDark
+    ? "10px 10px 22px rgba(0,0,0,0.3), -6px -6px 16px rgba(255,255,255,0.03), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 5px rgba(0,0,0,0.12)"
+    : "10px 10px 22px rgba(60,90,160,0.14), -6px -6px 16px rgba(230,240,255,0.9), inset 3px 3px 6px rgba(240,248,255,0.7), inset -2px -2px 5px rgba(60,80,140,0.06)";
+
+  const ctaShadow = isDark
+    ? "7px 7px 16px rgba(0,0,0,0.3), -4px -4px 10px rgba(255,255,255,0.04), inset 3px 3px 6px rgba(180,210,255,0.08), inset -2px -2px 4px rgba(0,0,0,0.18)"
+    : "7px 7px 16px rgba(50,80,150,0.2), -4px -4px 10px rgba(200,220,255,0.4), inset 3px 3px 6px rgba(180,210,255,0.3), inset -2px -2px 4px rgba(40,60,120,0.12)";
+
   const features = [
     "Unlimited projects",
     "Priority support",
@@ -231,23 +283,22 @@ function PricingCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
       whileTap={{ scale: 0.97 }}
-      className="font-[family-name:var(--font-clay)] w-full max-w-xs rounded-[26px] bg-[#dce8fc] p-7"
+      className={`font-[family-name:var(--font-clay)] w-full max-w-xs rounded-[26px] p-7 ${isDark ? "bg-[#1e2840]" : "bg-[#dce8fc]"}`}
       style={{
-        boxShadow:
-          "10px 10px 22px rgba(60,90,160,0.14), -6px -6px 16px rgba(230,240,255,0.9), inset 3px 3px 6px rgba(240,248,255,0.7), inset -2px -2px 5px rgba(60,80,140,0.06)",
+        boxShadow: cardShadow,
         ...customStyle,
       }}
     >
       {/* Badge row */}
       <div className="mb-5 flex items-center gap-2.5">
         <div
-          className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-[#b8cdef]"
+          className={`flex h-9 w-9 items-center justify-center rounded-[12px] ${isDark ? "bg-[#2a3858]" : "bg-[#b8cdef]"}`}
           style={{ boxShadow: clayIconShadow }}
         >
           <Crown size={16} strokeWidth={2.5} className="text-[#4a6fa5]" />
         </div>
         <span
-          className="rounded-full bg-[#c2d5f5] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#4a6fa5]"
+          className={`rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#4a6fa5] ${isDark ? "bg-[#2a3858]" : "bg-[#c2d5f5]"}`}
           style={{ boxShadow: clayPillShadow }}
         >
           Pro Plan
@@ -255,11 +306,11 @@ function PricingCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       </div>
 
       {/* Price */}
-      <p className="mb-1 text-5xl font-extrabold text-gray-800">
+      <p className={`mb-1 text-5xl font-extrabold ${isDark ? "text-gray-200" : "text-gray-800"}`}>
         $29
-        <span className="text-base font-semibold text-gray-500">/mo</span>
+        <span className={`text-base font-semibold ${isDark ? "text-gray-400" : "text-gray-500"}`}>/mo</span>
       </p>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className={`mb-6 text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>
         Everything you need to grow
       </p>
 
@@ -268,10 +319,10 @@ function PricingCard({ customStyle }: { customStyle?: React.CSSProperties }) {
         {features.map((feature) => (
           <li
             key={feature}
-            className="flex items-center gap-3 text-sm text-gray-700"
+            className={`flex items-center gap-3 text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}
           >
             <span
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#c2d5f5]"
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${isDark ? "bg-[#2a3858]" : "bg-[#c2d5f5]"}`}
               style={{ boxShadow: clayCheckShadow }}
             >
               <Check size={13} strokeWidth={3} className="text-[#4a6fa5]" />
@@ -285,10 +336,7 @@ function PricingCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       <motion.button
         whileTap={{ scale: 0.92, boxShadow: clayBtnPressed }}
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#6b8fd4] py-3.5 text-sm font-bold text-white"
-        style={{
-          boxShadow:
-            "7px 7px 16px rgba(50,80,150,0.2), -4px -4px 10px rgba(200,220,255,0.4), inset 3px 3px 6px rgba(180,210,255,0.3), inset -2px -2px 4px rgba(40,60,120,0.12)",
-        }}
+        style={{ boxShadow: ctaShadow }}
       >
         <Star size={15} strokeWidth={2.5} />
         Get Started
