@@ -1,16 +1,15 @@
-import {
-  Palette,
-  BookOpen,
-  Sparkles,
-  Layers,
-  Box,
-  Minimize2,
-  Circle,
-  Gem,
-  Droplets,
-  Zap,
-} from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { SidebarOptionsProps } from "@/types/docs/sidebar-types";
+import {
+  GlassmorphismIcon,
+  LiquidGlassIcon,
+  NeobrutalismIcon,
+  ClaymorphismIcon,
+  MetalLiquidIcon,
+  MinimalismIcon,
+  NeomorphismIcon,
+  SkeuomorphismIcon,
+} from "@/components/ui/ParadigmIcons";
 
 export const SIDEBAR_OPTIONS: SidebarOptionsProps = {
   gettingStarted: [
@@ -34,42 +33,42 @@ export const SIDEBAR_OPTIONS: SidebarOptionsProps = {
         {
           title: "Glassmorphism",
           url: "/docs/glassmorphism",
-          icon: <Sparkles className="size-4" />,
+          icon: <GlassmorphismIcon className="size-4" />,
         },
         {
           title: "Liquid Glass",
           url: "/docs/liquid-glass",
-          icon: <Droplets className="size-4" />,
+          icon: <LiquidGlassIcon className="size-4" />,
         },
         {
           title: "Neobrutalism",
           url: "/docs/neobrutalism",
-          icon: <Zap className="size-4" />,
+          icon: <NeobrutalismIcon className="size-4" />,
         },
         {
           title: "Claymorphism",
           url: "/docs/claymorphism",
-          icon: <Box className="size-4" />,
+          icon: <ClaymorphismIcon className="size-4" />,
         },
         {
           title: "Metal Liquid",
           url: "/docs/metal-liquid",
-          icon: <Gem className="size-4" />,
+          icon: <MetalLiquidIcon className="size-4" />,
         },
         {
           title: "Minimalism",
           url: "/docs/minimalism",
-          icon: <Minimize2 className="size-4" />,
+          icon: <MinimalismIcon className="size-4" />,
         },
         {
           title: "Neomorphism",
           url: "/docs/neomorphism",
-          icon: <Circle className="size-4" />,
+          icon: <NeomorphismIcon className="size-4" />,
         },
         {
           title: "Skeuomorphism",
           url: "/docs/skeuomorphism",
-          icon: <Layers className="size-4" />,
+          icon: <SkeuomorphismIcon className="size-4" />,
         },
       ],
     },
