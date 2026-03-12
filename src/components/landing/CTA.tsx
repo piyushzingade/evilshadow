@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ArrowRight } from "lucide-react";
+import { DotCluster, DotNebula, DotCorner } from "./DotMatrix";
 
 const footerLinks = [
   { label: "Documentation", href: "/docs" },
@@ -12,62 +13,6 @@ const footerLinks = [
   { label: "Neobrutalism", href: "/docs/neobrutalism" },
   { label: "Minimalism", href: "/docs/minimalism" },
 ];
-
-/* ── Floating decorative grid dots ── */
-function DecorativeGrid({
-  position,
-}: {
-  position: "left" | "right";
-}) {
-  const cols = 5;
-  const rows = 5;
-  const dots = [];
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      dots.push({ r, c, key: `${r}-${c}` });
-    }
-  }
-
-  return (
-    <div
-      className={`absolute top-1/2 -translate-y-1/2 hidden lg:block ${
-        position === "left" ? "left-[8%]" : "right-[8%]"
-      }`}
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-        className="grid gap-3"
-        style={{
-          gridTemplateColumns: `repeat(${cols}, 4px)`,
-          gridTemplateRows: `repeat(${rows}, 4px)`,
-        }}
-      >
-        {dots.map((dot, i) => (
-          <motion.div
-            key={dot.key}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 0.2, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              delay: 0.4 + i * 0.02,
-              type: "spring",
-              damping: 20,
-            }}
-            className="rounded-full"
-            style={{
-              width: "4px",
-              height: "4px",
-              backgroundColor: "var(--color-accent)",
-            }}
-          />
-        ))}
-      </motion.div>
-    </div>
-  );
-}
 
 /* ── Floating accent crosses ── */
 function FloatingCross({
@@ -150,9 +95,35 @@ export function CTA() {
           />
         </div>
 
-        {/* Floating decorative elements */}
-        <DecorativeGrid position="left" />
-        <DecorativeGrid position="right" />
+        {/* Dot nebula — left side */}
+        <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-[4%] hidden lg:block">
+          <DotNebula animationDelay={0.3} color="var(--color-accent)" className="opacity-40" />
+        </div>
+
+        {/* Dot cluster — right side */}
+        <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 right-[5%] hidden lg:block">
+          <DotCluster
+            rows={18}
+            cols={14}
+            dotSize={3}
+            gap={4}
+            seed={50}
+            density={0.5}
+            color="var(--color-accent)"
+            className="opacity-20"
+            animationDelay={0.4}
+          />
+        </div>
+
+        {/* Corner dot accents */}
+        <div className="pointer-events-none absolute top-8 left-8 hidden xl:block">
+          <DotCorner size={6} dotSize={3} gap={4} animationDelay={0.2} />
+        </div>
+        <div className="pointer-events-none absolute bottom-8 right-8 hidden xl:block">
+          <DotCorner size={6} dotSize={3} gap={4} mirror animationDelay={0.3} />
+        </div>
+
+        {/* Floating crosses */}
         <FloatingCross className="top-[20%] left-[15%]" delay={0.2} />
         <FloatingCross className="bottom-[25%] right-[12%]" delay={0.4} />
         <FloatingCross className="top-[30%] right-[20%]" delay={0.5} />

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { stylesRegistry } from "@/lib/styles-registry";
 import { useComponentCustomizer } from "@/hooks/useComponentCustomizer";
 import { StyleId } from "@/types";
+import { DotCluster, DotSparse } from "./DotMatrix";
 
 function DemoCard({
   styleId,
@@ -61,8 +62,36 @@ export function InteractiveDemo() {
   );
 
   return (
-    <section className="px-6 py-28">
-      <div className="mx-auto max-w-6xl">
+    <section className="relative px-6 py-28 overflow-hidden">
+      {/* Sparse dot field — background texture */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">
+        <DotSparse
+          rows={10}
+          cols={50}
+          dotSize={2}
+          gap={14}
+          seed={22}
+          sparsity={0.82}
+          className="opacity-60"
+          animationDelay={0.3}
+        />
+      </div>
+
+      {/* Dot cluster — right side accent */}
+      <div className="pointer-events-none absolute top-16 right-[4%] hidden xl:block">
+        <DotCluster
+          rows={15}
+          cols={12}
+          dotSize={3}
+          gap={3}
+          seed={66}
+          density={0.5}
+          className="opacity-12"
+          animationDelay={0.4}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl">
         {/* Section header */}
         <div className="mb-4">
           <p className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.2em] text-[var(--color-fg-muted)]">

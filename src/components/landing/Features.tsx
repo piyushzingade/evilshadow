@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { DotCluster, DotDivider, DotNebula } from "./DotMatrix";
 
 const features = [
   {
@@ -37,7 +38,26 @@ const features = [
 
 export function Features() {
   return (
-    <section className="px-6 py-28">
+    <section className="relative px-6 py-28 overflow-hidden">
+      {/* Dot nebula — left side atmosphere */}
+      <div className="pointer-events-none absolute top-[15%] left-[2%] hidden xl:block">
+        <DotNebula animationDelay={0.3} className="opacity-50" />
+      </div>
+
+      {/* Dot cluster — right side accent */}
+      <div className="pointer-events-none absolute bottom-[20%] right-[3%] hidden lg:block">
+        <DotCluster
+          rows={20}
+          cols={16}
+          dotSize={3}
+          gap={3}
+          seed={44}
+          density={0.55}
+          className="opacity-12"
+          animationDelay={0.5}
+        />
+      </div>
+
       <div className="mx-auto max-w-5xl">
         {/* Section header */}
         <AnimatedSection className="mb-4">
@@ -78,6 +98,11 @@ export function Features() {
               </div>
             </AnimatedSection>
           ))}
+        </div>
+
+        {/* Dot divider at the bottom */}
+        <div className="mt-16">
+          <DotDivider animationDelay={0.4} />
         </div>
       </div>
     </section>

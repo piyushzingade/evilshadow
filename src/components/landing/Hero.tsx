@@ -1,78 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Github } from "lucide-react";
+import { DotCluster, DotNebula } from "./DotMatrix";
 
 const words = ["EXPLORE.", "CUSTOMIZE.", "SHIP."];
-
-function seededRandom(seed: number): number {
-  const x = Math.sin(seed * 9301 + 49297) * 233280;
-  return x - Math.floor(x);
-}
-
-function DotMatrix({
-  rows,
-  cols,
-  className,
-}: {
-  rows: number;
-  cols: number;
-  className?: string;
-}) {
-  const dots = useMemo(() => {
-    const result: { row: number; col: number; opacity: number }[] = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const centerR = rows / 2;
-        const centerC = cols / 2;
-        const dist = Math.sqrt(
-          Math.pow((r - centerR) / centerR, 2) +
-            Math.pow((c - centerC) / centerC, 2)
-        );
-        const seed = r * cols + c;
-        if (dist < 0.85 && seededRandom(seed) > dist * 0.6) {
-          result.push({
-            row: r,
-            col: c,
-            opacity: Math.max(0.15, 1 - dist * 1.2),
-          });
-        }
-      }
-    }
-    return result;
-  }, [rows, cols]);
-
-  return (
-    <div
-      className={className}
-      style={{
-        display: "grid",
-        gridTemplateRows: `repeat(${rows}, 4px)`,
-        gridTemplateColumns: `repeat(${cols}, 4px)`,
-        gap: "3px",
-      }}
-    >
-      {dots.map((dot, i) => (
-        <motion.div
-          key={`${dot.row}-${dot.col}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: dot.opacity }}
-          transition={{ delay: 0.8 + i * 0.003, duration: 0.4 }}
-          style={{
-            gridRow: dot.row + 1,
-            gridColumn: dot.col + 1,
-            width: "4px",
-            height: "4px",
-            backgroundColor: "var(--color-fg)",
-            borderRadius: "0.5px",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
 
 /* ── Floating style preview cards for the right side ── */
 function FloatingStyles() {
@@ -427,9 +360,28 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Dot matrix decoration - repositioned for split layout */}
+      {/* Dot matrix cluster — bottom right */}
       <div className="pointer-events-none absolute right-[2%] bottom-[15%] hidden xl:block">
-        <DotMatrix rows={25} cols={18} className="opacity-20" />
+        <DotCluster rows={25} cols={18} className="opacity-20" animationDelay={0.8} />
+      </div>
+
+      {/* Dot nebula — top left atmosphere */}
+      <div className="pointer-events-none absolute top-[8%] left-[3%] hidden lg:block">
+        <DotNebula animationDelay={1.2} className="opacity-60" />
+      </div>
+
+      {/* Small dot cluster — left edge midway */}
+      <div className="pointer-events-none absolute left-[1%] top-[55%] hidden xl:block">
+        <DotCluster
+          rows={12}
+          cols={10}
+          dotSize={3}
+          gap={4}
+          seed={88}
+          density={0.5}
+          className="opacity-15"
+          animationDelay={1.5}
+        />
       </div>
 
       {/* Bottom dashed line separator */}

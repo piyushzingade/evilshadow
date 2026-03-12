@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { DotCluster, DotSparse } from "./DotMatrix";
 
 const stats = [
   {
@@ -71,7 +72,49 @@ const techStack = [
 
 export function Stats() {
   return (
-    <section className="px-6 py-28">
+    <section className="relative px-6 py-28 overflow-hidden">
+      {/* Sparse dot texture — full width background */}
+      <div className="pointer-events-none absolute top-[30%] left-1/2 -translate-x-1/2 hidden md:block">
+        <DotSparse
+          rows={6}
+          cols={60}
+          dotSize={2}
+          gap={16}
+          seed={99}
+          sparsity={0.85}
+          className="opacity-50"
+          animationDelay={0.2}
+        />
+      </div>
+
+      {/* Dot cluster — between stats */}
+      <div className="pointer-events-none absolute top-[40%] left-[6%] hidden xl:block">
+        <DotCluster
+          rows={10}
+          cols={10}
+          dotSize={3}
+          gap={4}
+          seed={7}
+          density={0.45}
+          className="opacity-10"
+          animationDelay={0.6}
+        />
+      </div>
+
+      {/* Dot cluster — right side */}
+      <div className="pointer-events-none absolute bottom-[25%] right-[5%] hidden xl:block">
+        <DotCluster
+          rows={12}
+          cols={8}
+          dotSize={3}
+          gap={4}
+          seed={19}
+          density={0.5}
+          className="opacity-12"
+          animationDelay={0.8}
+        />
+      </div>
+
       <div className="mx-auto max-w-6xl">
         {/* Top dashed separator */}
         <div className="mb-16 w-full border-t border-dashed border-[var(--color-border)]" />
