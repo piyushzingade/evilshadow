@@ -39,9 +39,56 @@ export function Navbar() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link
             href="/"
-            className="font-[family-name:var(--font-display)] text-2xl italic text-[var(--color-fg)]"
+            className="flex items-center gap-2.5"
           >
-            EvilShadow
+            <svg
+              viewBox="0 0 512 512"
+              className="h-7 w-7"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient
+                  id="es-mark"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#a5b4fc" />
+                  <stop offset="100%" stopColor="#818cf8" />
+                </linearGradient>
+              </defs>
+              <rect
+                x="184"
+                y="184"
+                width="216"
+                height="216"
+                rx="24"
+                transform="rotate(45 292 292)"
+                fill="#1e1b4b"
+              />
+              <rect
+                x="148"
+                y="148"
+                width="216"
+                height="216"
+                rx="24"
+                transform="rotate(45 256 256)"
+                fill="#4338ca"
+              />
+              <rect
+                x="112"
+                y="112"
+                width="216"
+                height="216"
+                rx="24"
+                transform="rotate(45 220 220)"
+                fill="url(#es-mark)"
+              />
+            </svg>
+            <span className="font-[family-name:var(--font-display)] text-2xl italic text-[var(--color-fg)]">
+              EvilShadow
+            </span>
           </Link>
 
           {/* Desktop Nav */}
