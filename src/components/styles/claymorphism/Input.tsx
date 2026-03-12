@@ -61,7 +61,7 @@ const claySelectShadowDark =
   "inset 5px 5px 12px rgba(0,0,0,0.2), inset -3px -3px 8px rgba(255,255,255,0.05), 3px 3px 8px rgba(0,0,0,0.1), -2px -2px 6px rgba(255,255,255,0.03)";
 
 const claySelectCardShadowLight =
-  "10px 10px 22px rgba(80,60,140,0.12), -6px -6px 16px rgba(240,235,255,0.85), inset 3px 3px 6px rgba(245,240,255,0.6), inset -2px -2px 5px rgba(80,60,120,0.06)";
+  "10px 10px 22px rgba(140,100,40,0.12), -6px -6px 16px rgba(255,245,230,0.85), inset 3px 3px 6px rgba(255,248,235,0.6), inset -2px -2px 5px rgba(120,90,40,0.06)";
 const claySelectCardShadowDark =
   "10px 10px 22px rgba(0,0,0,0.3), -6px -6px 16px rgba(255,255,255,0.03), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 5px rgba(0,0,0,0.12)";
 
@@ -91,8 +91,8 @@ function RoundedInput({ customStyle }: { customStyle?: React.CSSProperties }) {
   const charCountShadow = isDark ? clayCharCountDark : clayCharCountLight;
 
   const cardGradient = isDark
-    ? "linear-gradient(160deg, #2a2035 0%, #252040 50%, #2e2530 100%)"
-    : "linear-gradient(160deg, #f5e6f0 0%, #e8ddf5 50%, #fce4d6 100%)";
+    ? "linear-gradient(160deg, #302418 0%, #2a2418 50%, #302820 100%)"
+    : "linear-gradient(160deg, #f5e8d8 0%, #f0e4d4 50%, #fce4d6 100%)";
 
   return (
     <motion.div
@@ -103,7 +103,7 @@ function RoundedInput({ customStyle }: { customStyle?: React.CSSProperties }) {
     >
       {/* Phone / card frame with pastel gradient */}
       <div
-        className="overflow-hidden rounded-[28px] border-[3px] border-[#9b8ec4]"
+        className="overflow-hidden rounded-[28px] border-[3px] border-[#b09878]"
         style={{
           boxShadow: clayCardOuter,
           background: cardGradient,
@@ -115,11 +115,11 @@ function RoundedInput({ customStyle }: { customStyle?: React.CSSProperties }) {
           className={`mx-3.5 mt-3.5 rounded-[20px] px-6 py-7 text-center ${isDark ? "bg-[#1e3830]" : "bg-[#c4ede0]"}`}
           style={{ boxShadow: clayHeaderInset }}
         >
-          {/* Purple icon */}
+          {/* Accent icon */}
           <motion.div
             animate={{ rotate: [0, -5, 5, -3, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4 }}
-            className="mx-auto mb-3.5 flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#9b8ec4]"
+            className="mx-auto mb-3.5 flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#b09878]"
             style={{ boxShadow: clayIconShadow }}
           >
             <Pencil size={16} strokeWidth={2.5} className="text-white" />
@@ -138,12 +138,12 @@ function RoundedInput({ customStyle }: { customStyle?: React.CSSProperties }) {
               rows={5}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className={`w-full resize-none rounded-[18px] border-none px-5 py-4 text-sm placeholder-gray-400 outline-none ${isDark ? "bg-[#2a2540]/90 text-gray-200" : "bg-white/90 text-gray-800"}`}
+              className={`w-full resize-none rounded-[18px] border-none px-5 py-4 text-sm placeholder-gray-400 outline-none ${isDark ? "bg-[#302a20]/90 text-gray-200" : "bg-white/90 text-gray-800"}`}
               style={{ boxShadow: claySunkenInput }}
             />
             {/* Character count pill */}
             <span
-              className={`absolute bottom-3 right-3 rounded-full px-2.5 py-0.5 text-[10px] font-bold text-gray-400 ${isDark ? "bg-[#352e50]" : "bg-[#f0eef6]"}`}
+              className={`absolute bottom-3 right-3 rounded-full px-2.5 py-0.5 text-[10px] font-bold text-gray-400 ${isDark ? "bg-[#3a3228]" : "bg-[#f5f0e8]"}`}
               style={{ boxShadow: charCountShadow }}
             >
               {text.length}/500
@@ -195,10 +195,10 @@ function SelectInput({ customStyle }: { customStyle?: React.CSSProperties }) {
     >
       {/* Card wrapper for context */}
       <div
-        className={`rounded-[24px] p-5 ${isDark ? "bg-[#2a2540]" : "bg-[#f0edf8]"}`}
+        className={`rounded-[24px] p-5 ${isDark ? "bg-[#302a20]" : "bg-[#f5f0e8]"}`}
         style={{ boxShadow: claySelectCardShadow }}
       >
-        <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#9b8ec4]">
+        <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#b09878]">
           Choose a phase
         </p>
 
@@ -206,7 +206,7 @@ function SelectInput({ customStyle }: { customStyle?: React.CSSProperties }) {
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => setOpen((v) => !v)}
-          className={`flex w-full items-center justify-between rounded-[16px] px-5 py-4 text-sm font-semibold outline-none ${isDark ? "bg-[#352e50] text-gray-300" : "bg-[#e8ddf5] text-gray-700"}`}
+          className={`flex w-full items-center justify-between rounded-[16px] px-5 py-4 text-sm font-semibold outline-none ${isDark ? "bg-[#3a3228] text-gray-300" : "bg-[#f0e4d4] text-gray-700"}`}
           style={{ boxShadow: claySelectShadow }}
         >
           <span className={selected ? (isDark ? "text-gray-200" : "text-gray-800") : "text-gray-400"}>
@@ -218,7 +218,7 @@ function SelectInput({ customStyle }: { customStyle?: React.CSSProperties }) {
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.25 }}
           >
-            <ChevronDown size={18} strokeWidth={2.5} className="text-[#9b8ec4]" />
+            <ChevronDown size={18} strokeWidth={2.5} className="text-[#b09878]" />
           </motion.div>
         </motion.button>
 
@@ -240,9 +240,9 @@ function SelectInput({ customStyle }: { customStyle?: React.CSSProperties }) {
                 }}
                 className={`w-full rounded-[14px] px-5 py-3 text-left text-sm font-semibold transition-colors ${
                   selected === option.value
-                    ? "bg-[#9b8ec4] text-white"
+                    ? "bg-[#b09878] text-white"
                     : isDark
-                      ? "bg-[#352e50]/80 text-gray-300"
+                      ? "bg-[#3a3228]/80 text-gray-300"
                       : "bg-white/80 text-gray-700"
                 }`}
                 style={{ boxShadow: clayOptionShadow }}

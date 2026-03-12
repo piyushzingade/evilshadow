@@ -85,9 +85,9 @@ const clayPillPressedLight =
 const clayPillPressedDark =
   "inset 4px 4px 10px rgba(0,0,0,0.3), inset -3px -3px 7px rgba(255,255,255,0.06), 1px 1px 2px rgba(0,0,0,0.12)";
 
-/* ─── Lavender pill shadow (light / dark) ─── */
+/* ─── Warm cream pill shadow (light / dark) ─── */
 const clayLavenderPillLight =
-  "7px 7px 16px rgba(80,60,140,0.12), -4px -4px 12px rgba(240,235,255,0.7), inset 3px 3px 6px rgba(240,235,255,0.5), inset -2px -2px 4px rgba(80,60,120,0.08)";
+  "7px 7px 16px rgba(140,100,40,0.12), -4px -4px 12px rgba(255,245,230,0.7), inset 3px 3px 6px rgba(255,245,230,0.5), inset -2px -2px 4px rgba(120,90,40,0.08)";
 const clayLavenderPillDark =
   "7px 7px 16px rgba(0,0,0,0.3), -4px -4px 12px rgba(255,255,255,0.04), inset 3px 3px 6px rgba(255,255,255,0.06), inset -2px -2px 4px rgba(0,0,0,0.12)";
 
@@ -170,9 +170,9 @@ function ToggleButton({ customStyle }: { customStyle?: React.CSSProperties }) {
   const clayToggleKnobOff = isDark ? clayToggleKnobOffDark : clayToggleKnobOffLight;
   const toggleLabelShadow = isDark ? clayToggleLabelDark : clayToggleLabelLight;
 
-  const offBg = isDark ? "bg-[#2a2540]" : "bg-[#e8e2f0]";
+  const offBg = isDark ? "bg-[#302a20]" : "bg-[#f0e8dc]";
   const knobOffBg = isDark ? "bg-[#3a3548]" : "bg-[#f5f2fa]";
-  const labelOffBg = isDark ? "bg-[#2a2540]" : "bg-[#e8e2f0]";
+  const labelOffBg = isDark ? "bg-[#302a20]" : "bg-[#f0e8dc]";
 
   return (
     <div
@@ -249,7 +249,7 @@ function PillButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* ── Lavender pill ── */}
       <motion.button
         whileTap={{ scale: 0.92, boxShadow: clayPillPressed }}
-        className={`flex items-center gap-2 rounded-full px-9 py-3 text-sm font-bold text-[#5b4ba0] ${isDark ? "bg-[#2a2540]" : "bg-[#d4ccec]"}`}
+        className={`flex items-center gap-2 rounded-full px-9 py-3 text-sm font-bold text-[#8a6a40] ${isDark ? "bg-[#302a20]" : "bg-[#e0d4c0]"}`}
         style={{ boxShadow: lavenderShadow }}
       >
         Explore

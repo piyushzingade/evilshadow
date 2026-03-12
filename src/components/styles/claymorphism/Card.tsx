@@ -78,7 +78,7 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
     <AnimatePresence>
       {visible && (
         <div
-          className={`font-[family-name:var(--font-clay)] w-full max-w-md rounded-[28px] p-2.5 ${isDark ? "bg-[#1e1a2e]/60" : "bg-[#e0daf0]/60"}`}
+          className={`font-[family-name:var(--font-clay)] w-full max-w-md rounded-[28px] p-2.5 ${isDark ? "bg-[#241e16]/60" : "bg-[#f0e8dc]/60"}`}
           style={customStyle}
         >
           <motion.div
@@ -86,7 +86,7 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.95 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className={`relative w-full rounded-[26px] px-8 pb-9 pt-7 ${isDark ? "bg-[#2a2540]" : "bg-[#f2eff8]"}`}
+            className={`relative w-full rounded-[26px] px-8 pb-9 pt-7 ${isDark ? "bg-[#302a20]" : "bg-[#f7f2ea]"}`}
             style={{ boxShadow: clayCardOuter }}
           >
             {/* ── Close button (X) ── */}
@@ -96,7 +96,7 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                 setVisible(false);
                 setTimeout(() => setVisible(true), 1200);
               }}
-              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#9b8ec4] text-white"
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#b09878] text-white"
               style={{ boxShadow: closeBtnShadow }}
             >
               <X size={16} strokeWidth={3} />
@@ -142,7 +142,7 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
               {/* ── Text content ── */}
               <div className="flex-1 pt-5">
-                <h2 className={`mb-3 text-[26px] font-extrabold leading-tight ${isDark ? "text-[#b8a8e0]" : "text-[#5b4ba0]"}`}>
+                <h2 className={`mb-3 text-[26px] font-extrabold leading-tight ${isDark ? "text-[#d4c0a0]" : "text-[#8a6a40]"}`}>
                   Hey, Wait!!
                 </h2>
                 <p className={`text-[15px] leading-relaxed ${isDark ? "text-gray-400" : "text-gray-600"}`}>
@@ -156,14 +156,14 @@ function DialogCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             <div className="mt-7 flex gap-4 pl-[120px]">
               <motion.button
                 whileTap={{ scale: 0.92, boxShadow: clayBtnPressed }}
-                className={`flex-1 rounded-2xl px-5 py-3.5 text-sm font-bold ${isDark ? "bg-[#2a2540] text-gray-300" : "bg-white text-gray-700"}`}
+                className={`flex-1 rounded-2xl px-5 py-3.5 text-sm font-bold ${isDark ? "bg-[#302a20] text-gray-300" : "bg-white text-gray-700"}`}
                 style={{ boxShadow: clayBtnResting }}
               >
                 Yes, Maybe Later
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.92, boxShadow: clayBtnPressed }}
-                className={`flex-1 rounded-2xl border-2 px-5 py-3.5 text-sm font-bold text-[#6b5ea0] ${isDark ? "border-[#4a4068] bg-[#352e50]" : "border-[#c4b8e0] bg-[#ece8f5]"}`}
+                className={`flex-1 rounded-2xl border-2 px-5 py-3.5 text-sm font-bold text-[#8a6e48] ${isDark ? "border-[#5a4a38] bg-[#3a3228]" : "border-[#d8c8a8] bg-[#f5efe5]"}`}
                 style={{ boxShadow: outlineBtnShadow }}
               >
                 No, I Want to Stay
