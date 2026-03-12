@@ -267,6 +267,147 @@ body {
   margin-right: auto;
 }
 
+/* ── Docs content wrapper (layout level) ── */
+.docs-content-wrapper {
+  width: 100%;
+  padding: 2rem 2.5rem 4rem;
+}
+
+@media (max-width: 640px) {
+  .docs-content-wrapper {
+    padding: 1.5rem 1rem 3rem;
+  }
+}
+
+/* ── Docs page container ── */
+.docs-page {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Docs prose — typography for MDX content ── */
+.docs-prose {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.docs-prose h2 {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.docs-prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.docs-prose p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--color-fg-muted);
+  margin-bottom: 1rem;
+}
+
+.docs-prose ol {
+  list-style: none;
+  counter-reset: docs-counter;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+}
+
+.docs-prose ol li {
+  counter-increment: docs-counter;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--color-fg-muted);
+}
+
+.docs-prose ol li::before {
+  content: counter(docs-counter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.375rem;
+  background: var(--color-border-subtle);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-fg-muted);
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.docs-prose ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.docs-prose ul li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--color-fg-muted);
+}
+
+.docs-prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.docs-prose strong {
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.docs-prose code {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  background: var(--color-border-subtle);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  color: var(--color-fg);
+}
+
+.docs-prose a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--color-accent);
+  transition: border-color 0.2s ease;
+}
+
+.docs-prose a:hover {
+  border-bottom-style: solid;
+}
+
 /* ── Code styling ── */
 pre {
   padding: 10px;

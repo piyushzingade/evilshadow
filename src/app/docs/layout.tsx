@@ -14,7 +14,7 @@ export default function Layout({
         {/* Header */}
         <DocsHeader />
         {/* Content */}
-        <div className="p-6 w-full">{children}</div>
+        <div className="docs-content-wrapper">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

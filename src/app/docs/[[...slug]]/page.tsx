@@ -1,6 +1,7 @@
 import { source } from "@/lib/source";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { DocsPageContent } from "@/components/docs/DocsPageContent";
 
 export default async function Page({
   params,
@@ -14,17 +15,23 @@ export default async function Page({
 
   const { body: Mdx } = await page.data.load();
 
-  return (
-    <div className="page">
-      <div className="flex flex-col sm:gap-1">
-        <h1 className="text-2xl sm:text-3xl font-bold">{page.data.title}</h1>
-        <p className="text-muted-foreground text-xs sm:text-sm">
-          {page.data.description}
-        </p>
-      </div>
-      <div className="prose prose-sm dark:prose-invert max-w-none">
+  const isIndex = slug.length === 0;
+
+  if (isIndex) {
+    return (
+      <DocsPageContent
+        title={page.data.title}
+        description={page.data.description}
+      >
         <Mdx />
-      </div>
+      </DocsPageContent>
+    );
+  }
+
+  // Style pages — StylePageWrapper handles its own header
+  return (
+    <div className="docs-page">
+      <Mdx />
     </div>
   );
 }
