@@ -79,6 +79,11 @@ export function ComponentSection({
     );
   }
 
+  const previewClassName =
+    styleId === "glassmorphism"
+      ? "glass-preview-bg flex min-h-[280px] items-center justify-center p-8"
+      : undefined;
+
   return (
     <div className="flex flex-col gap-8">
       {variants.map((variant) => (
@@ -86,6 +91,7 @@ export function ComponentSection({
           key={variant.id}
           name={variant.name}
           code={generateCodeString(styleId, componentType, variant.id, customizerState)}
+          previewClassName={previewClassName}
         >
           <StyleComponent variant={variant.id} customStyle={cssStyles} />
         </ComponentPreview>

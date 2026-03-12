@@ -8,9 +8,10 @@ interface ComponentPreviewProps {
   name: string;
   children: React.ReactNode;
   code: string;
+  previewClassName?: string;
 }
 
-export function ComponentPreview({ name, children, code }: ComponentPreviewProps) {
+export function ComponentPreview({ name, children, code, previewClassName }: ComponentPreviewProps) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
 
   const tabs = [
@@ -52,7 +53,7 @@ export function ComponentPreview({ name, children, code }: ComponentPreviewProps
       </div>
 
       {tab === "preview" ? (
-        <div className="preview-grid flex min-h-[200px] items-center justify-center p-8 bg-[var(--color-preview-bg)]">
+        <div className={previewClassName || "preview-grid flex min-h-[200px] items-center justify-center p-8 bg-[var(--color-preview-bg)]"}>
           {children}
         </div>
       ) : (
