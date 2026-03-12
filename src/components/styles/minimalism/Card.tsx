@@ -26,7 +26,7 @@ function StatCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-      className="relative w-72 bg-zinc-100 px-10 py-16 overflow-hidden"
+      className="relative w-72 bg-zinc-100 dark:bg-zinc-900 px-10 py-16 overflow-hidden"
       style={customStyle}
     >
       {/* Light noise texture */}
@@ -35,13 +35,13 @@ function StatCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       <NoiseLayer opacity={0.07} />
 
       {/* Subtle top-left emboss highlight */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/[0.02]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 dark:from-white/10 via-transparent to-black/[0.02]" />
 
-      <p className="relative font-[family-name:var(--font-editorial)] text-7xl tracking-tight text-zinc-800 leading-none mix-blend-multiply">
+      <p className="relative font-[family-name:var(--font-editorial)] text-7xl tracking-tight text-zinc-800 dark:text-zinc-200 leading-none mix-blend-multiply dark:mix-blend-normal">
         1,284
       </p>
-      <div className="relative mt-6 h-px w-8 bg-zinc-300" />
-      <p className="relative mt-4 text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-[family-name:var(--font-mono)]">
+      <div className="relative mt-6 h-px w-8 bg-zinc-300 dark:bg-zinc-600" />
+      <p className="relative mt-4 text-[10px] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500 font-[family-name:var(--font-mono)]">
         Active Users
       </p>
     </motion.div>
@@ -59,31 +59,31 @@ function ContentCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-      className="relative w-80 bg-white border border-zinc-100 px-10 py-14"
+      className="relative w-80 bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-800 px-10 py-14"
       style={customStyle}
     >
       {/* Hairline top accent */}
-      <div className="absolute top-0 left-10 right-10 h-px bg-zinc-200" />
+      <div className="absolute top-0 left-10 right-10 h-px bg-zinc-200 dark:bg-zinc-700" />
 
-      <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-[family-name:var(--font-mono)] mb-6">
+      <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500 font-[family-name:var(--font-mono)] mb-6">
         Principle 10
       </p>
 
-      <h3 className="font-[family-name:var(--font-editorial)] text-2xl text-zinc-900 leading-[1.2] tracking-tight">
+      <h3 className="font-[family-name:var(--font-editorial)] text-2xl text-zinc-900 dark:text-zinc-100 leading-[1.2] tracking-tight">
         Less, but better
       </h3>
 
-      <p className="mt-6 text-[13px] leading-[2] text-zinc-400 font-light">
+      <p className="mt-6 text-[13px] leading-[2] text-zinc-400 dark:text-zinc-500 font-light">
         Good design is as little design as possible. Concentrate on the
         essential aspects, and the products are not burdened with
         non-essentials. Back to purity, back to simplicity.
       </p>
 
-      <div className="mt-10 h-px w-full bg-zinc-100" />
+      <div className="mt-10 h-px w-full bg-zinc-100 dark:bg-zinc-800" />
 
       <a
         href="#"
-        className="group mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-zinc-400 font-[family-name:var(--font-mono)] transition-colors duration-500 hover:text-zinc-900"
+        className="group mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 font-[family-name:var(--font-mono)] transition-colors duration-500 hover:text-zinc-900 dark:hover:text-zinc-100"
       >
         <span>Read more</span>
         <motion.span
@@ -111,7 +111,7 @@ function QuoteCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-      className="relative w-80 bg-white px-10 py-16 overflow-hidden"
+      className="relative w-80 bg-white dark:bg-zinc-950 px-10 py-16 overflow-hidden"
       style={customStyle}
     >
       <NoiseLayer />
@@ -129,25 +129,25 @@ function QuoteCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
         {/* N stacked with FF */}
         <div className="flex flex-col -ml-[2px]">
-          <span className="font-[family-name:var(--font-editorial)] text-[76px] font-black text-zinc-900 leading-[0.82] tracking-[-0.02em]">
+          <span className="font-[family-name:var(--font-editorial)] text-[76px] font-black text-zinc-900 dark:text-zinc-100 leading-[0.82] tracking-[-0.02em]">
             N
           </span>
-          <span className="font-[family-name:var(--font-editorial)] text-[50px] font-black text-zinc-900 leading-[0.88] tracking-[-0.01em]">
+          <span className="font-[family-name:var(--font-editorial)] text-[50px] font-black text-zinc-900 dark:text-zinc-100 leading-[0.88] tracking-[-0.01em]">
             FF
           </span>
         </div>
       </div>
 
       {/* Thin divider */}
-      <div className="h-px w-full bg-zinc-200 mb-8" />
+      <div className="h-px w-full bg-zinc-200 dark:bg-zinc-700 mb-8" />
 
       {/* Quote in italic serif */}
-      <blockquote className="font-[family-name:var(--font-editorial)] text-[17px] italic leading-[1.7] text-zinc-600 text-center">
+      <blockquote className="font-[family-name:var(--font-editorial)] text-[17px] italic leading-[1.7] text-zinc-600 dark:text-zinc-400 text-center">
         &ldquo;Do the best you can with what you have, where you are&rdquo;
       </blockquote>
 
       {/* Tiny attribution */}
-      <p className="mt-5 text-center text-[9px] uppercase tracking-[0.35em] text-zinc-300 font-[family-name:var(--font-mono)]">
+      <p className="mt-5 text-center text-[9px] uppercase tracking-[0.35em] text-zinc-300 dark:text-zinc-600 font-[family-name:var(--font-mono)]">
         Theodore Roosevelt
       </p>
     </motion.div>

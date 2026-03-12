@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
+import { useTheme } from "next-themes";
 import { StyleComponentProps } from "@/types";
 
 // ---------------------------------------------------------------------------
@@ -17,6 +18,8 @@ function UnderlineInput({
   customStyle?: React.CSSProperties;
 }) {
   const [isFocused, setIsFocused] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== "light";
 
   return (
     <motion.div
@@ -30,7 +33,11 @@ function UnderlineInput({
       <motion.label
         className="block text-[10px] uppercase tracking-[0.3em] font-[family-name:var(--font-mono)] mb-5 origin-left"
         animate={{
-          color: isFocused ? "rgb(24 24 27)" : "rgb(161 161 170)",
+          color: isFocused
+            ? isDark
+              ? "rgb(228 228 231)"
+              : "rgb(24 24 27)"
+            : "rgb(161 161 170)",
         }}
         transition={{ duration: 0.4 }}
       >
@@ -42,12 +49,12 @@ function UnderlineInput({
         placeholder="you@example.com"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className="w-full border-0 border-b border-zinc-200 bg-transparent pb-4 text-[14px] text-zinc-900 placeholder:text-zinc-300 outline-none tracking-wide font-light transition-colors duration-500 focus:border-zinc-300"
+        className="w-full border-0 border-b border-zinc-200 dark:border-zinc-700 bg-transparent pb-4 text-[14px] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-300 dark:placeholder:text-zinc-600 outline-none tracking-wide font-light transition-colors duration-500 focus:border-zinc-300 dark:focus:border-zinc-600"
       />
 
       {/* Animated focus underline */}
       <motion.div
-        className="absolute bottom-0 left-0 h-px bg-zinc-900 origin-left"
+        className="absolute bottom-0 left-0 h-px bg-zinc-900 dark:bg-zinc-100 origin-left"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isFocused ? 1 : 0 }}
         transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
@@ -81,7 +88,7 @@ function SearchInput({ customStyle }: { customStyle?: React.CSSProperties }) {
           transition={{ duration: 0.4 }}
         >
           <Search
-            className="h-[18px] w-[18px] text-zinc-900 flex-shrink-0"
+            className="h-[18px] w-[18px] text-zinc-900 dark:text-zinc-100 flex-shrink-0"
             strokeWidth={1}
           />
         </motion.div>
@@ -91,13 +98,13 @@ function SearchInput({ customStyle }: { customStyle?: React.CSSProperties }) {
           placeholder="Search..."
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className="w-full border-none bg-transparent text-[14px] text-zinc-900 placeholder:text-zinc-300 outline-none tracking-wide font-light"
+          className="w-full border-none bg-transparent text-[14px] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-300 dark:placeholder:text-zinc-600 outline-none tracking-wide font-light"
         />
       </div>
 
       {/* Barely-there bottom line that appears on focus */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-zinc-200 origin-left"
+        className="absolute bottom-0 left-0 right-0 h-px bg-zinc-200 dark:bg-zinc-700 origin-left"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isFocused ? 1 : 0 }}
         transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}

@@ -21,10 +21,10 @@ function TextButton({ customStyle }: { customStyle?: React.CSSProperties }) {
       className="group relative bg-transparent border-none px-1 py-3 cursor-pointer"
       style={customStyle}
     >
-      <span className="text-[13px] tracking-[0.15em] uppercase text-zinc-600 font-[family-name:var(--font-mono)] transition-colors duration-500 group-hover:text-zinc-900">
+      <span className="text-[13px] tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-400 font-[family-name:var(--font-mono)] transition-colors duration-500 group-hover:text-zinc-900 dark:group-hover:text-zinc-100">
         Learn more
       </span>
-      <span className="absolute bottom-2 left-1 h-px w-0 bg-zinc-900 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:w-[calc(100%-8px)]" />
+      <span className="absolute bottom-2 left-1 h-px w-0 bg-zinc-900 dark:bg-zinc-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:w-[calc(100%-8px)]" />
     </motion.button>
   );
 }
@@ -45,7 +45,7 @@ function OutlinedButton({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
       whileTap={{ scale: 0.98 }}
-      className="border border-zinc-300 bg-transparent px-10 py-4 text-[12px] uppercase tracking-[0.2em] text-zinc-700 font-[family-name:var(--font-mono)] transition-all duration-500 hover:bg-zinc-50 hover:border-zinc-400 hover:text-zinc-900 cursor-pointer"
+      className="border border-zinc-300 dark:border-zinc-600 bg-transparent px-10 py-4 text-[12px] uppercase tracking-[0.2em] text-zinc-700 dark:text-zinc-300 font-[family-name:var(--font-mono)] transition-all duration-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 cursor-pointer"
       style={customStyle}
     >
       Continue
@@ -73,7 +73,7 @@ function ToggleSwitch({ customStyle }: { customStyle?: React.CSSProperties }) {
       {/* Toggle track */}
       <button
         onClick={() => setIsToggled(!isToggled)}
-        className="relative h-[60px] w-[120px] cursor-pointer rounded-full border border-zinc-200/80 bg-zinc-100 p-[3px] transition-colors duration-500 overflow-hidden"
+        className="relative h-[60px] w-[120px] cursor-pointer rounded-full border border-zinc-200/80 dark:border-zinc-700/80 bg-zinc-100 dark:bg-zinc-800 p-[3px] transition-colors duration-500 overflow-hidden"
         style={{
           boxShadow:
             "inset 0 2px 8px rgba(0,0,0,0.07), inset 0 1px 2px rgba(0,0,0,0.05)",
