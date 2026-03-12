@@ -357,7 +357,7 @@ function SceneCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       id: "night",
       label: "Night Scene",
       icon: Moon,
-      activeColor: "text-indigo-400",
+      activeColor: "text-slate-400",
       desc: "Calm & relaxing",
     },
   ];
@@ -435,11 +435,11 @@ function SceneCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             className="h-2 w-2 rounded-full"
             style={{
               backgroundColor:
-                active === "morning" ? "#f59e0b" : "#818cf8",
+                active === "morning" ? "#f59e0b" : "#64748b",
               boxShadow:
                 active === "morning"
                   ? "0 0 6px rgba(245,158,11,0.5)"
-                  : "0 0 6px rgba(129,140,248,0.5)",
+                  : "0 0 6px rgba(100,116,139,0.5)",
             }}
           />
           <span

@@ -89,7 +89,7 @@ function ChromeButton({
           </div>
         </div>
 
-        {/* Subtle ambient purple/blue glow */}
+        {/* Subtle ambient glow */}
         <div
           className="pointer-events-none absolute inset-0 rounded-full"
           style={{

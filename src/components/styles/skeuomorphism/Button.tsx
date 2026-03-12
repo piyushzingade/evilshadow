@@ -173,7 +173,7 @@ function PushButton({ customStyle }: { customStyle?: React.CSSProperties }) {
           >
             <rect x="0" y="0" width="12" height="10" rx="5" fill="#F24E1E" />
             <rect x="12" y="0" width="12" height="10" rx="5" fill="#FF7262" />
-            <rect x="0" y="11" width="12" height="10" rx="5" fill="#A259FF" />
+            <rect x="0" y="11" width="12" height="10" rx="5" fill="#d97706" />
             <circle cx="18" cy="16" r="5" fill="#1ABCFE" />
             <rect x="0" y="22" width="12" height="10" rx="5" fill="#0ACF83" />
           </svg>

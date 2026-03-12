@@ -49,14 +49,14 @@ function EmbossedInput({
         style={{
           background: focused
             ? isDark
-              ? "linear-gradient(180deg, #4a4a72 0%, #3a3a5e 25%, #32325a 50%, #3a3a62 75%, #4e4e78 100%)"
-              : "linear-gradient(180deg, #a0a0e0 0%, #7878b0 25%, #6868a0 50%, #8080b8 75%, #a8a8d8 100%)"
+              ? "linear-gradient(180deg, #5a4a32 0%, #4a3a28 25%, #423222 50%, #4a3a2a 75%, #5a4a36 100%)"
+              : "linear-gradient(180deg, #d8c098 0%, #c0a070 25%, #b09060 50%, #c0a078 75%, #d8c098 100%)"
             : isDark
               ? "linear-gradient(180deg, #4a4a52 0%, #3a3a42 20%, #32323a 40%, #363640 60%, #424248 80%, #4e4e56 100%)"
               : "linear-gradient(180deg, #b8b8c2 0%, #909098 20%, #7e7e88 40%, #8a8a94 60%, #a4a4ae 80%, #c0c0ca 100%)",
           boxShadow: [
             focused
-              ? "0 0 0 2px rgba(99,102,241,0.15)"
+              ? "0 0 0 2px rgba(194,120,58,0.15)"
               : "0 0 0 0 transparent",
             "0 3px 10px rgba(0,0,0,0.12)",
             "0 1px 4px rgba(0,0,0,0.08)",
@@ -110,7 +110,7 @@ function EmbossedInput({
               style={{
                 fontFamily: "Inter, system-ui, sans-serif",
                 color: isDark ? "#e4e4ec" : "#3f3f46",
-                caretColor: "#6366f1",
+                caretColor: "#c2783a",
               }}
             />
           </div>
@@ -157,14 +157,14 @@ function SearchInput({
         style={{
           background: focused
             ? isDark
-              ? "linear-gradient(180deg, #4e4e78 0%, #3a3a60 20%, #32325a 40%, #363660 60%, #424268 80%, #505078 100%)"
-              : "linear-gradient(180deg, #b0b0e0 0%, #8888b8 20%, #7070a0 40%, #7878a8 60%, #9898c0 80%, #b8b8d8 100%)"
+              ? "linear-gradient(180deg, #5a4a36 0%, #4a3a28 20%, #42322a 40%, #4a3a2a 60%, #524232 80%, #5a4a38 100%)"
+              : "linear-gradient(180deg, #d8c098 0%, #c0a070 20%, #b09060 40%, #b89868 60%, #c8a880 80%, #d8c098 100%)"
             : isDark
               ? "linear-gradient(180deg, #4e4e56 0%, #404048 15%, #363640 30%, #32323c 50%, #3a3a44 70%, #464650 85%, #4e4e58 100%)"
               : "linear-gradient(180deg, #c8c8d2 0%, #a0a0aa 15%, #8e8e98 30%, #828290 50%, #9494a0 70%, #b0b0ba 85%, #c4c4ce 100%)",
           boxShadow: [
             focused
-              ? "0 0 0 2px rgba(99,102,241,0.12)"
+              ? "0 0 0 2px rgba(194,120,58,0.12)"
               : "0 0 0 0 transparent",
             "0 5px 18px rgba(0,0,0,0.13)",
             "0 2px 8px rgba(0,0,0,0.08)",
@@ -216,7 +216,7 @@ function SearchInput({
                 className="w-[18px] h-[18px]"
                 strokeWidth={2.5}
                 style={{
-                  color: focused ? "#6366f1" : isDark ? "#71717a" : "#a1a1aa",
+                  color: focused ? "#c2783a" : isDark ? "#71717a" : "#a1a1aa",
                   transition: "color 0.2s ease",
                 }}
               />
@@ -232,7 +232,7 @@ function SearchInput({
               style={{
                 fontFamily: "Inter, system-ui, sans-serif",
                 color: isDark ? "#e4e4ec" : "#3f3f46",
-                caretColor: "#6366f1",
+                caretColor: "#c2783a",
               }}
             />
 

@@ -389,7 +389,7 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
           Alarms
         </span>
         <span
-          className="text-[11px] font-semibold text-indigo-500 cursor-pointer"
+          className="text-[11px] font-semibold text-amber-600 cursor-pointer"
           style={{ textShadow: isDark ? "0 1px 0 rgba(0,0,0,0.4)" : "0 1px 0 rgba(255,255,255,0.5)" }}
         >
           + Add
@@ -451,7 +451,7 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                 className="relative w-[46px] h-[28px] rounded-full cursor-pointer flex-shrink-0 focus:outline-none"
                 style={{
                   background: alarm.on
-                    ? "linear-gradient(180deg, #818cf8 0%, #6366f1 30%, #4f46e5 70%, #4338ca 100%)"
+                    ? "linear-gradient(180deg, #d4a060 0%, #c2783a 30%, #a06830 70%, #8a5a28 100%)"
                     : isDark
                       ? "linear-gradient(180deg, #4a4a52 0%, #3a3a42 30%, #32323a 70%, #2a2a32 100%)"
                       : "linear-gradient(180deg, #d4d4d8 0%, #b8b8be 30%, #a1a1aa 70%, #94949c 100%)",
@@ -462,10 +462,10 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                       ? "0 1px 0 rgba(255,255,255,0.05)"
                       : "0 1px 0 rgba(255,255,255,0.5)",
                     alarm.on
-                      ? "inset 0 -1px 2px rgba(99,102,241,0.3)"
+                      ? "inset 0 -1px 2px rgba(194,120,58,0.3)"
                       : "inset 0 -1px 2px rgba(0,0,0,0.05)",
                   ].join(", "),
-                  border: `1px solid ${alarm.on ? "#3730a3" : isDark ? "#52525b" : "#88888e"}`,
+                  border: `1px solid ${alarm.on ? "#704a20" : isDark ? "#52525b" : "#88888e"}`,
                   transition: "background 0.25s ease, border-color 0.25s ease",
                 }}
               >
@@ -529,14 +529,14 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                     style={{
                       color: isActive
                         ? alarm.on
-                          ? isDark ? "#818cf8" : "#4f46e5"
+                          ? isDark ? "#d4a060" : "#a06830"
                           : isDark ? "#9ca3af" : "#6b7280"
                         : isDark ? "#52525b" : "#b0b0b8",
                       background: isActive
                         ? alarm.on
                           ? isDark
-                            ? "linear-gradient(180deg, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0.1) 100%)"
-                            : "linear-gradient(180deg, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0.06) 100%)"
+                            ? "linear-gradient(180deg, rgba(194,120,58,0.2) 0%, rgba(194,120,58,0.1) 100%)"
+                            : "linear-gradient(180deg, rgba(194,120,58,0.12) 0%, rgba(194,120,58,0.06) 100%)"
                           : isDark
                             ? "rgba(255,255,255,0.06)"
                             : "rgba(0,0,0,0.04)"
@@ -560,7 +560,7 @@ function AlarmCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 }
 
 // ---- Weather variant ----
-// Dark indigo pill badge + light weather detail card
+// Dark amber pill badge + light weather detail card
 function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
   const { isDark } = useSkeuTheme();
 
@@ -572,20 +572,20 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       className="flex flex-col items-center gap-4"
       style={{ fontFamily: "Inter, system-ui, sans-serif", ...customStyle }}
     >
-      {/* Floating dark indigo pill badge */}
+      {/* Floating dark amber pill badge */}
       <div
         className="flex items-center gap-3.5 px-5 py-3.5 rounded-full"
         style={{
           background:
-            "linear-gradient(135deg, #3730a3 0%, #312e81 25%, #1e1b4b 55%, #1a1836 80%, #1e293b 100%)",
+            "linear-gradient(135deg, #704a20 0%, #5a3e18 25%, #3a2810 55%, #1a1836 80%, #1e293b 100%)",
           boxShadow: [
-            "0 10px 28px rgba(30,27,75,0.55)",
+            "0 10px 28px rgba(58,40,16,0.55)",
             "0 4px 14px rgba(0,0,0,0.35)",
             "0 2px 6px rgba(0,0,0,0.2)",
             "inset 0 1px 0 rgba(255,255,255,0.12)",
             "inset 0 -1px 0 rgba(0,0,0,0.25)",
           ].join(", "),
-          border: "1px solid rgba(99,102,241,0.18)",
+          border: "1px solid rgba(194,120,58,0.18)",
         }}
       >
         {/* Time and city info */}
@@ -600,7 +600,7 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             7:30 PM
           </span>
           <span
-            className="text-indigo-300/80 text-[10px] font-medium tracking-wide"
+            className="text-amber-300/80 text-[10px] font-medium tracking-wide"
             style={{ textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
           >
             Today, +7Hrs
@@ -689,8 +689,8 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             className="w-[52px] h-[52px] rounded-xl flex items-center justify-center"
             style={{
               background: isDark
-                ? "linear-gradient(135deg, #2a2a3a 0%, #242438 30%, #1e1e34 60%, #1c1c32 100%)"
-                : "linear-gradient(135deg, #e8eeff 0%, #dde4ff 30%, #cdd6fe 60%, #c7d2fe 100%)",
+                ? "linear-gradient(135deg, #302a20 0%, #2a2418 30%, #241e14 60%, #221c12 100%)"
+                : "linear-gradient(135deg, #fef5e8 0%, #fcecd8 30%, #f8dfc4 60%, #f5d8b8 100%)",
               boxShadow: isDark
                 ? [
                     "0 3px 8px rgba(0,0,0,0.3)",
@@ -699,17 +699,17 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
                     "inset 0 -1px 2px rgba(0,0,0,0.15)",
                   ].join(", ")
                 : [
-                    "0 3px 8px rgba(99,102,241,0.15)",
+                    "0 3px 8px rgba(194,120,58,0.15)",
                     "0 1px 3px rgba(0,0,0,0.06)",
                     "inset 0 1px 0 rgba(255,255,255,0.8)",
-                    "inset 0 -1px 2px rgba(99,102,241,0.08)",
+                    "inset 0 -1px 2px rgba(194,120,58,0.08)",
                   ].join(", "),
               border: isDark
-                ? "1px solid rgba(99,102,241,0.15)"
-                : "1px solid rgba(99,102,241,0.1)",
+                ? "1px solid rgba(194,120,58,0.15)"
+                : "1px solid rgba(194,120,58,0.1)",
             }}
           >
-            <Cloud className={`w-6 h-6 ${isDark ? "text-indigo-300" : "text-indigo-400"}`} strokeWidth={2} />
+            <Cloud className={`w-6 h-6 ${isDark ? "text-amber-300" : "text-amber-400"}`} strokeWidth={2} />
           </div>
         </div>
 
@@ -732,14 +732,14 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
           {/* Condition badge */}
           <div
-            className={`rounded-lg px-3 py-1.5 text-[11px] font-semibold ${isDark ? "text-indigo-300" : "text-indigo-600"}`}
+            className={`rounded-lg px-3 py-1.5 text-[11px] font-semibold ${isDark ? "text-amber-300" : "text-amber-700"}`}
             style={{
               background: isDark
-                ? "linear-gradient(180deg, rgba(99,102,241,0.18) 0%, rgba(99,102,241,0.1) 100%)"
-                : "linear-gradient(180deg, rgba(99,102,241,0.1) 0%, rgba(99,102,241,0.06) 100%)",
+                ? "linear-gradient(180deg, rgba(194,120,58,0.18) 0%, rgba(194,120,58,0.1) 100%)"
+                : "linear-gradient(180deg, rgba(194,120,58,0.1) 0%, rgba(194,120,58,0.06) 100%)",
               border: isDark
-                ? "1px solid rgba(99,102,241,0.2)"
-                : "1px solid rgba(99,102,241,0.12)",
+                ? "1px solid rgba(194,120,58,0.2)"
+                : "1px solid rgba(194,120,58,0.12)",
               boxShadow: isDark
                 ? "inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.1)"
                 : "inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.04)",
