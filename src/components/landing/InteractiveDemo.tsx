@@ -2,19 +2,74 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { stylesRegistry } from "@/lib/styles-registry";
 import { useComponentCustomizer } from "@/hooks/useComponentCustomizer";
 import { StyleId } from "@/types";
 import { RotateCcw, Copy, Check, Code2, Sliders, Palette } from "lucide-react";
 import { DotCluster, DotSparse } from "./DotMatrix";
 import { ColorPicker } from "./ColorPicker";
+import { paradigmIconMap } from "@/components/ui/ParadigmIcons";
+
+/* ── Dynamic imports for actual style Card components ── */
+const styleCards: Record<
+  StyleId,
+  React.ComponentType<{ variant?: string; customStyle?: React.CSSProperties }>
+> = {
+  glassmorphism: dynamic(
+    () => import("@/components/styles/glassmorphism/Card")
+  ),
+  "liquid-glass": dynamic(
+    () => import("@/components/styles/liquid-glass/Card")
+  ),
+  neobrutalism: dynamic(
+    () => import("@/components/styles/neobrutalism/Card")
+  ),
+  claymorphism: dynamic(
+    () => import("@/components/styles/claymorphism/Card")
+  ),
+  "metal-liquid": dynamic(
+    () => import("@/components/styles/metal-liquid/Card")
+  ),
+  minimalism: dynamic(() => import("@/components/styles/minimalism/Card")),
+  neomorphism: dynamic(() => import("@/components/styles/neomorphism/Card")),
+  skeuomorphism: dynamic(
+    () => import("@/components/styles/skeuomorphism/Card")
+  ),
+};
+
+/* ── Per-style preview background configs ── */
+const PREVIEW_BG: Partial<
+  Record<StyleId, { className?: string; style?: React.CSSProperties }>
+> = {
+  glassmorphism: { className: "glass-preview-bg" },
+  neomorphism: { style: { backgroundColor: "#e0e5ec" } },
+};
 
 /* ── Static constants hoisted out of render ── */
 const SLIDERS = [
   { key: "blur" as const, label: "Blur", min: 0, max: 60, unit: "px" },
-  { key: "opacity" as const, label: "Opacity", min: 0, max: 100, unit: "%" },
-  { key: "borderRadius" as const, label: "Radius", min: 0, max: 48, unit: "px" },
-  { key: "shadowBlur" as const, label: "Shadow", min: 0, max: 60, unit: "px" },
+  {
+    key: "opacity" as const,
+    label: "Opacity",
+    min: 0,
+    max: 100,
+    unit: "%",
+  },
+  {
+    key: "borderRadius" as const,
+    label: "Radius",
+    min: 0,
+    max: 48,
+    unit: "px",
+  },
+  {
+    key: "shadowBlur" as const,
+    label: "Shadow",
+    min: 0,
+    max: 60,
+    unit: "px",
+  },
 ] as const;
 
 const PANEL_TABS = [
@@ -65,87 +120,6 @@ function CornerMark({
         />
       </svg>
     </div>
-  );
-}
-
-/* ── Live preview card that responds to customization ── */
-function DemoCard({
-  styleId,
-  customStyle,
-}: {
-  styleId: StyleId;
-  customStyle: React.CSSProperties;
-}) {
-  const styleDef = stylesRegistry.find((s) => s.id === styleId)!;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.92, y: 12 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.92, y: -12 }}
-      transition={{ type: "spring", damping: 28, stiffness: 220 }}
-      className="w-full max-w-[300px]"
-      style={customStyle}
-    >
-      <div className="p-5">
-        {/* Color accent bar */}
-        <div className="flex items-center gap-3 mb-4">
-          <div
-            className="h-1.5 w-10 rounded-full"
-            style={{ backgroundColor: styleDef.color }}
-          />
-          <div
-            className="h-1.5 w-5 rounded-full opacity-40"
-            style={{ backgroundColor: styleDef.color }}
-          />
-        </div>
-
-        {/* Card title */}
-        <h3 className="text-base font-semibold text-white tracking-tight">
-          {styleDef.name}
-        </h3>
-        <p className="mt-1.5 text-[13px] leading-relaxed text-white/50">
-          {styleDef.tagline}
-        </p>
-
-        {/* Fake component tags */}
-        <div className="mt-5 flex items-center gap-2">
-          {["Card", "Button", "Input"].map((tag) => (
-            <div
-              key={tag}
-              className="px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider"
-              style={{
-                backgroundColor: `${styleDef.color}18`,
-                color: styleDef.color,
-                borderRadius:
-                  styleId === "neobrutalism"
-                    ? "0px"
-                    : styleId === "claymorphism"
-                      ? "10px"
-                      : "4px",
-                border:
-                  styleId === "neobrutalism"
-                    ? `1.5px solid ${styleDef.color}`
-                    : "none",
-              }}
-            >
-              {tag}
-            </div>
-          ))}
-        </div>
-
-        {/* Fake progress bar */}
-        <div className="mt-5 h-1 w-full rounded-full bg-white/10 overflow-hidden">
-          <motion.div
-            className="h-full rounded-full"
-            style={{ backgroundColor: styleDef.color }}
-            initial={{ width: "0%" }}
-            animate={{ width: "68%" }}
-            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-          />
-        </div>
-      </div>
-    </motion.div>
   );
 }
 
@@ -234,12 +208,14 @@ export function InteractiveDemo() {
     [activeStyle]
   );
 
-
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(codeString);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [codeString]);
+
+  const CardComponent = styleCards[activeStyle];
+  const previewBg = PREVIEW_BG[activeStyle];
 
   return (
     <section className="relative px-6 py-28 overflow-hidden">
@@ -284,13 +260,18 @@ export function InteractiveDemo() {
           </h2>
         </div>
         <p className="mb-12 max-w-md text-base text-[var(--color-fg-muted)]">
-          Switch styles and tweak properties in real-time. Copy the generated CSS
-          when you find the look you want.
+          Switch styles and tweak properties in real-time. Copy the generated
+          CSS when you find the look you want.
         </p>
 
         {/* Dashed separator */}
         <div className="mb-10">
-          <svg width="100%" height="1" preserveAspectRatio="none" className="block">
+          <svg
+            width="100%"
+            height="1"
+            preserveAspectRatio="none"
+            className="block"
+          >
             <line
               x1="0"
               y1="0.5"
@@ -303,17 +284,20 @@ export function InteractiveDemo() {
           </svg>
         </div>
 
-        {/* Style selector strip */}
+        {/* Style selector strip — paradigm icons instead of dots */}
         <div className="mb-10 flex flex-wrap gap-2">
           {stylesRegistry.map((style) => {
             const isActive = activeStyle === style.id;
+            const Icon = paradigmIconMap[style.id];
             return (
               <button
                 key={style.id}
                 onClick={() => setActiveStyle(style.id)}
                 className="relative flex items-center gap-2.5 px-4 py-2.5 text-[13px] font-medium transition-all duration-200"
                 style={{
-                  color: isActive ? "var(--color-fg)" : "var(--color-fg-muted)",
+                  color: isActive
+                    ? "var(--color-fg)"
+                    : "var(--color-fg-muted)",
                   borderLeft: isActive
                     ? `2px solid ${style.color}`
                     : "2px solid transparent",
@@ -322,26 +306,30 @@ export function InteractiveDemo() {
                     : "transparent",
                 }}
               >
-                {/* Color indicator dot */}
-                <span
-                  className="h-2 w-2 rounded-full flex-shrink-0 transition-all duration-300"
-                  style={{
-                    backgroundColor: style.color,
-                    opacity: isActive ? 1 : 0.35,
-                    boxShadow: isActive
-                      ? `0 0 8px ${style.color}50`
-                      : "none",
-                  }}
-                />
+                {Icon && (
+                  <Icon
+                    className="h-4 w-4 flex-shrink-0 transition-all duration-300"
+                    style={{
+                      color: style.color,
+                      opacity: isActive ? 1 : 0.4,
+                    }}
+                  />
+                )}
                 <span className="relative">
                   {style.name}
-                  {/* Active underline accent */}
                   {isActive && (
                     <motion.div
                       layoutId="style-underline"
                       className="absolute -bottom-0.5 left-0 right-0 h-px"
-                      style={{ backgroundColor: style.color, opacity: 0.5 }}
-                      transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                      style={{
+                        backgroundColor: style.color,
+                        opacity: 0.5,
+                      }}
+                      transition={{
+                        type: "spring",
+                        damping: 30,
+                        stiffness: 300,
+                      }}
                     />
                   )}
                 </span>
@@ -355,20 +343,25 @@ export function InteractiveDemo() {
           {/* Preview canvas */}
           <div className="relative flex-1 lg:border-r lg:border-dashed lg:border-[var(--color-border)]">
             <div
-              className="relative flex min-h-[400px] items-center justify-center overflow-hidden border border-dashed border-[var(--color-border)] lg:mr-6"
-              style={{ borderRadius: "2px" }}
+              className={`relative flex min-h-[440px] items-center justify-center overflow-hidden border border-dashed border-[var(--color-border)] lg:mr-6 ${previewBg?.className || ""}`}
+              style={{
+                borderRadius: "2px",
+                ...previewBg?.style,
+              }}
             >
-              {/* Dot grid background */}
-              <div
-                className="absolute inset-0 opacity-[0.35]"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle, var(--color-preview-dot) 0.5px, transparent 0.5px)",
-                  backgroundSize: "16px 16px",
-                }}
-              />
+              {/* Dot grid background — hidden when preview has custom bg */}
+              {!previewBg && (
+                <div
+                  className="absolute inset-0 opacity-[0.35]"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle, var(--color-preview-dot) 0.5px, transparent 0.5px)",
+                    backgroundSize: "16px 16px",
+                  }}
+                />
+              )}
 
-              {/* Radial glow behind the card — uses active style color */}
+              {/* Radial glow behind the card */}
               <motion.div
                 key={activeStyle}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -376,8 +369,8 @@ export function InteractiveDemo() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="absolute pointer-events-none"
                 style={{
-                  width: "350px",
-                  height: "350px",
+                  width: "400px",
+                  height: "400px",
                   borderRadius: "50%",
                   background: `radial-gradient(circle, ${activeStyleDef.color}12, transparent 70%)`,
                   filter: "blur(40px)",
@@ -392,25 +385,51 @@ export function InteractiveDemo() {
 
               {/* Center crosshair */}
               <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.08">
-                  <line x1="20" y1="0" x2="20" y2="40" stroke="var(--color-fg)" strokeWidth="0.5" strokeDasharray="2 3" />
-                  <line x1="0" y1="20" x2="40" y2="20" stroke="var(--color-fg)" strokeWidth="0.5" strokeDasharray="2 3" />
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                  fill="none"
+                  opacity="0.08"
+                >
+                  <line
+                    x1="20"
+                    y1="0"
+                    x2="20"
+                    y2="40"
+                    stroke="var(--color-fg)"
+                    strokeWidth="0.5"
+                    strokeDasharray="2 3"
+                  />
+                  <line
+                    x1="0"
+                    y1="20"
+                    x2="40"
+                    y2="20"
+                    stroke="var(--color-fg)"
+                    strokeWidth="0.5"
+                    strokeDasharray="2 3"
+                  />
                 </svg>
               </div>
 
-              {/* Demo card */}
-              <div className="relative z-10">
+              {/* Actual style Card component */}
+              <div className="relative z-10 px-4">
                 <AnimatePresence mode="wait">
-                  <DemoCard
+                  <motion.div
                     key={activeStyle}
-                    styleId={activeStyle}
-                    customStyle={cssStyles}
-                  />
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                  >
+                    <CardComponent customStyle={cssStyles} />
+                  </motion.div>
                 </AnimatePresence>
               </div>
 
               {/* Style label in bottom-left */}
-              <div className="absolute bottom-3 left-3 flex items-center gap-2">
+              <div className="absolute bottom-3 left-3 flex items-center gap-2 z-20">
                 <div
                   className="h-1 w-1 rounded-full"
                   style={{ backgroundColor: activeStyleDef.color }}
@@ -434,8 +453,14 @@ export function InteractiveDemo() {
                       onClick={() => setActiveTab(tab.id)}
                       className="flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.08em] transition-colors duration-200"
                       style={{
-                        color: activeTab === tab.id ? "var(--color-fg)" : "var(--color-fg-muted)",
-                        borderBottom: activeTab === tab.id ? `1px solid ${activeStyleDef.color}` : "1px solid transparent",
+                        color:
+                          activeTab === tab.id
+                            ? "var(--color-fg)"
+                            : "var(--color-fg-muted)",
+                        borderBottom:
+                          activeTab === tab.id
+                            ? `1px solid ${activeStyleDef.color}`
+                            : "1px solid transparent",
                       }}
                     >
                       <tab.icon className="h-3 w-3" />
@@ -455,7 +480,6 @@ export function InteractiveDemo() {
 
               <AnimatePresence mode="wait">
                 {activeTab === "sliders" && (
-                  /* Sliders view */
                   <motion.div
                     key="sliders"
                     initial={{ opacity: 0, x: -8 }}
@@ -477,9 +501,13 @@ export function InteractiveDemo() {
                       />
                     ))}
 
-                    {/* Divider */}
                     <div className="my-1">
-                      <svg width="100%" height="1" preserveAspectRatio="none" className="block">
+                      <svg
+                        width="100%"
+                        height="1"
+                        preserveAspectRatio="none"
+                        className="block"
+                      >
                         <line
                           x1="0"
                           y1="0.5"
@@ -492,12 +520,13 @@ export function InteractiveDemo() {
                       </svg>
                     </div>
 
-                    {/* Quick info */}
                     <div className="flex items-center gap-3 text-[10px] text-[var(--color-fg-muted)] opacity-60">
                       <div className="flex items-center gap-1.5">
                         <div
                           className="h-1.5 w-1.5 rounded-full"
-                          style={{ backgroundColor: activeStyleDef.color }}
+                          style={{
+                            backgroundColor: activeStyleDef.color,
+                          }}
                         />
                         <span className="font-[family-name:var(--font-mono)] uppercase tracking-wider">
                           {activeStyleDef.name}
@@ -515,7 +544,6 @@ export function InteractiveDemo() {
                 )}
 
                 {activeTab === "colors" && (
-                  /* Colors view */
                   <motion.div
                     key="colors"
                     initial={{ opacity: 0, x: -8 }}
@@ -530,9 +558,13 @@ export function InteractiveDemo() {
                       onChange={(hex) => updateProperty("bgColor", hex)}
                     />
 
-                    {/* Divider */}
                     <div className="my-0.5 ml-10">
-                      <svg width="100%" height="1" preserveAspectRatio="none" className="block">
+                      <svg
+                        width="100%"
+                        height="1"
+                        preserveAspectRatio="none"
+                        className="block"
+                      >
                         <line
                           x1="0"
                           y1="0.5"
@@ -551,9 +583,13 @@ export function InteractiveDemo() {
                       onChange={(hex) => updateProperty("borderColor", hex)}
                     />
 
-                    {/* Divider */}
                     <div className="my-0.5 ml-10">
-                      <svg width="100%" height="1" preserveAspectRatio="none" className="block">
+                      <svg
+                        width="100%"
+                        height="1"
+                        preserveAspectRatio="none"
+                        className="block"
+                      >
                         <line
                           x1="0"
                           y1="0.5"
@@ -572,9 +608,13 @@ export function InteractiveDemo() {
                       onChange={(hex) => updateProperty("shadowColor", hex)}
                     />
 
-                    {/* Bottom divider */}
                     <div className="mt-3">
-                      <svg width="100%" height="1" preserveAspectRatio="none" className="block">
+                      <svg
+                        width="100%"
+                        height="1"
+                        preserveAspectRatio="none"
+                        className="block"
+                      >
                         <line
                           x1="0"
                           y1="0.5"
@@ -587,18 +627,19 @@ export function InteractiveDemo() {
                       </svg>
                     </div>
 
-                    {/* All colors summary strip */}
                     <div className="mt-2 flex items-center gap-3">
                       <div className="flex items-center gap-1.5">
-                        {[state.bgColor, state.borderColor, state.shadowColor].map(
-                          (c, i) => (
-                            <div
-                              key={i}
-                              className="h-4 w-4 rounded-[2px] border border-[var(--color-border)]"
-                              style={{ backgroundColor: c }}
-                            />
-                          )
-                        )}
+                        {[
+                          state.bgColor,
+                          state.borderColor,
+                          state.shadowColor,
+                        ].map((c, i) => (
+                          <div
+                            key={i}
+                            className="h-4 w-4 rounded-[2px] border border-[var(--color-border)]"
+                            style={{ backgroundColor: c }}
+                          />
+                        ))}
                       </div>
                       <span className="font-[family-name:var(--font-mono)] text-[9px] text-[var(--color-fg-muted)] opacity-50 uppercase tracking-wider">
                         Active palette
@@ -608,7 +649,6 @@ export function InteractiveDemo() {
                 )}
 
                 {activeTab === "code" && (
-                  /* Code view */
                   <motion.div
                     key="code"
                     initial={{ opacity: 0, x: 8 }}
@@ -630,18 +670,17 @@ export function InteractiveDemo() {
                             const [prop, val] = line.split(": ");
                             return (
                               <div key={i}>
-                                <span style={{ color: "#93c5fd" }}>{prop}</span>
-                                <span style={{ color: "#6b7280" }}>: </span>
-                                <span style={{ color: "#fde68a" }}>
-                                  {val}
+                                <span style={{ color: "#93c5fd" }}>
+                                  {prop}
                                 </span>
+                                <span style={{ color: "#6b7280" }}>: </span>
+                                <span style={{ color: "#fde68a" }}>{val}</span>
                               </div>
                             );
                           })}
                         </code>
                       </pre>
 
-                      {/* Copy button */}
                       <button
                         onClick={handleCopy}
                         className="absolute top-2 right-2 flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider transition-all duration-200 border border-[#ffffff15] hover:border-[#ffffff30]"
@@ -666,7 +705,8 @@ export function InteractiveDemo() {
                     </div>
 
                     <p className="text-[11px] leading-relaxed text-[var(--color-fg-muted)] opacity-60">
-                      Adjust properties and colors, then copy the CSS output directly into your project.
+                      Adjust properties and colors, then copy the CSS output
+                      directly into your project.
                     </p>
                   </motion.div>
                 )}
@@ -677,7 +717,12 @@ export function InteractiveDemo() {
 
         {/* Bottom dashed separator */}
         <div className="mt-16">
-          <svg width="100%" height="1" preserveAspectRatio="none" className="block">
+          <svg
+            width="100%"
+            height="1"
+            preserveAspectRatio="none"
+            className="block"
+          >
             <line
               x1="0"
               y1="0.5"

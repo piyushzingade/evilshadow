@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Github } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { stylesRegistry } from "@/lib/styles-registry";
+import { paradigmIconMap } from "@/components/ui/ParadigmIcons";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -130,22 +131,30 @@ export function Navbar() {
                           "linear-gradient(90deg, transparent, var(--color-accent), transparent)",
                       }}
                     />
-                    {stylesRegistry.map((style) => (
-                      <Link
-                        key={style.id}
-                        href={`/docs/${style.id}`}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[var(--color-fg-muted)] transition-all duration-200 hover:bg-[var(--color-border)] hover:text-[var(--color-fg)] hover:pl-4"
-                        onClick={() => setStylesOpen(false)}
-                      >
-                        <span
-                          className="h-2.5 w-2.5 rounded-full ring-2 ring-transparent transition-all duration-200"
-                          style={{
-                            backgroundColor: style.color,
-                          }}
-                        />
-                        {style.name}
-                      </Link>
-                    ))}
+                    {stylesRegistry.map((style) => {
+                      const Icon = paradigmIconMap[style.id];
+                      return (
+                        <Link
+                          key={style.id}
+                          href={`/docs/${style.id}`}
+                          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[var(--color-fg-muted)] transition-all duration-200 hover:bg-[var(--color-border)] hover:text-[var(--color-fg)] hover:pl-4"
+                          onClick={() => setStylesOpen(false)}
+                        >
+                          {Icon ? (
+                            <Icon
+                              className="h-4 w-4 flex-shrink-0"
+                              style={{ color: style.color }}
+                            />
+                          ) : (
+                            <span
+                              className="h-2.5 w-2.5 rounded-full"
+                              style={{ backgroundColor: style.color }}
+                            />
+                          )}
+                          {style.name}
+                        </Link>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -234,20 +243,30 @@ export function Navbar() {
                   />
                   Styles
                 </p>
-                {stylesRegistry.map((style) => (
-                  <Link
-                    key={style.id}
-                    href={`/docs/${style.id}`}
-                    className="flex items-center gap-3 py-2 text-sm text-[var(--color-fg-muted)] transition-all duration-200 hover:text-[var(--color-fg)] hover:pl-1"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <span
-                      className="h-2 w-2 rounded-full"
-                      style={{ backgroundColor: style.color }}
-                    />
-                    {style.name}
-                  </Link>
-                ))}
+                {stylesRegistry.map((style) => {
+                  const Icon = paradigmIconMap[style.id];
+                  return (
+                    <Link
+                      key={style.id}
+                      href={`/docs/${style.id}`}
+                      className="flex items-center gap-3 py-2 text-sm text-[var(--color-fg-muted)] transition-all duration-200 hover:text-[var(--color-fg)] hover:pl-1"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {Icon ? (
+                        <Icon
+                          className="h-4 w-4 flex-shrink-0"
+                          style={{ color: style.color }}
+                        />
+                      ) : (
+                        <span
+                          className="h-2 w-2 rounded-full"
+                          style={{ backgroundColor: style.color }}
+                        />
+                      )}
+                      {style.name}
+                    </Link>
+                  );
+                })}
               </div>
 
               {/* Bottom section with dashed border */}
