@@ -170,14 +170,14 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
   ];
 
   const defaultGlass: React.CSSProperties = {
-    backdropFilter: "blur(40px)",
-    WebkitBackdropFilter: "blur(40px)",
+    backdropFilter: "blur(14px) saturate(160%)",
+    WebkitBackdropFilter: "blur(14px) saturate(160%)",
     background:
-      "linear-gradient(155deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.06) 100%)",
-    border: "1px solid rgba(255,255,255,0.3)",
+      "linear-gradient(155deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0.10) 100%)",
+    border: "1px solid rgba(255,255,255,0.4)",
     borderRadius: "22px",
     boxShadow:
-      "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2)",
+      "0 4px 24px rgba(0,0,0,0.04), 0 1px 6px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.35)",
   };
 
   const glassStyle = customStyle
@@ -192,47 +192,25 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       className="font-[family-name:var(--font-clean)] relative w-full max-w-sm overflow-hidden"
       style={{ borderRadius: glassStyle.borderRadius }}
     >
-      {/* === Layer 1: Outer ambient glow === */}
-      <div
-        className="pointer-events-none absolute -inset-2 rounded-[28px]"
-        style={{
-          boxShadow:
-            "0 0 50px 6px rgba(34,211,238,0.06), 0 0 100px 16px rgba(52,211,153,0.04)",
-        }}
-      />
+      {/* Glass shell */}
+      <div className="absolute inset-0" style={glassStyle} />
 
-      {/* === Layer 2: Glass shell — customizer targets this === */}
-      <div
-        className="absolute inset-0"
-        style={glassStyle}
-      />
-
-      {/* === Layer 3: Inner frost gradient === */}
+      {/* Inner frost */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           borderRadius: glassStyle.borderRadius,
           background:
-            "linear-gradient(165deg, rgba(255,255,255,0.18) 0%, transparent 40%, rgba(34,211,238,0.03) 100%)",
+            "linear-gradient(155deg, rgba(255,255,255,0.12) 0%, transparent 45%)",
         }}
       />
 
-      {/* === Layer 4: Top refraction streak === */}
+      {/* Top edge highlight */}
       <div
-        className="pointer-events-none absolute -top-20 -left-20 h-60 w-60 rotate-[40deg]"
+        className="pointer-events-none absolute inset-x-8 top-[1px] h-[1px]"
         style={{
           background:
-            "linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%)",
-          filter: "blur(25px)",
-        }}
-      />
-
-      {/* === Layer 5: Top edge highlight === */}
-      <div
-        className="pointer-events-none absolute inset-x-8 top-0 h-[1px]"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(255,255,255,0.45) 50%, transparent)",
+            "linear-gradient(90deg, transparent, rgba(255,255,255,0.55) 50%, transparent)",
         }}
       />
 
@@ -241,51 +219,74 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
         <motion.div
           whileHover={{ scale: 1.04 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="mx-auto mb-5 flex h-22 w-22 items-center justify-center rounded-full"
+          className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full"
           style={{
             background:
-              "linear-gradient(135deg, rgba(34,211,238,0.35) 0%, rgba(52,211,153,0.25) 100%)",
-            border: "2px solid rgba(255,255,255,0.35)",
+              "linear-gradient(135deg, rgba(120,110,200,0.35) 0%, rgba(170,175,210,0.30) 100%)",
+            border: "2px solid rgba(255,255,255,0.45)",
             boxShadow:
-              "0 0 30px rgba(34,211,238,0.12), 0 0 60px rgba(52,211,153,0.06), inset 0 1px 0 rgba(255,255,255,0.2)",
+              "0 4px 20px rgba(120,110,200,0.12), inset 0 1px 0 rgba(255,255,255,0.3)",
             backdropFilter: "blur(12px)",
           }}
         >
-          <span className="text-2xl font-bold text-white tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.15)]">
+          <span
+            className="text-xl tracking-wide"
+            style={{ color: "rgba(20,20,35,0.70)", fontWeight: 600 }}
+          >
             BJ
           </span>
         </motion.div>
 
         {/* Name & Title */}
-        <h3 className="text-lg font-bold text-white tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
+        <h3
+          className="text-lg tracking-wide"
+          style={{ color: "rgba(20,20,35,0.80)", fontWeight: 600 }}
+        >
           Brian Jones
         </h3>
-        <p className="mb-7 mt-1 text-sm text-white/50 font-medium">
+        <p
+          className="mb-7 mt-1 text-sm"
+          style={{ color: "rgba(60,60,75,0.50)", fontWeight: 500 }}
+        >
           Senior Product Designer
         </p>
 
         {/* Stats row */}
         <div
-          className="flex items-center justify-around rounded-xl py-4"
+          className="flex items-center justify-around rounded-xl py-4 px-2"
           style={{
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.18)",
+            border: "1px solid rgba(255,255,255,0.35)",
             backdropFilter: "blur(8px)",
             boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 8px rgba(0,0,0,0.06)",
+              "inset 0 1px 0 rgba(255,255,255,0.25), 0 2px 8px rgba(0,0,0,0.03)",
           }}
         >
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`flex flex-col items-center gap-0.5 ${
-                i < stats.length - 1 ? "border-r border-white/10 pr-6" : ""
+              className={`flex flex-col items-center gap-1 ${
+                i < stats.length - 1
+                  ? "border-r pr-5"
+                  : ""
               }`}
+              style={{
+                borderColor:
+                  i < stats.length - 1
+                    ? "rgba(60,60,75,0.10)"
+                    : undefined,
+              }}
             >
-              <span className="text-xl font-bold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
+              <span
+                className="text-xl"
+                style={{ color: "rgba(20,20,35,0.78)", fontWeight: 700 }}
+              >
                 {stat.value}
               </span>
-              <span className="text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <span
+                className="text-[11px] uppercase tracking-wider"
+                style={{ color: "rgba(60,60,75,0.45)", fontWeight: 500 }}
+              >
                 {stat.label}
               </span>
             </div>
@@ -298,14 +299,14 @@ function ProfileCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
 function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
   const defaultGlass: React.CSSProperties = {
-    backdropFilter: "blur(40px)",
-    WebkitBackdropFilter: "blur(40px)",
+    backdropFilter: "blur(14px) saturate(160%)",
+    WebkitBackdropFilter: "blur(14px) saturate(160%)",
     background:
-      "linear-gradient(150deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.06) 100%)",
-    border: "1px solid rgba(255,255,255,0.3)",
+      "linear-gradient(150deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0.10) 100%)",
+    border: "1px solid rgba(255,255,255,0.4)",
     borderRadius: "22px",
     boxShadow:
-      "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2)",
+      "0 4px 24px rgba(0,0,0,0.04), 0 1px 6px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.35)",
   };
 
   const glassStyle = customStyle
@@ -320,61 +321,49 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
       className="font-[family-name:var(--font-clean)] relative w-full max-w-sm overflow-hidden"
       style={{ borderRadius: glassStyle.borderRadius }}
     >
-      {/* === Layer 1: Outer ambient glow — warm sun tint === */}
-      <div
-        className="pointer-events-none absolute -inset-2 rounded-[28px]"
-        style={{
-          boxShadow:
-            "0 0 50px 6px rgba(253,224,71,0.06), 0 0 100px 16px rgba(251,191,36,0.04)",
-        }}
-      />
+      {/* Glass shell */}
+      <div className="absolute inset-0" style={glassStyle} />
 
-      {/* === Layer 2: Glass shell — customizer targets this === */}
-      <div
-        className="absolute inset-0"
-        style={glassStyle}
-      />
-
-      {/* === Layer 3: Warm/cool frost gradient === */}
+      {/* Inner frost */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           borderRadius: glassStyle.borderRadius,
           background:
-            "linear-gradient(155deg, rgba(253,224,71,0.06) 0%, transparent 40%, rgba(96,165,250,0.04) 100%)",
+            "linear-gradient(155deg, rgba(255,255,255,0.12) 0%, transparent 45%)",
         }}
       />
 
-      {/* === Layer 4: Top refraction streak === */}
+      {/* Top edge highlight */}
       <div
-        className="pointer-events-none absolute -top-20 -left-16 h-56 w-56 rotate-[40deg]"
+        className="pointer-events-none absolute inset-x-6 top-[1px] h-[1px]"
         style={{
           background:
-            "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, transparent 55%)",
-          filter: "blur(24px)",
+            "linear-gradient(90deg, transparent, rgba(255,255,255,0.55) 50%, transparent)",
         }}
       />
 
-      {/* === Layer 5: Top edge highlight === */}
-      <div
-        className="pointer-events-none absolute inset-x-6 top-0 h-[1px]"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(255,255,255,0.45) 50%, transparent)",
-        }}
-      />
-
-      <div className="relative p-6 z-10">
-        {/* Top -- Location */}
-        <div className="mb-1 flex items-center justify-between">
+      <div className="relative p-7 z-10">
+        {/* Top — Location + Sun */}
+        <div className="mb-1 flex items-start justify-between">
           <div>
-            <div className="flex items-center gap-1.5 mb-1">
-              <MapPin className="h-3 w-3 text-white/40" strokeWidth={2} />
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/40">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <MapPin
+                className="h-3 w-3"
+                strokeWidth={2}
+                style={{ color: "rgba(60,60,75,0.40)" }}
+              />
+              <p
+                className="text-[11px] uppercase tracking-[0.18em]"
+                style={{ color: "rgba(60,60,75,0.45)", fontWeight: 500 }}
+              >
                 Current Weather
               </p>
             </div>
-            <h3 className="text-xl font-bold text-white tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
+            <h3
+              className="text-xl tracking-wide"
+              style={{ color: "rgba(20,20,35,0.80)", fontWeight: 700 }}
+            >
               San Francisco
             </h3>
           </div>
@@ -383,11 +372,12 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           >
             <Sun
-              className="h-12 w-12 text-yellow-300"
+              className="h-11 w-11"
               strokeWidth={1.5}
               style={{
+                color: "#e59c1a",
                 filter:
-                  "drop-shadow(0 0 14px rgba(253,224,71,0.45)) drop-shadow(0 0 30px rgba(253,224,71,0.2))",
+                  "drop-shadow(0 0 10px rgba(229,156,26,0.35)) drop-shadow(0 0 24px rgba(229,156,26,0.15))",
               }}
             />
           </motion.div>
@@ -395,10 +385,16 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
 
         {/* Temperature */}
         <div className="my-5">
-          <span className="text-7xl font-extralight text-white tracking-tighter drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+          <span
+            className="text-7xl tracking-tighter"
+            style={{ color: "rgba(20,20,35,0.78)", fontWeight: 200 }}
+          >
             23
           </span>
-          <span className="relative -top-6 ml-1 text-2xl font-light text-white/55">
+          <span
+            className="relative -top-6 ml-1 text-2xl"
+            style={{ color: "rgba(60,60,75,0.40)", fontWeight: 300 }}
+          >
             °C
           </span>
         </div>
@@ -408,40 +404,60 @@ function WeatherCard({ customStyle }: { customStyle?: React.CSSProperties }) {
           <div
             className="flex flex-1 items-center gap-2.5 rounded-xl px-4 py-3"
             style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(255,255,255,0.18)",
+              border: "1px solid rgba(255,255,255,0.35)",
               backdropFilter: "blur(8px)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
             }}
           >
             <Droplets
-              className="h-4 w-4 text-blue-300/80"
+              className="h-4 w-4"
               strokeWidth={2}
               style={{
-                filter: "drop-shadow(0 0 4px rgba(147,197,253,0.3))",
+                color: "rgba(80,130,200,0.70)",
+                filter: "drop-shadow(0 0 3px rgba(80,130,200,0.2))",
               }}
             />
-            <span className="text-xs font-medium text-white/45">Humidity</span>
-            <span className="ml-auto text-sm font-bold text-white">62%</span>
+            <span
+              className="text-xs"
+              style={{ color: "rgba(60,60,75,0.50)", fontWeight: 500 }}
+            >
+              Humidity
+            </span>
+            <span
+              className="ml-auto text-sm"
+              style={{ color: "rgba(20,20,35,0.78)", fontWeight: 700 }}
+            >
+              62%
+            </span>
           </div>
           <div
             className="flex flex-1 items-center gap-2.5 rounded-xl px-4 py-3"
             style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(255,255,255,0.18)",
+              border: "1px solid rgba(255,255,255,0.35)",
               backdropFilter: "blur(8px)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
             }}
           >
             <Wind
-              className="h-4 w-4 text-cyan-300/80"
+              className="h-4 w-4"
               strokeWidth={2}
               style={{
-                filter: "drop-shadow(0 0 4px rgba(103,232,249,0.3))",
+                color: "rgba(70,150,170,0.70)",
+                filter: "drop-shadow(0 0 3px rgba(70,150,170,0.2))",
               }}
             />
-            <span className="text-xs font-medium text-white/45">Wind</span>
-            <span className="ml-auto text-sm font-bold text-white">
+            <span
+              className="text-xs"
+              style={{ color: "rgba(60,60,75,0.50)", fontWeight: 500 }}
+            >
+              Wind
+            </span>
+            <span
+              className="ml-auto text-sm"
+              style={{ color: "rgba(20,20,35,0.78)", fontWeight: 700 }}
+            >
               12 km/h
             </span>
           </div>
